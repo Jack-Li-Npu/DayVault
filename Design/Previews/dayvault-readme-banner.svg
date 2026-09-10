@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="520" viewBox="0 0 1440 520" role="img" aria-labelledby="title desc">
+  <title id="title">DayVault — 日常记录与共同成长 / Daily records and a growing companion</title>
+  <desc id="desc">Original editorial banner with bold DayVault lettering and a geometric origami companion. A brand illustration, not an app screenshot.</desc>
+  <rect width="1440" height="520" fill="#F4F0E6"/>
+  <path d="M38 44H1402V476H38Z M958 44V476 M38 398H1402" fill="none" stroke="#1C1E19" stroke-width="2"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" fill="#1C1E19">
+    <text x="76" y="94" font-size="17" font-weight="700" letter-spacing="3">DAYVAULT / 日常记录</text>
+    <rect x="76" y="257" width="500" height="16" fill="#DDF853"/>
+    <text x="69" y="247" font-size="128" font-weight="900" letter-spacing="-7">DayVault</text>
+    <text x="76" y="323" font-size="30" font-weight="700">记录日常，让坚持有迹可循。</text>
+    <text x="76" y="364" font-size="21" fill="#66695F">Daily records. A growing companion. Achievements you keep.</text>
+    <text x="1002" y="92" font-size="14" font-weight="700" letter-spacing="2">A LITTLE COMPANY</text>
+    <text x="1151" y="365" font-size="15" text-anchor="middle" fill="#66695F">折纸搭档 / ORIGAMI COMPANION</text>
+    <text x="76" y="446" font-size="18" font-weight="700"><tspan fill="#5144D9">01</tspan><tspan dx="18">轻松记录 / RECORD</tspan></text>
+    <text x="516" y="446" font-size="18" font-weight="700"><tspan fill="#5144D9">02</tspan><tspan dx="18">一起积累 / GROW</tspan></text>
+    <text x="1002" y="446" font-size="18" font-weight="700"><tspan fill="#5144D9">03</tspan><tspan dx="18">留住成就 / KEEP</tspan></text>
+  </g>
+  <g stroke="#24291F" stroke-width="3.5" stroke-linejoin="round">
+    <ellipse cx="1151" cy="325" rx="90" ry="10" fill="#24291F" opacity=".1" stroke="none"/>
+    <path d="M1105 288L1095 320L1130 320L1142 289M1164 289L1176 320L1210 320L1197 288" fill="#24291F"/>
+    <path d="M1062 193L1134 128L1216 176L1207 285L1148 314L1067 277Z" fill="#F5E8A9"/>
+    <path d="M1134 128L1148 221L1062 193M1148 221L1216 176M1067 277L1148 221L1207 285M1148 221V314" fill="none"/>
+    <path d="M1062 193L1020 167L1044 272L1067 277" fill="#E6EBA7"/>
+    <path d="M1216 176L1262 142L1232 279L1207 285" fill="#D0E288"/>
+    <path d="M1152 155L1163 159L1158 172L1147 167Z" fill="#EB7856"/>
+    <path d="M1091 238V245M1179 239V246" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <path d="M1301 271H1322M1312 260V282" stroke="#5144D9" stroke-width="4"/>
+  <rect x="1292" y="113" width="16" height="16" fill="#DDF853" transform="rotate(12 1300 121)"/>
+</svg>
