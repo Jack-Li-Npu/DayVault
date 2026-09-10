@@ -1,5 +1,7 @@
 # DayVault privacy summary
 
+> Release privacy note / 发布脱敏说明：`api.example.com`, `example-model` and legacy model labels are placeholders, not actual provider settings. 私人接口与模型仅保存在忽略的本地配置中；历史测试结论保留。
+
 DayVault stores schedule, completion, template, category, review, achievement and goal data on the user's device and, when available, in the user's private iCloud database. Personal achievement definitions/evidence, companion messages, memory proposals/confirmed memories and before/after adjustment records use the same persistence boundary. Ordinary recording does not require a DayVault account or a custom backend. Optional AI features use a separately configured server and model service.
 
 Calendar access is off by default and is requested only when the user enables Calendar integration. Selected calendars are read to display blocking overlays. Export creates an independent event through Apple’s system editor.
@@ -37,8 +39,8 @@ Character share cards are rendered on the device. The app does not upload a shar
 
 ## Provider and credential boundary
 
-The local test configuration uses a host-side Deno proxy and the user-selected third-party relay `https://api.3366.ai`, requesting `gpt-5.6-luna` with `medium` reasoning. The provider API key is held in macOS Keychain and passed to the proxy in memory; it is not embedded in the app or committed in this repository. Production AI requests should use an authenticated server. Local unauthenticated preview mode is for loopback development only.
+The local test configuration uses a host-side Deno proxy and the user-selected third-party relay `https://api.example.com`, requesting `example-model` with `medium` reasoning. The provider API key is held in macOS Keychain and passed to the proxy in memory; it is not embedded in the app or committed in this repository. Production AI requests should use an authenticated server. Local unauthenticated preview mode is for loopback development only.
 
 Responses requests set `store: false`. This flag does not establish the third-party relay's retention, logging or training policy, and deleting local app data does not promise deletion of copies previously processed by that service. Review the selected provider's terms and retention controls before sending sensitive content or releasing the app.
 
-Compatibility was rechecked on **2026-09-10 (Asia/Shanghai)** with one synthetic `ok` request and no real personal records. The relay returned **HTTP 400 / model_not_supported** for the exact requested model. No second structured request or substitute model was used. Recording remains functional while remote AI is unavailable; the app must not represent deterministic local previews as successful model responses.
+On **2026-09-10 (Asia/Shanghai)**, the user explicitly changed the selected model to `example-model`. A synthetic connectivity request and proxy-level companion/achievement requests succeeded; the latter two passed server validation. Initial planning and adjustment requests failed and remain unverified. These checks transmitted fictional goal data and the relevant bundled instructions/output schemas through the selected relay, not real personal records; generated results were not saved in the app. Further upstream diagnosis was blocked by security approval. The previous `example-legacy-model` rejection remains a historical result. Recording remains functional when remote AI is unavailable; deterministic local previews must not be represented as successful model responses.

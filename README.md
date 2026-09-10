@@ -10,6 +10,8 @@
 
 **简体中文** · [English](README.en.md)
 
+**版本：** [v1.1.0 更新介绍（中英双语）](docs/releases/v1.1.0.md) · [新版本发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.1.0) · [v1.0.0 原版介绍](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.md)
+
 [看看界面](#看看界面) · [第一次使用](#第一次使用) · [本地运行](#本地运行) · [开发指南](docs/DEVELOPMENT.zh-CN.md) · [隐私说明](PRIVACY.md)
 
 **Swift 6 · SwiftUI · iOS 18+ · 本地优先 · 可选 AI**
@@ -18,7 +20,7 @@
 
 ![DayVault 纸感品牌插画：日常记录、折纸搭档与成长主题](Design/Previews/dayvault-readme-banner.svg)
 
-> **当前状态：可构建的开发原型，不是已发布的 App Store 产品。** 日常记录、已有成就判定和动画可离线使用。AI 接口与校验已实现，但当前配置的第三方服务仍拒绝指定模型；下文将真实接口状态与本地测试分开说明。本文提供中英双语介绍，**App 首版界面仍以简体中文为主**。
+> **当前状态：可构建的开发原型，不是已发布的 App Store 产品。** 日常记录、已有成就判定和动画可离线使用。真实 AI 排程曾成功，但最新联调仍有上游 HTTP 504，不能视为稳定上线。私人接口、模型与密钥不随新版本发布，文档中的示例值是脱敏占位符。本文提供中英双语介绍，**App 首版界面仍以简体中文为主**。
 
 ## 为什么做 DayVault
 
@@ -156,9 +158,9 @@ open DayVault.xcodeproj
 
 ### 真实 AI 当前状态
 
-本地测试配置沿用 `https://api.3366.ai`、`gpt-5.6-luna`、`medium`。**2026-09-10** 的最小合成请求仍收到 `HTTP 400 / model_not_supported`，没有发送个人记录，也没有偷偷更换模型。
+本地测试使用 `https://api.example.com`、`example-model`、`medium`。**2026-09-10** 用户授权继续联调后，初次排程通过真实代理生成了使用 `v1.1.0` 指令的演讲计划；此前基础连接、搭档与个人成就也曾成功。中转仍有间歇性超时；七天调整的 `invalid_structured_output` 尚未重新验收。[修复、验证范围及限制 →](docs/AI-PLANNER-LIVE-VALIDATION.zh-CN.md)
 
-因此，个人成就生成、搭档对话与 AI 调整虽已完成本地契约与集成测试，**尚不能称为该真实服务上的端到端可用功能**。原有排程页面的确定性本地预览有明确标记，不冒充模型回应。需要服务商支持准确的模型标识后，才能继续真实联调。
+本轮只发送虚构测试数据，没有导入个人记录或将生成结果写入 App；**上述结果不是完整 iOS 端到端验证或生产上线证明**。旧模型 `example-legacy-model` 的 `400 / model_not_supported` 属于此前测试记录。原有排程页面的确定性本地预览仍有明确标记，不冒充模型回应。
 
 ## 技术与验证
 

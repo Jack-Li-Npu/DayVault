@@ -145,7 +145,7 @@ struct CompanionSheet: View {
     private var providerDescription: String {
         let endpoint = ProcessInfo.processInfo.environment["DAYVAULT_AI_ENDPOINT"] ?? UserDefaults.standard.string(forKey: "aiPlannerEndpoint")
         guard let endpoint, let host = URL(string: endpoint)?.host else { return "尚未配置 AI 服务" }
-        if ["localhost", "127.0.0.1"].contains(host) { return "本地测试代理 → api.3366.ai（第三方服务）" }
+        if ["localhost", "127.0.0.1"].contains(host) { return "本地测试代理（使用前请向配置者确认实际模型服务商）" }
         return "\(host) 服务代理；上游服务由该代理配置"
     }
 

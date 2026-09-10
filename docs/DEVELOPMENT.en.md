@@ -1,5 +1,7 @@
 # DayVault developer guide
 
+> Release privacy note / 发布脱敏说明：`api.example.com`, `example-model` and legacy model labels are placeholders, not actual provider settings. 私人接口与模型仅保存在忽略的本地配置中；历史测试结论保留。
+
 [简体中文](DEVELOPMENT.zh-CN.md) · [Project introduction](../README.md) · [Privacy](../PRIVACY.md)
 
 This guide covers building, configuration, data boundaries and verification. DayVault is a native iPhone prototype, not a production-ready hosted AI service. The current app ships in Simplified Chinese; English resource files are retained but excluded from the first-release app and widget resources. English documentation does not imply an English-language app release.
@@ -108,16 +110,24 @@ node Scripts/bundle-ai-skill.mjs
 
 This regenerates `dayvault-goal-planner.bundle.ts` and `dayvault-journey.bundle.ts` in `supabase/functions/_shared`. Keep the canonical files and generated bundles consistent. The model output is an untrusted proposal: server and app validators reject unknown sources, unsupported rules, extra fields and invalid scope. The model cannot directly write progress, unlock dates, equipment ownership or executable code.
 
+The initial planner prompt is now `1.1.0`. Its build explicitly includes scheduling policy, learning/career/project/habit guidance and the existing API contract semantics, and exports the identical [complete Chinese prompt](../AI/Skills/dayvault-goal-planner/PROMPT.zh-CN.md). See the [Chinese research inventory](AI-PLANNER-SKILL-RESEARCH.zh-CN.md) for sources, licenses and 18 pending behavioral-evaluation cases. User-authorized initial-planning relay tests have now succeeded; see the [live integration record and limitations](AI-PLANNER-LIVE-VALIDATION.zh-CN.md).
+
 ### Local macOS relay
 
 The existing local test configuration explicitly selects:
 
-- Upstream base URL: `https://api.3366.ai`
-- Model: `gpt-5.6-luna`
-- Reasoning effort: `medium`
-- iOS development endpoint: `http://localhost:8000`
+First create an ignored `.env.local` at the repository root and set `OPENAI_BASE_URL`, `DAYVAULT_OPENAI_MODEL` and optionally `DAYVAULT_OPENAI_REASONING_EFFORT`. Continue storing the key in Keychain. The endpoint and model below are placeholders, not a working service.
 
-**Recorded compatibility result, 2026-09-10 (Asia/Shanghai):** a single synthetic request asking for `ok` returned **HTTP 400 / `model_not_supported`** from `https://api.3366.ai/v1/responses`. It used the exact selected model and reasoning setting, not personal records. No replacement model or second structured-output probe was used. This is the last recorded result, not a new live check; remote Journey functionality has not been verified end-to-end through this relay. Changing documentation does not resolve that provider limitation.
+- Upstream base URL: `https://api.example.com`
+- Model: `example-model`
+- Reasoning effort: `medium`
+- iOS development endpoint: `http://127.0.0.1:8000` (legacy loopback addresses on port 8000 normalize to IPv4 to avoid refused `::1` connections)
+
+A model-relay timeout means the local proxy responded; restarting it is unnecessary. This differs from a local connection failure. A client wait timeout does not establish whether generation finished upstream. Error details contain only fixed categories and status codes, never request bodies or keys.
+
+**Current compatibility result, 2026-09-10 (Asia/Shanghai):** following explicit authorization, the initial planner's schema compatibility and response transport were fixed. The synthetic six-week speech goal returned HTTP 200 through the actual proxy, with prompt version `1.1.0`; that request took 81 seconds. The relay still has intermittent gateway failures. Earlier connectivity, companion and achievement tests succeeded; the adjustment operation's `invalid_structured_output` has not been reverified. This is not a production-reliability claim. See the [detailed scope](AI-PLANNER-LIVE-VALIDATION.zh-CN.md).
+
+Only fictional goals were sent; no personal records were transmitted and no generated test schedule was saved. An isolated simulator session also rendered a complete Chinese speech plan after retry, with server-provided model/prompt metadata. This is not production reliability verification. See the [official OpenAI model documentation](https://developers.openai.com/api/docs/models) for the protocol; actual relay compatibility is determined by live testing. This change passed **45 server tests, 8 iOS unit tests and 2 iOS UI tests**, plus type, format and syntax checks. The 142-test snapshot below is an earlier full regression run.
 
 For local testing, install Deno and ensure `deno`, `rg` and Xcode's `xcrun` are on `PATH`. Node.js is needed to regenerate instruction bundles. Check available tools without printing environment secrets:
 
@@ -135,19 +145,20 @@ Boot one iPhone simulator, then run from the repository root:
 ./Scripts/run-local-ai-test.sh
 ```
 
-The first script securely prompts for the provider key and stores it in macOS Keychain under service `com.dayvault.local-ai`, account `dayvault-local`; do not put the key in a command example, `.xcconfig`, screenshot or commit. The second reads the key into the host process environment, binds the Deno proxy to `127.0.0.1:8000`, and temporarily injects `DAYVAULT_AI_ENDPOINT` into the booted simulator. Keep that terminal open and relaunch the app from Xcode. **Starting the proxy does not prove the selected model works; using remote AI can send data and incur provider charges.**
+The first script securely prompts for the provider key and stores it in macOS Keychain under service `com.dayvault.local-ai`, account `dayvault-local`; skip it if already configured. Never put the key in a command example, `.xcconfig`, screenshot or commit. The second rebuilds the current skill bundle, reads the key into the host process environment, binds the proxy to `127.0.0.1:8000`, and persists only the non-secret endpoint in the simulator. Keep that terminal open and relaunch the app from Xcode. **Starting the proxy does not prove the selected model works; remote AI sends data and may incur provider charges.**
 
-Press **Control-C** to stop. The script's cleanup removes the simulator endpoint and unsets its key variable. If the process is forcibly killed and cleanup does not run, remove only the development override:
+Press **Control-C** to stop. Cleanup removes the temporary environment override but retains the app's endpoint preference. A stopped proxy produces an explicit connection error, not a demo. To intentionally restore local-demo mode, stop the proxy, remove both non-secret settings, then relaunch the app:
 
 ```sh
 xcrun simctl spawn booted launchctl unsetenv DAYVAULT_AI_ENDPOINT
+xcrun simctl spawn booted defaults delete com.dayvault.app aiPlannerEndpoint
 ```
 
 Also check Xcode Run environment overrides if the app continues to target an old endpoint. Debug Journey clients accept loopback HTTP; normal remote configuration requires HTTPS. Unauthenticated preview mode is appropriate only for this loopback development setup, never an Internet-exposed production service.
 
 ### Hosted endpoint
 
-Deploy the existing Supabase Edge Function with server secrets described in [supabase/.env.example](../supabase/.env.example). The example contains placeholders, not usable credentials. The current example chooses the third-party relay; the code's default base URL is the official endpoint if `OPENAI_BASE_URL` is omitted, so set the intended provider explicitly. Do not silently switch providers or model names to hide a compatibility error.
+Deploy the existing Supabase Edge Function with server secrets described in [supabase/.env.example](../supabase/.env.example). The example contains placeholders, not usable credentials. Code defaults, the example and the local script now select the third-party relay `https://api.example.com` and `example-model`. Server environment variables override these defaults, so existing deployments need their secrets updated separately. Do not silently switch providers or model names to hide a compatibility error. This change updates local configuration only; no remote service was deployed.
 
 Configure these Xcode scheme environment values for development:
 

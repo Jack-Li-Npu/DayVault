@@ -212,6 +212,17 @@
 "ai.adjust_hint" = "想调整？直接说出来。";
 "ai.plan.roadmap" = "前进路径";
 "ai.plan.label" = "AI 草案";
+"ai.source.local" = "本地演示 · 非 AI 生成";
+"ai.source.local_detail" = "固定模板，未使用排程指令。连接 AI 后可重新生成。";
+"ai.source.remote" = "AI 生成 · 待你确认";
+"ai.source.skill_version" = "排程指令 v%@";
+"ai.error.unavailable" = "暂时连不上 AI 服务。若使用本地测试，请保持代理终端开启后重试；日常记录仍可使用。";
+"ai.error.local_connection" = "未能连接本地排程代理（127.0.0.1:8000）。请启动本地代理并保持终端开启，再重试。";
+"ai.error.proxy_connection" = "未能连接排程代理。请检查网络和接口地址，再重试。";
+"ai.error.transport" = "与排程代理的连接中断。请检查网络后重试；这不代表模型密钥无效。";
+"ai.error.proxy_timeout" = "等待排程代理响应超时，尚不能确认模型端是否完成。可以稍后重试；现有日程没有改变。";
+"ai.error.upstream_timeout" = "排程代理已响应，但模型中转服务超时。无需重启本地代理，请稍后重试。";
+"ai.error.upstream_unavailable" = "排程代理已响应，但未能从模型中转服务取得结果。请稍后重试，无需重新配置本地连接。";
 "ai.deadline" = "目标日";
 "ai.plan.next_steps" = "接下来要做的事";
 "ai.plan.assumptions" = "我的假设";

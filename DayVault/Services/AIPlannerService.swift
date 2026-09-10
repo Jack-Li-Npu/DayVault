@@ -1,17 +1,34 @@
 import DayVaultCore
 import Foundation
 
+enum DayVaultAIEndpoint {
+    static func normalized(_ url: URL) -> URL {
+        guard url.scheme == "http", url.port == 8000,
+              ["localhost", "::1", "[::1]"].contains(url.host?.lowercased() ?? ""),
+              var parts = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return url }
+        parts.host = "127.0.0.1"
+        return parts.url ?? url
+    }
+}
+
 enum AIPlannerServiceFactory {
+    private static var endpointText: String? {
+#if DEBUG
+        // Regular UI tests must never spend tokens or send fixture data remotely.
+        if ProcessInfo.processInfo.arguments.contains("-ui-testing"),
+           !ProcessInfo.processInfo.arguments.contains("-live-ai-test") { return nil }
+#endif
+        return ProcessInfo.processInfo.environment["DAYVAULT_AI_ENDPOINT"]
+            ?? UserDefaults.standard.string(forKey: "aiPlannerEndpoint")
+    }
+
     static var isRemoteConfigured: Bool {
-        let environment = ProcessInfo.processInfo.environment
-        let endpointText = environment["DAYVAULT_AI_ENDPOINT"] ?? UserDefaults.standard.string(forKey: "aiPlannerEndpoint")
         return endpointText.flatMap(URL.init(string:)) != nil
     }
 
-    static func make() -> any AIPlanning {
+    static func make() -> HybridAIPlannerService {
         let environment = ProcessInfo.processInfo.environment
         let defaults = UserDefaults.standard
-        let endpointText = environment["DAYVAULT_AI_ENDPOINT"] ?? defaults.string(forKey: "aiPlannerEndpoint")
         let publishableKey = environment["DAYVAULT_SUPABASE_KEY"] ?? defaults.string(forKey: "aiPlannerPublishableKey")
         let accessToken = environment["DAYVAULT_SUPABASE_ACCESS_TOKEN"] ?? defaults.string(forKey: "aiPlannerAccessToken")
         let endpoint = endpointText.flatMap(URL.init(string:))
@@ -19,11 +36,42 @@ enum AIPlannerServiceFactory {
     }
 }
 
-enum AIPlannerServiceError: LocalizedError {
+enum AIPlannerSource: Equatable, Sendable {
+    case localDemo
+    case remote(model: String?, skillVersion: String?)
+
+    var label: String {
+        switch self {
+        case .localDemo: String(localized: "ai.source.local")
+        case .remote: String(localized: "ai.source.remote")
+        }
+    }
+
+    var detail: String {
+        switch self {
+        case .localDemo: String(localized: "ai.source.local_detail")
+        case let .remote(model, version):
+            [model, version.map { String(format: String(localized: "ai.source.skill_version"), $0) }]
+                .compactMap { $0 }.joined(separator: " · ")
+        }
+    }
+}
+
+struct AIPlannerResult: Sendable {
+    let turn: PlannerTurn
+    let source: AIPlannerSource
+}
+
+enum AIPlannerServiceError: LocalizedError, Equatable {
     case invalidResponse
     case providerAuthenticationFailed
     case providerRateLimited
     case unsupportedModel
+    case connectionFailure(isLocal: Bool, code: Int)
+    case transportFailure(code: Int)
+    case requestTimedOut
+    case providerTimeout(status: Int?)
+    case providerUnavailable(status: Int?)
     case server(status: Int)
 
     var errorDescription: String? {
@@ -36,33 +84,55 @@ enum AIPlannerServiceError: LocalizedError {
             String(localized: "ai.error.provider_rate_limited")
         case .unsupportedModel:
             String(localized: "ai.error.model_unsupported")
+        case let .connectionFailure(isLocal, code):
+            String(localized: isLocal ? "ai.error.local_connection" : "ai.error.proxy_connection") + "\nURLError \(code)"
+        case let .transportFailure(code):
+            String(localized: "ai.error.transport") + "\nURLError \(code)"
+        case .requestTimedOut:
+            String(localized: "ai.error.proxy_timeout") + "\nURLError -1001"
+        case let .providerTimeout(status):
+            String(localized: "ai.error.upstream_timeout") + Self.details("provider_timeout", status: status)
+        case let .providerUnavailable(status):
+            String(localized: "ai.error.upstream_unavailable") + Self.details("provider_unavailable", status: status)
         case let .server(status):
             String(format: String(localized: "ai.error.server"), status)
         }
     }
+
+    private static func details(_ code: String, status: Int?) -> String {
+        guard let status, (100...599).contains(status) else { return "\n\(code)" }
+        return "\n\(code) · HTTP \(status)"
+    }
 }
 
 actor HybridAIPlannerService: AIPlanning {
+    typealias Transport = @Sendable (URLRequest) async throws -> (Data, URLResponse)
     private let endpoint: URL?
     private let publishableKey: String?
     private let accessToken: String?
     private let localPlanner = LocalGoalPlanner()
+    private let transport: Transport
 
-    init(endpoint: URL?, publishableKey: String?, accessToken: String?) {
-        self.endpoint = endpoint
+    init(endpoint: URL?, publishableKey: String?, accessToken: String?, transport: @escaping Transport = { try await URLSession.shared.data(for: $0) }) {
+        self.endpoint = endpoint.map(DayVaultAIEndpoint.normalized)
         self.publishableKey = publishableKey
         self.accessToken = accessToken
+        self.transport = transport
     }
 
     func generate(_ request: PlannerRequest) async throws -> PlannerTurn {
+        try await generateResult(request).turn
+    }
+
+    func generateResult(_ request: PlannerRequest) async throws -> AIPlannerResult {
         guard let endpoint else {
-            try await Task.sleep(for: .milliseconds(850))
-            return try await localPlanner.generate(request)
+            let turn = try await localPlanner.generate(request)
+            return AIPlannerResult(turn: turn, source: .localDemo)
         }
 
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = "POST"
-        urlRequest.timeoutInterval = 60
+        urlRequest.timeoutInterval = 150
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if let publishableKey, !publishableKey.isEmpty {
             urlRequest.setValue(publishableKey, forHTTPHeaderField: "apikey")
@@ -74,7 +144,20 @@ actor HybridAIPlannerService: AIPlanning {
         encoder.dateEncodingStrategy = .iso8601
         urlRequest.httpBody = try encoder.encode(request)
 
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await transport(urlRequest)
+        } catch let error as URLError where error.code != .cancelled {
+            switch error.code {
+            case .timedOut:
+                throw AIPlannerServiceError.requestTimedOut
+            case .cannotConnectToHost, .cannotFindHost, .dnsLookupFailed:
+                throw AIPlannerServiceError.connectionFailure(isLocal: endpoint.host == "127.0.0.1", code: error.code.rawValue)
+            default:
+                throw AIPlannerServiceError.transportFailure(code: error.code.rawValue)
+            }
+        }
         guard let http = response as? HTTPURLResponse else { throw AIPlannerServiceError.invalidResponse }
         guard (200..<300).contains(http.statusCode) else {
             if let envelope = try? JSONDecoder().decode(AIPlannerErrorEnvelope.self, from: data) {
@@ -85,6 +168,12 @@ actor HybridAIPlannerService: AIPlanning {
                     throw AIPlannerServiceError.providerRateLimited
                 case "model_not_supported":
                     throw AIPlannerServiceError.unsupportedModel
+                case "provider_timeout":
+                    throw AIPlannerServiceError.providerTimeout(status: envelope.upstreamStatus)
+                case "provider_unavailable":
+                    throw AIPlannerServiceError.providerUnavailable(status: envelope.upstreamStatus)
+                case "invalid_structured_output", "invalid_openai_response", "missing_structured_output", "incomplete_output":
+                    throw AIPlannerServiceError.invalidResponse
                 default:
                     break
                 }
@@ -96,12 +185,25 @@ actor HybridAIPlannerService: AIPlanning {
         decoder.dateDecodingStrategy = .iso8601
         let turn = try decoder.decode(PlannerTurn.self, from: data)
         try GeneratedPlanValidator.validate(turn, for: request)
-        return turn
+        // Provenance comes from the transport/server, never from model-authored JSON.
+        let source = AIPlannerSource.remote(
+            model: Self.metadata(http, field: "X-DayVault-Model"),
+            skillVersion: Self.metadata(http, field: "X-DayVault-Skill-Version")
+        )
+        return AIPlannerResult(turn: turn, source: source)
+    }
+
+    private static func metadata(_ response: HTTPURLResponse, field: String) -> String? {
+        guard let value = response.value(forHTTPHeaderField: field),
+              value.count <= 80,
+              value.range(of: "^[a-zA-Z0-9._-]+$", options: .regularExpression) != nil else { return nil }
+        return value
     }
 }
 
 private struct AIPlannerErrorEnvelope: Decodable {
     let error: String
+    let upstreamStatus: Int?
 }
 
 actor LocalGoalPlanner: AIPlanning {

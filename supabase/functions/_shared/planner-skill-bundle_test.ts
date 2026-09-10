@@ -1,0 +1,121 @@
+import {
+  plannerInstructions,
+  plannerOutputSchema,
+  skillVersion,
+} from "./dayvault-goal-planner.bundle.ts";
+import { journeyBundles } from "./dayvault-journey.bundle.ts";
+
+const skillRoot = new URL(
+  "../../../AI/Skills/dayvault-goal-planner/",
+  import.meta.url,
+);
+const initialReferences = [
+  "references/scheduling-policy.md",
+  "references/domain-playbooks.md",
+  "references/planner-contract.md",
+];
+
+async function source(path: string): Promise<string> {
+  return await Deno.readTextFile(new URL(path, skillRoot));
+}
+
+Deno.test("initial planner bundles every runtime reference without stale content", async () => {
+  const documents = await Promise.all(
+    ["SKILL.md", ...initialReferences].map(source),
+  );
+  if (plannerInstructions !== documents.join("\n\n")) {
+    throw new Error("Regenerate the planner bundle from all runtime sources");
+  }
+  const version = documents[0].match(/version:\s*([^\s]+)/)?.[1];
+  if (skillVersion !== version || skillVersion !== "1.1.0") {
+    throw new Error("Planner bundle version does not match its source");
+  }
+});
+
+Deno.test("initial planner schema stays identical to the app contract source", async () => {
+  const document = JSON.parse(await source("references/output-schema.json"));
+  if (JSON.stringify(plannerOutputSchema) !== JSON.stringify(document.schema)) {
+    throw new Error("Planner schema and bundle differ");
+  }
+});
+
+Deno.test("readable Chinese prompt is exactly the runtime instructions", async () => {
+  if (await source("PROMPT.zh-CN.md") !== plannerInstructions) {
+    throw new Error(
+      "Readable prompt is stale or differs from the runtime bundle",
+    );
+  }
+});
+
+Deno.test("adjustment keeps its own policy and frozen response version", async () => {
+  const [entry, policy, schemaText, ...initialOnly] = await Promise.all([
+    source("SKILL.md"),
+    source("references/adjustment-policy.md"),
+    source("references/adjustment-schema.json"),
+    ...initialReferences.map(source),
+  ]);
+  const bundle = journeyBundles.suggestAdjustment;
+  if (bundle.instructions !== `${entry}\n\n${policy}`) {
+    throw new Error(
+      "Adjustment must load only the shared entry and its own policy",
+    );
+  }
+  if (initialOnly.some((document) => bundle.instructions.includes(document))) {
+    throw new Error(
+      "Initial-plan defaults leaked into the adjustment operation",
+    );
+  }
+  if (
+    JSON.stringify(bundle.schema) !==
+      JSON.stringify(JSON.parse(schemaText).schema)
+  ) {
+    throw new Error("Adjustment schema changed during a prompt-only revision");
+  }
+  if (bundle.schema.properties.skillVersion.enum[0] !== "1.0.0") {
+    throw new Error("Keep the existing Swift/TypeScript response contract");
+  }
+});
+
+interface PlannerEvalCase {
+  id: string;
+  request: {
+    goalText: string;
+    currentDate: string;
+    timeZoneID: string;
+    busyWindows: Array<{ start: string; end: string }>;
+  };
+  expectedKind: string;
+  rubric: string[];
+}
+
+Deno.test("planner behavioral cases are valid fixtures, not claimed model results", async () => {
+  const cases: PlannerEvalCase[] =
+    (await source("evals/planner-v1.1-cases.jsonl"))
+      .trim().split("\n").map((line) => JSON.parse(line));
+  if (
+    cases.length !== 18 ||
+    new Set(cases.map((item) => item.id)).size !== cases.length
+  ) {
+    throw new Error("Expected 18 distinct review cases");
+  }
+  for (const item of cases) {
+    if (
+      !item.request.goalText ||
+      !Number.isFinite(Date.parse(item.request.currentDate))
+    ) {
+      throw new Error(`Invalid synthetic request: ${item.id}`);
+    }
+    new Intl.DateTimeFormat("en", { timeZone: item.request.timeZoneID });
+    for (const window of item.request.busyWindows) {
+      if (!(Date.parse(window.start) < Date.parse(window.end))) {
+        throw new Error(`Invalid busy window: ${item.id}`);
+      }
+    }
+    if (
+      !["plan", "clarification"].includes(item.expectedKind) ||
+      item.rubric.length < 2
+    ) {
+      throw new Error(`Missing observable review criteria: ${item.id}`);
+    }
+  }
+});

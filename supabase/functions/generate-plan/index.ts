@@ -6,6 +6,7 @@ import {
 import {
   defaultOpenAIBaseURL,
   defaultOpenAIModel,
+  isUpstreamTimeout,
   reasoningEffort,
   responsesEndpoint,
   upstreamErrorKind,
@@ -16,20 +17,34 @@ import {
   validateJourneyRequest,
   validateJourneyResponse,
 } from "../_shared/journey-validation.ts";
+import {
+  type OpenAIResponseBody,
+  providerSchema,
+  readOpenAIResponse,
+  structuredOutputText,
+  validateSchema,
+} from "../_shared/structured-output.ts";
 
 const jsonHeaders = { "Content-Type": "application/json; charset=utf-8" };
-
-type OpenAIResponseBody = {
-  error?: string | { code?: unknown; message?: unknown; type?: unknown };
-  output?: Array<{
-    content?: Array<{ type?: string; text?: string }>;
-  }>;
-  output_text?: unknown;
-};
 
 Deno.serve({
   hostname: Deno.env.get("DAYVAULT_SERVER_HOST") ?? "0.0.0.0",
 }, async (request) => {
+  if (
+    request.method === "GET" && new URL(request.url).pathname === "/health" &&
+    Deno.env.get("DAYVAULT_ALLOW_UNAUTHENTICATED_PREVIEW") === "true" &&
+    Deno.env.get("DAYVAULT_SERVER_HOST") === "127.0.0.1"
+  ) {
+    return new Response(
+      JSON.stringify({
+        status: "ready",
+        model: Deno.env.get("DAYVAULT_OPENAI_MODEL") ?? defaultOpenAIModel,
+        skillVersion,
+        aiVerified: false,
+      }),
+      { headers: { ...jsonHeaders, "Cache-Control": "no-store" } },
+    );
+  }
   if (request.method !== "POST") {
     return new Response(JSON.stringify({ error: "method_not_allowed" }), {
       status: 405,
@@ -112,23 +127,32 @@ Deno.serve({
   const bundle = journeyRequest
     ? journeyBundles[journeyRequest.operation]
     : undefined;
+  const model = Deno.env.get("DAYVAULT_OPENAI_MODEL") ?? defaultOpenAIModel;
+  const schema = bundle?.schema ?? plannerOutputSchema;
+  const responseHeaders = {
+    ...jsonHeaders,
+    "X-DayVault-Model": model,
+    "X-DayVault-Skill-Version": bundle?.version ?? skillVersion,
+    "Cache-Control": "no-store",
+  };
   let openAIResponse: Response;
   try {
     openAIResponse = await fetch(openAIEndpoint, {
       method: "POST",
-      signal: AbortSignal.timeout(60_000),
+      signal: AbortSignal.timeout(135_000),
       headers: {
         "Authorization": `Bearer ${openAIKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: Deno.env.get("DAYVAULT_OPENAI_MODEL") ?? defaultOpenAIModel,
+        model,
         reasoning: {
           effort: reasoningEffort(
             Deno.env.get("DAYVAULT_OPENAI_REASONING_EFFORT"),
           ),
         },
         store: false,
+        stream: true,
         max_output_tokens: journeyRequest ? 4000 : 8000,
         safety_identifier: safetyIdentifier,
         prompt_cache_key: bundle
@@ -151,29 +175,46 @@ Deno.serve({
               ? `dayvault_${journeyRequest.operation}`
               : "dayvault_planner_turn",
             strict: true,
-            schema: bundle?.schema ?? plannerOutputSchema,
+            schema: providerSchema(schema),
           },
         },
       }),
     });
-  } catch {
-    return new Response(JSON.stringify({ error: "provider_unavailable" }), {
-      status: 503,
-      headers: jsonHeaders,
-    });
+  } catch (error) {
+    return new Response(
+      JSON.stringify({
+        error: isUpstreamTimeout(error)
+          ? "provider_timeout"
+          : "provider_unavailable",
+      }),
+      {
+        status: 503,
+        headers: jsonHeaders,
+      },
+    );
   }
 
-  const responseText = await openAIResponse.text();
   let responseBody: OpenAIResponseBody = {};
   try {
-    responseBody = JSON.parse(responseText);
-  } catch {
+    responseBody = await readOpenAIResponse(openAIResponse);
+  } catch (error) {
     if (openAIResponse.ok) {
       return new Response(
-        JSON.stringify({ error: "invalid_openai_response" }),
+        JSON.stringify({
+          error: isUpstreamTimeout(error)
+            ? "provider_timeout"
+            : "invalid_openai_response",
+        }),
         { status: 502, headers: jsonHeaders },
       );
     }
+  }
+
+  if (responseBody.status && responseBody.status !== "completed") {
+    return new Response(JSON.stringify({ error: "incomplete_output" }), {
+      status: 502,
+      headers: jsonHeaders,
+    });
   }
   if (!openAIResponse.ok) {
     const upstreamError = typeof responseBody.error === "object"
@@ -193,6 +234,7 @@ Deno.serve({
     return new Response(
       JSON.stringify({
         error,
+        upstreamStatus: openAIResponse.status,
       }),
       {
         status: 502,
@@ -201,11 +243,7 @@ Deno.serve({
     );
   }
 
-  const outputText = typeof responseBody.output_text === "string"
-    ? responseBody.output_text
-    : responseBody.output
-      ?.flatMap((item) => item.content ?? [])
-      .find((content) => content.type === "output_text")?.text;
+  const outputText = structuredOutputText(responseBody);
   if (typeof outputText !== "string") {
     return new Response(
       JSON.stringify({ error: "missing_structured_output" }),
@@ -215,10 +253,14 @@ Deno.serve({
 
   try {
     const result = JSON.parse(outputText);
+    validateSchema(result, schema);
     if (journeyRequest) validateJourneyResponse(result, journeyRequest);
+    else if (
+      result.kind === "plan" && result.plan?.skillVersion !== skillVersion
+    ) throw new Error("wrong_skill_version");
     return new Response(JSON.stringify(result), {
       status: 200,
-      headers: jsonHeaders,
+      headers: responseHeaders,
     });
   } catch {
     return new Response(

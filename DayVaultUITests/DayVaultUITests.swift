@@ -46,6 +46,24 @@ final class DayVaultUITests: XCTestCase {
         app.buttons["制定计划"].tap()
 
         XCTAssertTrue(app.staticTexts["你希望什么时候看到成果？"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["本地演示 · 非 AI 生成"].exists)
+    }
+
+    @MainActor
+    func testLocalPlanIsClearlyLabeledAfterGeneration() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-ui-testing", "-inMemoryStore", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
+        app.launch()
+        XCTAssertTrue(app.buttons["home-open-planner"].waitForExistence(timeout: 5))
+        app.buttons["home-open-planner"].tap()
+        let goal = app.textFields["描述一个目标…"]
+        XCTAssertTrue(goal.waitForExistence(timeout: 5))
+        goal.tap()
+        goal.typeText("Give a speech in 6 weeks")
+        app.buttons["制定计划"].tap()
+        XCTAssertTrue(app.staticTexts["本地演示 · 非 AI 生成"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["AI 草案"].exists)
+        XCTAssertFalse(app.staticTexts["AI 生成 · 待你确认"].exists)
     }
 
     @MainActor

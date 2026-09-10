@@ -33,3 +33,12 @@ DayVault's goal-planning skill adapts selected scheduling concepts from
 [AI Daily Planner](https://github.com/frankjdwu/ai-daily-planner), Copyright
 Frank Wu, used under the MIT License. DayVault owns its runtime prompt, output
 schema, mobile interaction design, and implementation.
+
+The 1.1 planner revision also adapts selected learning guidance from
+[Tutor Skills](https://github.com/bevibing/tutor-skills),
+[Study System](https://github.com/SkillMedev/personal-operating-system), and
+[Guided Learning Skill](https://github.com/WSE-research/guided-learning-skill).
+Their copyright and MIT notices are preserved in
+[the planner's third-party notices](AI/Skills/dayvault-goal-planner/THIRD_PARTY_NOTICES.md).
+The [skill research inventory](docs/AI-PLANNER-SKILL-RESEARCH.zh-CN.md) records
+verified sources, versions, exclusions and the original DayVault synthesis.

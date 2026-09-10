@@ -7,6 +7,8 @@
   <p><a href="#a-look-inside">Screenshots</a> · <a href="#what-you-can-do">Features</a> · <a href="#your-first-minute">Your first minute</a> · <a href="#run-it-locally">Quick start</a> · <a href="docs/DEVELOPMENT.en.md">Developer guide</a></p>
 </div>
 
+**Versions:** [v1.1.0 bilingual introduction](docs/releases/v1.1.0.md) · [New release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.1.0) · [Original v1.0.0 introduction](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.en.md)
+
 ![Original DayVault brand illustration combining daily records, an origami companion, and personal growth](Design/Previews/dayvault-readme-banner.svg)
 
 *The banner is an original brand illustration, not an app screenshot. Actual interface captures appear below.*
@@ -17,7 +19,7 @@ DayVault starts with a familiar feeling: **you have kept showing up, and you wan
 
 The app keeps daily recording simple. Your completed actions build a collection of achievements and clothing for an original character. If you choose, a small origami AI companion can respond to the records you share, help design personal milestones, and suggest changes to a plan. It is an optional witness to your progress—not an all-in-one life coach or a compulsory chat screen.
 
-> **Current status:** a private development prototype for authorized repository collaborators, not an App Store or TestFlight release. The app currently ships in **Simplified Chinese**; this English README documents the same build, not a separate English interface. Remote AI integration is implemented, but the selected test relay still rejects the configured model. See [verification and limitations](#verification-and-limitations).
+> **Current status:** a private development prototype, not an App Store or TestFlight release. The app currently ships in **Simplified Chinese**. Live planning has succeeded, but recent upstream HTTP 504 failures remain unresolved. Personal provider/model settings and credentials are excluded from this release; example values in documentation are redacted placeholders. See [verification and limitations](#verification-and-limitations).
 
 ## A look inside
 
@@ -177,7 +179,7 @@ The following results were recorded locally on **2026-09-10**. They are a dated 
 | Deno server contracts | 30 | Strict model-output validation, Chinese fixtures, invalid references and configuration boundaries. |
 | **Total** | **142** | Deterministic local tests; not a live model-quality evaluation. |
 
-**Live AI is not yet verified with the selected relay.** On the same date, a minimal synthetic request to `https://api.3366.ai/v1/responses`, using the configured `gpt-5.6-luna` model and `medium` reasoning, returned **HTTP 400 / `model_not_supported`**. No real personal records were sent and no substitute model was silently selected.
+**Live AI is partially verified, not release-ready.** On 2026-09-10, user-authorized initial planning succeeded through `https://api.example.com/v1/responses` using `example-model`, `medium` and prompt `1.1.0`, after schema and transport fixes. Earlier connectivity, companion and personal-achievement checks also succeeded. The relay still has intermittent gateway failures, and adjustment proposals' `invalid_structured_output` has not been reverified. No personal records were sent or generated test schedules saved. [Integration evidence and limitations →](docs/AI-PLANNER-LIVE-VALIDATION.zh-CN.md)
 
 Companion responses, new AI-designed achievements, and AI adjustment generation require a working endpoint. When unavailable, these functions report the problem. The original planner's deterministic local preview is explicitly labeled; it is not presented as a model reply. Existing recording, earned achievements, and local motion remain usable.
 

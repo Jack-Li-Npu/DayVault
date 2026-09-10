@@ -1,6 +1,11 @@
-export const defaultOpenAIBaseURL = "https://api.openai.com";
-export const defaultOpenAIModel = "gpt-5.6-luna";
+export const defaultOpenAIBaseURL = "https://api.example.com";
+export const defaultOpenAIModel = "example-model";
 export const defaultReasoningEffort = "medium";
+
+export function isUpstreamTimeout(error: unknown): boolean {
+  return error instanceof Error &&
+    ["TimeoutError", "AbortError"].includes(error.name);
+}
 
 const reasoningEfforts = new Set([
   "none",
@@ -51,6 +56,8 @@ export function upstreamErrorKind(
   if (status === 429) {
     return "provider_rate_limited";
   }
+  if (status === 408 || status === 504) return "provider_timeout";
+  if (status === 502 || status === 503) return "provider_unavailable";
 
   const description = [code, type, message]
     .filter((value): value is string => typeof value === "string")

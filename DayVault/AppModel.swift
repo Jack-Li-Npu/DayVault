@@ -16,7 +16,7 @@ final class AppModel {
     let context: ModelContext
     let calendarService = SystemCalendarService()
     let notificationService = SystemNotificationService()
-    let aiPlanner = AIPlannerServiceFactory.make()
+    var aiPlanner: HybridAIPlannerService { AIPlannerServiceFactory.make() }
     let journeyAI: any JourneyAI
 
     var goals: [PersonalGoal] = []

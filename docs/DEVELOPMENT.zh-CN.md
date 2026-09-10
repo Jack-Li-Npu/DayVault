@@ -1,5 +1,7 @@
 # DayVault 开发指南
 
+> Release privacy note / 发布脱敏说明：`api.example.com`, `example-model` and legacy model labels are placeholders, not actual provider settings. 私人接口与模型仅保存在忽略的本地配置中；历史测试结论保留。
+
 [English](DEVELOPMENT.en.md) · [项目介绍](../README.md) · [隐私说明](../PRIVACY.md)
 
 本文说明如何运行项目、配置服务、理解数据边界并验证改动。DayVault 当前是原生 iPhone 原型，不是已部署完毕的商业 AI 服务。首版 App 使用简体中文；英文资源仍在仓库中，但未打包进首版 App 和小组件。提供英文文档不代表 App 已发布英文版本。
@@ -108,16 +110,24 @@ node Scripts/bundle-ai-skill.mjs
 
 脚本重新生成 `supabase/functions/_shared` 下的 `dayvault-goal-planner.bundle.ts` 和 `dayvault-journey.bundle.ts`。请保持源文件和生成包一致。模型输出始终是不可信提案：服务端与 App 都会拒绝未知引用、不支持的规则、多余字段和越界范围。模型不能直接写入进度、解锁日期、装备资格或可执行代码。
 
+“AI 帮我排”指令已升级为 `1.1.0`：构建明确包含排程规则、学习/职业/项目/习惯方法及接口语义约定，同时输出 [完整中文 Prompt](../AI/Skills/dayvault-goal-planner/PROMPT.zh-CN.md)。调研清单、许可、18 个待模型评测场景和现有接口限制见 [技能调研与适配说明](AI-PLANNER-SKILL-RESEARCH.zh-CN.md)。用户授权后已完成初次排程的真实代理测试，详见 [链路修复与验收记录](AI-PLANNER-LIVE-VALIDATION.zh-CN.md)。
+
 ### 本地 macOS 中转测试
 
 现有本地测试脚本明确配置为：
 
-- 上游 Base URL：`https://api.3366.ai`
-- 模型：`gpt-5.6-luna`
-- 思考强度：`medium`
-- iOS 开发接口：`http://localhost:8000`
+先在项目根目录创建 `.env.local`（已被 Git 忽略），填写下列变量的实际值；密钥继续通过钥匙串配置。下面的接口与模型是占位符，不能直接用于调用。
 
-**已记录的兼容性结果，2026-09-10（Asia/Shanghai）：**向 `https://api.3366.ai/v1/responses` 发出的一次仅要求返回 `ok` 的合成请求，收到了 **HTTP 400 / `model_not_supported`**。请求使用了上述准确模型及思考配置，没有发送个人记录，没有替换模型，也未继续发出第二次结构化输出探针。这是上次记录，不是此次文档更新中的新联调；个人成就、陪伴等远端链路尚未通过该中转完成端到端验证。更新文档不会消除服务商的模型兼容性限制。
+- 上游 Base URL：`https://api.example.com`
+- 模型：`example-model`
+- 思考强度：`medium`
+- iOS 开发接口：`http://127.0.0.1:8000`（旧的本地 8000 端口地址会自动归一到 IPv4，避免 `::1` 拒绝连接）
+
+若提示“模型中转服务超时”，说明本地代理已经响应，无需重启本地代理；这与“未能连接本地排程代理”不同。等待代理响应超时则不能判断模型是否已完成。错误详情只包含固定类型和状态码，不包含请求正文或密钥。
+
+**本轮兼容性结果，2026-09-10（Asia/Shanghai）：**用户授权继续联调后，初次排程修复了结构兼容性与等待链路问题。“6周后上台演讲”经真实代理返回 HTTP 200，响应指令版本为 `1.1.0`，该次耗时约 81 秒。此前基础连接、搭档与个人成就也曾通过合成测试；七天调整的 `502 / invalid_structured_output` 尚未重新验收。详见 [完整测试范围与限制](AI-PLANNER-LIVE-VALIDATION.zh-CN.md)。
+
+这些测试只使用虚构目标，未发送真实个人记录，也未向 App 保存结果；不等于生产上线或稳定性验收。`example-model` 的 Responses API 与 `medium` 参数可参考 [OpenAI 官方模型文档](https://developers.openai.com/api/docs/models)，实际第三方中转兼容性以联调结果为准。本轮通过 45 项服务端测试、8 项 iOS 单元测试及 2 项 iOS UI 测试；下文 142 项是此前完整回归的历史记录。
 
 本地测试需安装 Deno，并确保 `deno`、`rg` 和 Xcode 的 `xcrun` 可从 `PATH` 调用。重新打包指令还需要 Node.js。可以先检查工具，不要打印含密钥的整个环境：
 
@@ -135,19 +145,20 @@ xcrun --find simctl
 ./Scripts/run-local-ai-test.sh
 ```
 
-第一条命令安全提示输入模型密钥，保存到 macOS 钥匙串的 service `com.dayvault.local-ai`、account `dayvault-local`。不要把密钥写入命令示例、`.xcconfig`、截图或提交记录。第二条命令将密钥读入宿主进程环境，把 Deno 代理绑定到 `127.0.0.1:8000`，并临时向已启动模拟器注入 `DAYVAULT_AI_ENDPOINT`。保持终端开启，再从 Xcode 重新启动 App。**代理启动成功不代表模型可用；实际操作远端 AI 可能发送数据并产生调用费用。**
+第一条命令安全提示输入模型密钥，保存到 macOS 钥匙串的 service `com.dayvault.local-ai`、account `dayvault-local`；已经配置过就不必再运行。不要把密钥写入命令示例、`.xcconfig`、截图或提交记录。第二条命令重新打包指令，将密钥读入宿主进程环境，把 Deno 代理绑定到 `127.0.0.1:8000`，并在模拟器保存不含密钥的连接地址。保持终端开启，再从 Xcode 重新启动 App。**代理启动成功不代表模型可用；实际操作远端 AI 可能发送数据并产生调用费用。**
 
-按 **Control-C** 停止。脚本会清理模拟器的 endpoint 环境变量及自身的密钥变量。若进程被强制结束而未执行清理，可以仅移除该开发覆盖项：
+按 **Control-C** 停止。脚本清理临时环境变量，但保留 App 的连接地址；此时再次请求 AI 会显示连接错误，不会变成演示。要主动恢复本地演示，停止代理后移除两个非秘密配置项，再重启 App：
 
 ```sh
 xcrun simctl spawn booted launchctl unsetenv DAYVAULT_AI_ENDPOINT
+xcrun simctl spawn booted defaults delete com.dayvault.app aiPlannerEndpoint
 ```
 
 若 App 仍连接旧地址，还应检查 Xcode Run 的环境变量覆盖。Debug Journey 客户端允许回环 HTTP，正常远端配置要求 HTTPS。未认证预览模式仅用于此类回环开发，不应把它作为公网生产服务运行。
 
 ### 部署服务端接口
 
-部署现有 Supabase Edge Function，并按 [supabase/.env.example](../supabase/.env.example) 设置服务端 secrets。示例只有占位符，不含可用密钥。当前示例选择第三方中转；若省略 `OPENAI_BASE_URL`，代码默认使用官方地址，因此应明确设定实际服务商。不要为了掩盖兼容性错误而静默切换模型或服务商。
+部署现有 Supabase Edge Function，并按 [supabase/.env.example](../supabase/.env.example) 设置服务端 secrets。示例只有占位符，不含可用密钥。当前代码默认值、示例与本地脚本均选择第三方中转 `https://api.example.com` 和 `example-model`；服务端环境变量可覆盖默认值，已有部署需单独更新其 secrets。不要为了掩盖兼容性错误而静默切换模型或服务商。本轮只更新本地配置，未部署远端服务。
 
 开发时，在 Xcode scheme 环境变量中配置：
 

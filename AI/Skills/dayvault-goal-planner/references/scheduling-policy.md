@@ -1,40 +1,55 @@
-# Scheduling Policy
+# 初次排程规则
 
-## Time horizons
+仅适用于新计划，不用于 `suggestAdjustment`。
 
-- One to 14 days: return every proposed block explicitly.
-- Fifteen to 180 days: return a complete roadmap, explicit blocks for the first 14 days, and repeatable weekly patterns for the remainder.
-- Beyond 180 days: plan the first 180 days and identify a review checkpoint instead of pretending the distant schedule is certain.
+## 把模糊目标落到可观察的成果
 
-## Capacity
+从 `goalText` 与 `clarificationAnswer` 提取：想完成的结果、期限或持续周期、起点、明确可用时间、固定休息及限制。较新的明确更正优先，未更正的限制继续有效。不要把“我想学摄影”扩成器材购买、职业转型和社交运营。
 
-- Use the user's explicit availability when present.
-- Otherwise assume 09:00–21:00 in the supplied timezone.
-- Fill no more than 70 percent of available time.
-- Schedule no more than two demanding blocks per day.
-- Default to blocks of 15–120 minutes. Use up to 180 minutes only when the task clearly benefits.
-- Leave at least 15 minutes between demanding blocks.
-- For multi-week plans, keep at least one lighter or rest day in each seven-day period.
+- 成果与期限都明确：直接给草案，不再确认一次“是否开始”。“今晚”“三周内”“坚持三十天”已是可用时间范围。
+- 成果明确、期限缺失：问一个短问题，例如“你想在什么时候完成第一版？”用户明确说没有期限、先试试，可用七天试行草案并标明假设，不反复逼问截止日。
+- 成果本身无法判断，例如“我想变好”：先问“你最近最想推进哪件事？”不要猜测其工作、健康或心理状态。
+- 明确期限已过去，或时间相互矛盾：指出这一处矛盾并问一个问题，不能悄悄推到明年。
 
-## Decomposition
+## 拆解：每一步都要留下结果
 
-- Create two to five phases with an observable outcome for each phase.
-- Give each milestone a concrete definition of done.
-- Put foundational work before polishing or repetition.
-- Keep the first action small enough to begin without further planning.
-- Use checkpoints to adapt later work instead of overspecifying every distant day.
+从最终验收结果倒推先后依赖，再顺序排入日历。优先处理会阻塞后续工作的部分，不强行把所有最难的事放在早晨。
 
-## Conflicts and feasibility
+- 用 2–5 个阶段满足现有接口，但简单目标只用最少两个轻阶段，不为凑阶段新增工作。
+- 每个里程碑说明可检查的完成标准，例如“一页简历已检查事实和错字”，不用“能力获得显著提升”。
+- 事项标题用动词和对象，尽量在 18 个汉字内；备注通常一两句，写验收点或前置条件。不是每天重复“推进：理清方向”。
+- 第一步应能直接开始。准备资料与第一次实际尝试可放在同一个 15–30 分钟事项内，不先安排漫长的“制定计划”。
+- 查资料、练习、产出和核对不必机械平均分配；依任务决定。把难度未知的部分安排一次小尝试，用后续检查点承接反馈。
 
-- Never overlap a supplied busy window.
-- Never schedule after the target deadline.
-- If the full request cannot fit, reduce scope and return a warning.
-- Preserve the user's stated rest, work, school, health, or family constraints.
-- Use absolute timestamps with timezone offsets in generated blocks.
+## 容量：有空档不等于愿意投入
 
-## Community challenges
+先放固定事项和休息，再用剩余时段安排当前目标。区分“可选的时段范围”和“愿意投入的分钟预算”。用户说每天 30 分钟，就不能给他每天两小时；用户明确要一整段 30 分钟，也不要机械缩成 21 分钟。
 
-- Recommend only an ID from `activeChallengeIDs`.
-- Recommend at most one challenge.
-- Prefer a challenge whose metric naturally reinforces the goal.
-- Do not claim a challenge is popular; popularity is supplied and rendered by the host application.
+- 用户给出的节奏、时间预算、夜班、周末安排优先。不能因为是周末就认定休息，也不能擅自加码已给出的训练频率。
+- 缺少预算时，试行默认每天最多一个 30 分钟事项，说明这是可修改的初稿，不是用户已承诺的长期强度。
+- 缺少具体时间时，可暂选本地 19:00–21:00 内一个建议时段；有冲突时再找 09:00–21:00 内的空档。必须在 `assumptions` 说明未确认可用性。绝不把 09:00–21:00 当成每天 12 小时的可支配时间。
+- 大段开放时段最多安排约 70%，其余留白；至少给相邻高负荷事项留 15 分钟缓冲。已知 `existingDailyLoads` 计入负担，不能当它为零。
+- 每天最多两项 `focus`；普通任务优先一项。单项 15–120 分钟，只有确有需要且不超用户预算才到 180 分钟。
+- 多周高负荷计划默认每七天至少一个较轻或休息日；明确的每日短练习可保留，不替用户改为每周六天。固定五练两休等节奏严格保留。
+
+## 时间、冲突与远期不确定性
+
+`currentDate` 是现在，`timeZoneID` 决定本地日期；将相对日期解析为绝对时间，输出带 `Z` 或偏移量的 ISO 8601，不使用设备默认时区或今天的偏移量代替未来 DST 日期。
+
+- 不安排过去的时段；结束不能超过用户截止时间。晚上发起“今天完成”时不能排到当天上午。
+- `busyWindows` 是硬约束。逐一检查所有生成事项之间以及事项与忙闲窗口之间的重叠。没有传入日历数据只能说“按当前提供的安排”，不能说“已检查所有日历”。
+- 1–14 天：明确列出要执行的事项。更长目标：保留完整阶段、期限与里程碑，只把前 14 天排细，其余以阶段说明保留弹性。超过 180 天仍保留用户真正的终点，但在 180 天内设置复看节点，不假装知道遥远日期的空闲。
+- 当前重复模式没有独立生效起点，因此本版新草案使用 `recurringPatterns: []`，避免与前 14 天事项重复。说明远期路线尚未写成全部日程，不宣称已预约几个月。
+- 现有 AI 结构只支持带时刻的事项、最短 15 分钟。用户明确要求不设时刻或更短事项时，不伪造凌晨零点、拉长任务或悄悄改要求；用一个澄清问题说明限制，询问是否接受带建议时刻/时长的草案。普通记录器的能力不代表此 AI 接口已支持。
+
+## 不可行时诚实停下
+
+如果目标明显无法在预算与期限内完成，不通过熬夜、挤掉休息、编造能力或静默降低目标来凑数。用 `clarification` 简要说明冲突，并问最能解除约束的一件事，例如“按每天 30 分钟，这周放不下全部内容；你愿意先做哪一部分？”
+
+一个可交付的部分草案只在用户接受缩小范围后生成。剩余工作、临时假设与不确定性分别放进现有字段，不用“精简版”暗中替换完整承诺。
+
+## 计划与成就的边界
+
+让行动留下可回顾的东西：完成一次练习、保存一版作品、整理一条反馈。不要为奖励堆砌无意义事项，也不把里程碑写成已获得的奖章。
+
+`activeChallengeIDs` 只有允许的 ID，不提供热度或详细语义。只有宿主/用户同时明确了某个允许 ID 对应的内容、且确实匹配目标时才推荐；否则 `recommendedChallengeID: null`。本技能不能设计或泄露隐藏成就。

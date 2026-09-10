@@ -169,6 +169,17 @@
 "ai.applied" = "Your plan is ready";
 "ai.view_today" = "See today";
 "ai.error.title" = "The plan didn’t come through";
+"ai.source.local" = "Local demo · Not AI-generated";
+"ai.source.local_detail" = "Fixed template; planner instructions were not used. Connect AI to regenerate.";
+"ai.source.remote" = "AI-generated · Awaiting your approval";
+"ai.source.skill_version" = "Planner instructions v%@";
+"ai.error.unavailable" = "Cannot reach the AI service. For local testing, keep the proxy terminal open and retry. Daily recording is still available.";
+"ai.error.local_connection" = "Cannot connect to the local planner proxy (127.0.0.1:8000). Start it, keep its terminal open, then retry.";
+"ai.error.proxy_connection" = "Cannot connect to the planner proxy. Check your network and endpoint, then retry.";
+"ai.error.transport" = "The planner connection was interrupted. Check your network and retry; this does not mean the model key is invalid.";
+"ai.error.proxy_timeout" = "The planner proxy did not respond in time. The model's completion status is unknown. Retry later; your schedule is unchanged.";
+"ai.error.upstream_timeout" = "The planner proxy responded, but the model relay timed out. Retry later; restarting the local proxy is unnecessary.";
+"ai.error.upstream_unavailable" = "The planner proxy responded, but could not get a result from the model relay. Retry later; no local connection changes are needed.";
 "ai.error.invalid_response" = "The AI returned an incomplete plan. Retry, or add the first step manually.";
 "ai.error.provider_authentication" = "The local API key is invalid or expired. Reconfigure it, then retry.";
 "ai.error.provider_rate_limited" = "The relay is rate-limited or temporarily out of quota. Try again later.";

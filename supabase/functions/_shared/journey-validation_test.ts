@@ -316,6 +316,11 @@ Deno.test("seven calendar days preserves local time across a daylight-saving tra
 });
 
 Deno.test("bundled journey skills include actual rules and strict schemas for all operations", () => {
+  const expectedPromptVersions = {
+    designAchievements: "1.0.0",
+    companionReply: "1.0.0",
+    suggestAdjustment: "1.1.0",
+  };
   for (
     const operation of [
       "designAchievements",
@@ -325,7 +330,8 @@ Deno.test("bundled journey skills include actual rules and strict schemas for al
   ) {
     const bundle = journeyBundles[operation];
     if (
-      bundle.version !== "1.0.0" || bundle.instructions.length < 500 ||
+      bundle.version !== expectedPromptVersions[operation] ||
+      bundle.instructions.length < 500 ||
       bundle.schema.additionalProperties !== false
     ) throw new Error(`Missing executable skill bundle: ${operation}`);
   }

@@ -22,6 +22,8 @@ struct AILandingView: View {
     @State private var errorMessage: String?
     @State private var appliedPlanTitle: String?
     @State private var showAllBlocks = false
+    @State private var resultSource: AIPlannerSource?
+    @State private var lastSubmission: String?
 
     private let generationMessages: [LocalizedStringKey] = [
         "ai.generating.milestones",
@@ -81,7 +83,9 @@ struct AILandingView: View {
             get: { errorMessage != nil },
             set: { if !$0 { errorMessage = nil } }
         )) {
-            Button("action.retry") { composerFocused = true }
+            Button("action.retry") {
+                if let lastSubmission { input = lastSubmission; submit() }
+            }
             Button("action.cancel", role: .cancel) { errorMessage = nil }
         } message: {
             Text(errorMessage ?? "")
@@ -177,9 +181,12 @@ struct AILandingView: View {
             }
             if let clarificationQuestion {
                 AssistantPanel {
-                    Text(clarificationQuestion)
+                    VStack(alignment: .leading, spacing: 8) {
+                        if let resultSource { PlannerSourceLabel(source: resultSource) }
+                        Text(clarificationQuestion)
                         .font(.title3.weight(.black))
                         .foregroundStyle(EditorialPalette.ink)
+                    }
                 }
             }
             if isGenerating {
@@ -192,7 +199,7 @@ struct AILandingView: View {
                 }
             }
             if let draft {
-                PlanPreviewView(plan: draft, showAllBlocks: $showAllBlocks, onApply: applyDraft)
+                PlanPreviewView(plan: draft, source: resultSource, showAllBlocks: $showAllBlocks, onApply: applyDraft)
             }
             if let appliedPlanTitle {
                 AssistantPanel {
@@ -267,7 +274,10 @@ struct AILandingView: View {
         let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, !isGenerating else { return }
         let goal = originalGoal ?? trimmed
-        let answer = originalGoal == nil ? nil : trimmed
+        let answer = originalGoal == nil || trimmed == originalGoal ? nil : trimmed
+        lastSubmission = trimmed
+        errorMessage = nil
+        resultSource = nil
         if originalGoal == nil { originalGoal = trimmed }
         input = ""
         clarificationQuestion = nil
@@ -286,7 +296,9 @@ struct AILandingView: View {
             defer { stageTask.cancel() }
             do {
                 let request = model.plannerRequest(goal: goal, clarificationAnswer: answer)
-                let turn = try await model.aiPlanner.generate(request)
+                let result = try await model.aiPlanner.generateResult(request)
+                let turn = result.turn
+                resultSource = result.source
                 isGenerating = false
                 switch turn.kind {
                 case .clarification:
@@ -462,6 +474,7 @@ private struct ChallengeMotif: View {
 private struct PlanPreviewView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let plan: GeneratedProjectPlan
+    let source: AIPlannerSource?
     @Binding var showAllBlocks: Bool
     let onApply: () -> Void
 
@@ -473,10 +486,7 @@ private struct PlanPreviewView: View {
         AssistantPanel {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("ai.plan.label")
-                        .font(.caption2.weight(.black))
-                        .tracking(1.3)
-                        .foregroundStyle(EditorialPalette.coralText)
+                    if let source { PlannerSourceLabel(source: source) }
                     Text(plan.title)
                         .font(.title2.weight(.black))
                         .foregroundStyle(EditorialPalette.ink)
@@ -562,6 +572,25 @@ private struct PlanPreviewView: View {
 
                 Button("ai.use_plan", action: onApply)
                     .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
+            }
+        }
+    }
+}
+
+private struct PlannerSourceLabel: View {
+    let source: AIPlannerSource
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(source.label)
+                .font(.caption2.weight(.black))
+                .foregroundStyle(EditorialPalette.coralText)
+                .accessibilityIdentifier("planner-result-source")
+            if !source.detail.isEmpty {
+                Text(source.detail)
+                    .font(.caption2)
+                    .foregroundStyle(EditorialPalette.muted)
+                    .accessibilityIdentifier("planner-result-version")
             }
         }
     }

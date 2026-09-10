@@ -46,7 +46,7 @@ actor RemoteJourneyAIService: JourneyAI {
     private let session: URLSession
 
     init(endpoint: URL?, publishableKey: String? = nil, accessToken: String? = nil, session: URLSession = .shared) {
-        self.endpoint = endpoint; self.publishableKey = publishableKey; self.accessToken = accessToken; self.session = session
+        self.endpoint = endpoint.map(DayVaultAIEndpoint.normalized); self.publishableKey = publishableKey; self.accessToken = accessToken; self.session = session
     }
 
     func designAchievements(_ request: JourneyAIRequest) async throws -> JourneyAchievementDesign {
