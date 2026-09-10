@@ -1,0 +1,1015 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		003AC6918B723F9CDB0EDD71 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44BE029A974D4918B7B098B /* PersistenceController.swift */; };
+		1CC64B72B5F05849D303C984 /* DayVaultWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90706508ED3980640BA716B1 /* DayVaultWidgets.swift */; };
+		1DE4ABC94FD5B15BF1CC9279 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 86CEE2A8D4C117DDB40A0C6C /* Localizable.strings */; };
+		1ED56F83C02979B5C0E27E8C /* PersonalAchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131DAF5BBF427F5498EB9D44 /* PersonalAchievementsView.swift */; };
+		229885687D06DA5D5CA1AA48 /* AvatarUnlockCeremony.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF654881AE2A6445946F043E /* AvatarUnlockCeremony.swift */; };
+		233DDE49B2FD0BBDAB7594DD /* AchievementBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C97BDCDFB539830BBC960A /* AchievementBadge.swift */; };
+		2768B57284E48E3CE768FC4C /* CompanionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E784C30792A66B0DD4A79A2 /* CompanionSheet.swift */; };
+		2863261C996D4024619C4844 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45D0ED66C0BD5AA2C2CEC8B /* NotificationService.swift */; };
+		2B9754F1F96C973DB3379C4E /* CalendarExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E26263441C11DBD115B42 /* CalendarExportView.swift */; };
+		31D47FD1562326334F64CAF7 /* DayVaultWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C9EB87980B2841D3CE481F15 /* DayVaultWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4534EFCEB8725540380068C7 /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932D30C753A73ED6C41E46CA /* NotificationDelegate.swift */; };
+		4BDC5C11D98D78DF35ED1886 /* EditorialDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA47F17CBF2FEE994208E835 /* EditorialDesign.swift */; };
+		50C5F6471C6D0449F859F282 /* DayVaultAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92767AFA5ED391FA8D8E154 /* DayVaultAvatar.swift */; };
+		557AFB3432D72E57E388BB27 /* AvatarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F1FC2BC3C7CC07F9BD292 /* AvatarUITests.swift */; };
+		5667B6CAAAD1C240FFB7C8F4 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDBF81434727AE4810710BD /* RootTabView.swift */; };
+		5B91A6C116AB086AD664B775 /* AvatarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871333E15F9AAF07FAB9284 /* AvatarIntegrationTests.swift */; };
+		61436C3AC2CC01675CD58A5B /* AvatarStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE75C116B88D64E9EEF25EA /* AvatarStudioView.swift */; };
+		62B154875F2CF7914352919B /* AchievementUnlockBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51531010E3473A2EA88D9AAA /* AchievementUnlockBanner.swift */; };
+		69D74A236E8E9A743EEE2716 /* VaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA1E2A462FF92E024EC2839 /* VaultView.swift */; };
+		6D70F5068E4CE869810C207E /* DayVaultCore in Frameworks */ = {isa = PBXBuildFile; productRef = 512F44610AEF5CC830C629BB /* DayVaultCore */; };
+		72B08D0C07AB3739DE818C35 /* DayVaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7113563841A0625F0735A0 /* DayVaultApp.swift */; };
+		792279891D3FA6587636EC6D /* DayVaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01585EE9F34FD734FC494E84 /* DayVaultTests.swift */; };
+		7C5DA1513A85479FFD8DC4EB /* AppModelAdjustments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F57B91B90883E6FC43AC65E /* AppModelAdjustments.swift */; };
+		807E099D198CAD0B207E6EFA /* JourneyIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FE6FDE4E23754B8725C44F /* JourneyIntegrationTests.swift */; };
+		84D054C1EC86921D6B7A60B6 /* AILandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA409D71A4AC9FB25D9C139 /* AILandingView.swift */; };
+		8651455155EDE896522FDD14 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE00AEBF8F68FDFBAB671F6 /* SettingsView.swift */; };
+		88B1241F6925EE5B54C92E97 /* CalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1245CABEC731560469F433 /* CalendarScreen.swift */; };
+		8BB59A98143C28CEB9D21C1E /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E611B2FCCCB7E57CC1181532 /* InsightsView.swift */; };
+		8F93051F11A94E0224D4C333 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F84C42CDE4C081CA19D7782 /* Assets.xcassets */; };
+		944E7038FB92999755CE03AA /* GoalManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17168087C84271D3AB68B906 /* GoalManagerView.swift */; };
+		9920D57E31B51A0F2B2500CE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C5380A3656924469A6B7F66 /* InfoPlist.strings */; };
+		9BDB08ABF8753BA1F5D42FAB /* AIPlannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B78FE47ABCCAD7D14BA57E7 /* AIPlannerService.swift */; };
+		9BF21B0308AE3F35CB863E6C /* ItemEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B058BB61F67648D13FA9F5A6 /* ItemEditorView.swift */; };
+		9DCBA355AA7F8E80E4322424 /* AppModelJourney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAEF4ACA1E6124B2BA35C56 /* AppModelJourney.swift */; };
+		AC6C4D19089A4FAD675FCE5F /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BA2BCAA330C159BF039B74 /* CalendarService.swift */; };
+		AD780B152DE38A6E7DB1EE43 /* JourneyAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3427C95EF0DEFC3FA1EBC8 /* JourneyAIService.swift */; };
+		B9AC5162D70CAB97732D4515 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1270932BC76B24ADEBB02F /* AppModel.swift */; };
+		C6B8DD7D1E3B7AB52DE48C52 /* OrigamiCompanion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2289EC94ACA010135D5F81 /* OrigamiCompanion.swift */; };
+		C7751123826A0CEEAED2722E /* DayVaultCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7625499619F9D9865C737CCF /* DayVaultCore */; };
+		CD75731A45B50FAF5B3DB5A6 /* EntitlementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C9614734C793DC180745B /* EntitlementStore.swift */; };
+		E9B0830D8F5BC1F198CF1BE0 /* DuetCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFADEBBFE5B7BB0F431D798E /* DuetCelebrationView.swift */; };
+		ED9478A663696568D976FDEF /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787C8CF64D706272EDE5E949 /* AppTheme.swift */; };
+		F3F9E9FE90109EA2BB7E5D41 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77AB85518B9E1309224838 /* TodayView.swift */; };
+		F9F46BCD16C823EA16EB864B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DC490277107A3E8A6390BF5 /* Localizable.strings */; };
+		FA5E4707A1226AD7B4900D56 /* DayVaultCore in Frameworks */ = {isa = PBXBuildFile; productRef = B9BB49CDBC0AD476BC481B49 /* DayVaultCore */; };
+		FB4795AE0EB4D1638A69E976 /* DayTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF825359F67D54F971EDF017 /* DayTimelineView.swift */; };
+		FFC556092A15F09ED3255BC3 /* DayVaultUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5574FB7D167BCED137D998 /* DayVaultUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5FBC206CECFE36ED752826EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB9C30B8DD7C7D497777242B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FAEBC95ADF4F8561A068D9A;
+			remoteInfo = DayVault;
+		};
+		D6F93C8C6A5FE8C1B8A78E01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB9C30B8DD7C7D497777242B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FAEBC95ADF4F8561A068D9A;
+			remoteInfo = DayVault;
+		};
+		F9E1DCCEBDB31A9A449A66F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB9C30B8DD7C7D497777242B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA8994395241DD292789673A;
+			remoteInfo = DayVaultWidgets;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		99E07A9E7457EA0CBB96A0CD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				31D47FD1562326334F64CAF7 /* DayVaultWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		01585EE9F34FD734FC494E84 /* DayVaultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayVaultTests.swift; sourceTree = "<group>"; };
+		04A8D65AA4B9FF25264193FE /* DayVaultWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DayVaultWidgets.entitlements; sourceTree = "<group>"; };
+		0C7113563841A0625F0735A0 /* DayVaultApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayVaultApp.swift; sourceTree = "<group>"; };
+		0DA1E2A462FF92E024EC2839 /* VaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultView.swift; sourceTree = "<group>"; };
+		131DAF5BBF427F5498EB9D44 /* PersonalAchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalAchievementsView.swift; sourceTree = "<group>"; };
+		17168087C84271D3AB68B906 /* GoalManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManagerView.swift; sourceTree = "<group>"; };
+		1FDBF81434727AE4810710BD /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		3D1270932BC76B24ADEBB02F /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		3E784C30792A66B0DD4A79A2 /* CompanionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionSheet.swift; sourceTree = "<group>"; };
+		3F57B91B90883E6FC43AC65E /* AppModelAdjustments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelAdjustments.swift; sourceTree = "<group>"; };
+		410F1FC2BC3C7CC07F9BD292 /* AvatarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarUITests.swift; sourceTree = "<group>"; };
+		4B5574FB7D167BCED137D998 /* DayVaultUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayVaultUITests.swift; sourceTree = "<group>"; };
+		51531010E3473A2EA88D9AAA /* AchievementUnlockBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementUnlockBanner.swift; sourceTree = "<group>"; };
+		519BC9281B01CB86A4335AE2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		5B78FE47ABCCAD7D14BA57E7 /* AIPlannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPlannerService.swift; sourceTree = "<group>"; };
+		5F84C42CDE4C081CA19D7782 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		603C9614734C793DC180745B /* EntitlementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementStore.swift; sourceTree = "<group>"; };
+		60D6E03C93A19C84DE735D80 /* DayVaultCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DayVaultCore; path = Packages/DayVaultCore; sourceTree = SOURCE_ROOT; };
+		611B3A031E690150435F04AD /* DayVaultUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DayVaultUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6551D60BAA236D1B8BF8EB69 /* DayVault.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DayVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		787C8CF64D706272EDE5E949 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		7A094210AFA96BF6C60F5B57 /* DayVaultTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DayVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8871333E15F9AAF07FAB9284 /* AvatarIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarIntegrationTests.swift; sourceTree = "<group>"; };
+		8A2289EC94ACA010135D5F81 /* OrigamiCompanion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrigamiCompanion.swift; sourceTree = "<group>"; };
+		8B3427C95EF0DEFC3FA1EBC8 /* JourneyAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyAIService.swift; sourceTree = "<group>"; };
+		8DA409D71A4AC9FB25D9C139 /* AILandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AILandingView.swift; sourceTree = "<group>"; };
+		8FC054996FF769EB141EAEC5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		90706508ED3980640BA716B1 /* DayVaultWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayVaultWidgets.swift; sourceTree = "<group>"; };
+		932D30C753A73ED6C41E46CA /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
+		9B1245CABEC731560469F433 /* CalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScreen.swift; sourceTree = "<group>"; };
+		9CAEF4ACA1E6124B2BA35C56 /* AppModelJourney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelJourney.swift; sourceTree = "<group>"; };
+		A44BE029A974D4918B7B098B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		A45D0ED66C0BD5AA2C2CEC8B /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		A53E26263441C11DBD115B42 /* CalendarExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExportView.swift; sourceTree = "<group>"; };
+		ADE00AEBF8F68FDFBAB671F6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B058BB61F67648D13FA9F5A6 /* ItemEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditorView.swift; sourceTree = "<group>"; };
+		B0BA2BCAA330C159BF039B74 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
+		BF825359F67D54F971EDF017 /* DayTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTimelineView.swift; sourceTree = "<group>"; };
+		C2C97BDCDFB539830BBC960A /* AchievementBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementBadge.swift; sourceTree = "<group>"; };
+		C8FE6FDE4E23754B8725C44F /* JourneyIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyIntegrationTests.swift; sourceTree = "<group>"; };
+		C9EB87980B2841D3CE481F15 /* DayVaultWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DayVaultWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA47F17CBF2FEE994208E835 /* EditorialDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorialDesign.swift; sourceTree = "<group>"; };
+		CCE75C116B88D64E9EEF25EA /* AvatarStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarStudioView.swift; sourceTree = "<group>"; };
+		D92767AFA5ED391FA8D8E154 /* DayVaultAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayVaultAvatar.swift; sourceTree = "<group>"; };
+		DD1556887140AF058C5696E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DF654881AE2A6445946F043E /* AvatarUnlockCeremony.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarUnlockCeremony.swift; sourceTree = "<group>"; };
+		E611B2FCCCB7E57CC1181532 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		EC8D9C3E7D670FC218A5EB2E /* DayVault.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DayVault.entitlements; sourceTree = "<group>"; };
+		FA66627ACD097AD86F44863E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FE77AB85518B9E1309224838 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		FFADEBBFE5B7BB0F431D798E /* DuetCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuetCelebrationView.swift; sourceTree = "<group>"; };
+		FFD6E4063A595FAEDDF8C57D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		59291D45C9D936ED7A337167 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7751123826A0CEEAED2722E /* DayVaultCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		764EDD4C972D658432D65B84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA5E4707A1226AD7B4900D56 /* DayVaultCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2A80C0324CE18B75F1E8812 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D70F5068E4CE869810C207E /* DayVaultCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		09016FC48D43E9944842A326 /* DayVaultTests */ = {
+			isa = PBXGroup;
+			children = (
+				8871333E15F9AAF07FAB9284 /* AvatarIntegrationTests.swift */,
+				01585EE9F34FD734FC494E84 /* DayVaultTests.swift */,
+				C8FE6FDE4E23754B8725C44F /* JourneyIntegrationTests.swift */,
+			);
+			path = DayVaultTests;
+			sourceTree = "<group>";
+		};
+		0C9AA9250F54802F3A278172 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				A53E26263441C11DBD115B42 /* CalendarExportView.swift */,
+				9B1245CABEC731560469F433 /* CalendarScreen.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		23A85D684B49AE711BCB444A /* DayVaultUITests */ = {
+			isa = PBXGroup;
+			children = (
+				410F1FC2BC3C7CC07F9BD292 /* AvatarUITests.swift */,
+				4B5574FB7D167BCED137D998 /* DayVaultUITests.swift */,
+			);
+			path = DayVaultUITests;
+			sourceTree = "<group>";
+		};
+		2ECB5E8F5EE739C559F7A341 = {
+			isa = PBXGroup;
+			children = (
+				37FE25605D42E3FE4003DE1E /* DayVault */,
+				09016FC48D43E9944842A326 /* DayVaultTests */,
+				23A85D684B49AE711BCB444A /* DayVaultUITests */,
+				E1218860415878F3E945781A /* DayVaultWidgets */,
+				EF4578CDED72AFA5C2AD9E1F /* Packages */,
+				CC3C619CCA977025E80687D8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		37FE25605D42E3FE4003DE1E /* DayVault */ = {
+			isa = PBXGroup;
+			children = (
+				CCD413D931CEEFADAB2BEAAD /* Features */,
+				AD0962614633EE11E99775EE /* Resources */,
+				47E27F1F8CD59BA01A9AD159 /* Services */,
+				3D1270932BC76B24ADEBB02F /* AppModel.swift */,
+				3F57B91B90883E6FC43AC65E /* AppModelAdjustments.swift */,
+				9CAEF4ACA1E6124B2BA35C56 /* AppModelJourney.swift */,
+				787C8CF64D706272EDE5E949 /* AppTheme.swift */,
+				5F84C42CDE4C081CA19D7782 /* Assets.xcassets */,
+				EC8D9C3E7D670FC218A5EB2E /* DayVault.entitlements */,
+				0C7113563841A0625F0735A0 /* DayVaultApp.swift */,
+				CA47F17CBF2FEE994208E835 /* EditorialDesign.swift */,
+				FA66627ACD097AD86F44863E /* Info.plist */,
+				A44BE029A974D4918B7B098B /* PersistenceController.swift */,
+				1FDBF81434727AE4810710BD /* RootTabView.swift */,
+			);
+			path = DayVault;
+			sourceTree = "<group>";
+		};
+		47E27F1F8CD59BA01A9AD159 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5B78FE47ABCCAD7D14BA57E7 /* AIPlannerService.swift */,
+				B0BA2BCAA330C159BF039B74 /* CalendarService.swift */,
+				603C9614734C793DC180745B /* EntitlementStore.swift */,
+				8B3427C95EF0DEFC3FA1EBC8 /* JourneyAIService.swift */,
+				932D30C753A73ED6C41E46CA /* NotificationDelegate.swift */,
+				A45D0ED66C0BD5AA2C2CEC8B /* NotificationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4ED177CB1FA905ABCAE721CE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				86CEE2A8D4C117DDB40A0C6C /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		56F3B8730B7FBBA2E3208C83 /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				E611B2FCCCB7E57CC1181532 /* InsightsView.swift */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
+		748794B2854452A95A770397 /* Avatar */ = {
+			isa = PBXGroup;
+			children = (
+				CCE75C116B88D64E9EEF25EA /* AvatarStudioView.swift */,
+				DF654881AE2A6445946F043E /* AvatarUnlockCeremony.swift */,
+				D92767AFA5ED391FA8D8E154 /* DayVaultAvatar.swift */,
+			);
+			path = Avatar;
+			sourceTree = "<group>";
+		};
+		77E8A0EB78B01755A2098297 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B058BB61F67648D13FA9F5A6 /* ItemEditorView.swift */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		AD0962614633EE11E99775EE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2C5380A3656924469A6B7F66 /* InfoPlist.strings */,
+				4DC490277107A3E8A6390BF5 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B65E6C0F5F4BFB5860BD8AF7 /* Companion */ = {
+			isa = PBXGroup;
+			children = (
+				3E784C30792A66B0DD4A79A2 /* CompanionSheet.swift */,
+				FFADEBBFE5B7BB0F431D798E /* DuetCelebrationView.swift */,
+				17168087C84271D3AB68B906 /* GoalManagerView.swift */,
+				8A2289EC94ACA010135D5F81 /* OrigamiCompanion.swift */,
+			);
+			path = Companion;
+			sourceTree = "<group>";
+		};
+		CC3C619CCA977025E80687D8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6551D60BAA236D1B8BF8EB69 /* DayVault.app */,
+				7A094210AFA96BF6C60F5B57 /* DayVaultTests.xctest */,
+				611B3A031E690150435F04AD /* DayVaultUITests.xctest */,
+				C9EB87980B2841D3CE481F15 /* DayVaultWidgets.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CCD413D931CEEFADAB2BEAAD /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				748794B2854452A95A770397 /* Avatar */,
+				0C9AA9250F54802F3A278172 /* Calendar */,
+				B65E6C0F5F4BFB5860BD8AF7 /* Companion */,
+				77E8A0EB78B01755A2098297 /* Editor */,
+				56F3B8730B7FBBA2E3208C83 /* Insights */,
+				FB0EC037304C272AEDD90B84 /* Landing */,
+				E6F51BF0F929EEC55E5C0B5F /* Settings */,
+				DEE4A38363C37CC6FBC9040A /* Today */,
+				FEB2DFD7710968343ACD79C1 /* Vault */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		DEE4A38363C37CC6FBC9040A /* Today */ = {
+			isa = PBXGroup;
+			children = (
+				BF825359F67D54F971EDF017 /* DayTimelineView.swift */,
+				FE77AB85518B9E1309224838 /* TodayView.swift */,
+			);
+			path = Today;
+			sourceTree = "<group>";
+		};
+		E1218860415878F3E945781A /* DayVaultWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				4ED177CB1FA905ABCAE721CE /* Resources */,
+				04A8D65AA4B9FF25264193FE /* DayVaultWidgets.entitlements */,
+				90706508ED3980640BA716B1 /* DayVaultWidgets.swift */,
+				DD1556887140AF058C5696E9 /* Info.plist */,
+			);
+			path = DayVaultWidgets;
+			sourceTree = "<group>";
+		};
+		E6F51BF0F929EEC55E5C0B5F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				ADE00AEBF8F68FDFBAB671F6 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		EF4578CDED72AFA5C2AD9E1F /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				60D6E03C93A19C84DE735D80 /* DayVaultCore */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		FB0EC037304C272AEDD90B84 /* Landing */ = {
+			isa = PBXGroup;
+			children = (
+				8DA409D71A4AC9FB25D9C139 /* AILandingView.swift */,
+			);
+			path = Landing;
+			sourceTree = "<group>";
+		};
+		FEB2DFD7710968343ACD79C1 /* Vault */ = {
+			isa = PBXGroup;
+			children = (
+				C2C97BDCDFB539830BBC960A /* AchievementBadge.swift */,
+				51531010E3473A2EA88D9AAA /* AchievementUnlockBanner.swift */,
+				131DAF5BBF427F5498EB9D44 /* PersonalAchievementsView.swift */,
+				0DA1E2A462FF92E024EC2839 /* VaultView.swift */,
+			);
+			path = Vault;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		74916A61F0E70B7D9FF16B3E /* DayVaultUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 351F407F8FAD259A6CD0E334 /* Build configuration list for PBXNativeTarget "DayVaultUITests" */;
+			buildPhases = (
+				49A2DD422FFD8503703AB309 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D0393C3B3B922627D5BB46D /* PBXTargetDependency */,
+			);
+			name = DayVaultUITests;
+			packageProductDependencies = (
+			);
+			productName = DayVaultUITests;
+			productReference = 611B3A031E690150435F04AD /* DayVaultUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		7FAEBC95ADF4F8561A068D9A /* DayVault */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AEDAAF14D8062C7F6F0B091C /* Build configuration list for PBXNativeTarget "DayVault" */;
+			buildPhases = (
+				D0C143FC2877BE9A5D26CECC /* Sources */,
+				42DCDB460DE6267A25683FA3 /* Resources */,
+				59291D45C9D936ED7A337167 /* Frameworks */,
+				99E07A9E7457EA0CBB96A0CD /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5F312FEE7DFE9C2B237147B8 /* PBXTargetDependency */,
+			);
+			name = DayVault;
+			packageProductDependencies = (
+				7625499619F9D9865C737CCF /* DayVaultCore */,
+			);
+			productName = DayVault;
+			productReference = 6551D60BAA236D1B8BF8EB69 /* DayVault.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CA8994395241DD292789673A /* DayVaultWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE35B91B61F8BF39FA234443 /* Build configuration list for PBXNativeTarget "DayVaultWidgets" */;
+			buildPhases = (
+				59BD543A5B9B50C314D8606F /* Sources */,
+				5C938BD6DAF83BE7148EBEAB /* Resources */,
+				764EDD4C972D658432D65B84 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DayVaultWidgets;
+			packageProductDependencies = (
+				B9BB49CDBC0AD476BC481B49 /* DayVaultCore */,
+			);
+			productName = DayVaultWidgets;
+			productReference = C9EB87980B2841D3CE481F15 /* DayVaultWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		EEE1CFC5954F077D7C9D162F /* DayVaultTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E7B0BB4402CD1750B5A288FB /* Build configuration list for PBXNativeTarget "DayVaultTests" */;
+			buildPhases = (
+				D9AA9005979A103723BF712A /* Sources */,
+				B2A80C0324CE18B75F1E8812 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3C28E1759E0D7BC2051B8EAF /* PBXTargetDependency */,
+			);
+			name = DayVaultTests;
+			packageProductDependencies = (
+				512F44610AEF5CC830C629BB /* DayVaultCore */,
+			);
+			productName = DayVaultTests;
+			productReference = 7A094210AFA96BF6C60F5B57 /* DayVaultTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AB9C30B8DD7C7D497777242B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					74916A61F0E70B7D9FF16B3E = {
+						DevelopmentTeam = "";
+						TestTargetID = 7FAEBC95ADF4F8561A068D9A;
+					};
+					7FAEBC95ADF4F8561A068D9A = {
+						DevelopmentTeam = "";
+					};
+					CA8994395241DD292789673A = {
+						DevelopmentTeam = "";
+					};
+					EEE1CFC5954F077D7C9D162F = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = 7CE44E2EBAAA5CD5957996AE /* Build configuration list for PBXProject "DayVault" */;
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = 2ECB5E8F5EE739C559F7A341;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B971D790DEE7172D54ED5F22 /* XCLocalSwiftPackageReference "Packages/DayVaultCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = CC3C619CCA977025E80687D8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7FAEBC95ADF4F8561A068D9A /* DayVault */,
+				CA8994395241DD292789673A /* DayVaultWidgets */,
+				EEE1CFC5954F077D7C9D162F /* DayVaultTests */,
+				74916A61F0E70B7D9FF16B3E /* DayVaultUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		42DCDB460DE6267A25683FA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F93051F11A94E0224D4C333 /* Assets.xcassets in Resources */,
+				9920D57E31B51A0F2B2500CE /* InfoPlist.strings in Resources */,
+				F9F46BCD16C823EA16EB864B /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C938BD6DAF83BE7148EBEAB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DE4ABC94FD5B15BF1CC9279 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		49A2DD422FFD8503703AB309 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				557AFB3432D72E57E388BB27 /* AvatarUITests.swift in Sources */,
+				FFC556092A15F09ED3255BC3 /* DayVaultUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59BD543A5B9B50C314D8606F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CC64B72B5F05849D303C984 /* DayVaultWidgets.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0C143FC2877BE9A5D26CECC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84D054C1EC86921D6B7A60B6 /* AILandingView.swift in Sources */,
+				9BDB08ABF8753BA1F5D42FAB /* AIPlannerService.swift in Sources */,
+				233DDE49B2FD0BBDAB7594DD /* AchievementBadge.swift in Sources */,
+				62B154875F2CF7914352919B /* AchievementUnlockBanner.swift in Sources */,
+				B9AC5162D70CAB97732D4515 /* AppModel.swift in Sources */,
+				7C5DA1513A85479FFD8DC4EB /* AppModelAdjustments.swift in Sources */,
+				9DCBA355AA7F8E80E4322424 /* AppModelJourney.swift in Sources */,
+				ED9478A663696568D976FDEF /* AppTheme.swift in Sources */,
+				61436C3AC2CC01675CD58A5B /* AvatarStudioView.swift in Sources */,
+				229885687D06DA5D5CA1AA48 /* AvatarUnlockCeremony.swift in Sources */,
+				2B9754F1F96C973DB3379C4E /* CalendarExportView.swift in Sources */,
+				88B1241F6925EE5B54C92E97 /* CalendarScreen.swift in Sources */,
+				AC6C4D19089A4FAD675FCE5F /* CalendarService.swift in Sources */,
+				2768B57284E48E3CE768FC4C /* CompanionSheet.swift in Sources */,
+				FB4795AE0EB4D1638A69E976 /* DayTimelineView.swift in Sources */,
+				72B08D0C07AB3739DE818C35 /* DayVaultApp.swift in Sources */,
+				50C5F6471C6D0449F859F282 /* DayVaultAvatar.swift in Sources */,
+				E9B0830D8F5BC1F198CF1BE0 /* DuetCelebrationView.swift in Sources */,
+				4BDC5C11D98D78DF35ED1886 /* EditorialDesign.swift in Sources */,
+				CD75731A45B50FAF5B3DB5A6 /* EntitlementStore.swift in Sources */,
+				944E7038FB92999755CE03AA /* GoalManagerView.swift in Sources */,
+				8BB59A98143C28CEB9D21C1E /* InsightsView.swift in Sources */,
+				9BF21B0308AE3F35CB863E6C /* ItemEditorView.swift in Sources */,
+				AD780B152DE38A6E7DB1EE43 /* JourneyAIService.swift in Sources */,
+				4534EFCEB8725540380068C7 /* NotificationDelegate.swift in Sources */,
+				2863261C996D4024619C4844 /* NotificationService.swift in Sources */,
+				C6B8DD7D1E3B7AB52DE48C52 /* OrigamiCompanion.swift in Sources */,
+				003AC6918B723F9CDB0EDD71 /* PersistenceController.swift in Sources */,
+				1ED56F83C02979B5C0E27E8C /* PersonalAchievementsView.swift in Sources */,
+				5667B6CAAAD1C240FFB7C8F4 /* RootTabView.swift in Sources */,
+				8651455155EDE896522FDD14 /* SettingsView.swift in Sources */,
+				F3F9E9FE90109EA2BB7E5D41 /* TodayView.swift in Sources */,
+				69D74A236E8E9A743EEE2716 /* VaultView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9AA9005979A103723BF712A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B91A6C116AB086AD664B775 /* AvatarIntegrationTests.swift in Sources */,
+				792279891D3FA6587636EC6D /* DayVaultTests.swift in Sources */,
+				807E099D198CAD0B207E6EFA /* JourneyIntegrationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1D0393C3B3B922627D5BB46D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FAEBC95ADF4F8561A068D9A /* DayVault */;
+			targetProxy = D6F93C8C6A5FE8C1B8A78E01 /* PBXContainerItemProxy */;
+		};
+		3C28E1759E0D7BC2051B8EAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FAEBC95ADF4F8561A068D9A /* DayVault */;
+			targetProxy = 5FBC206CECFE36ED752826EE /* PBXContainerItemProxy */;
+		};
+		5F312FEE7DFE9C2B237147B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA8994395241DD292789673A /* DayVaultWidgets */;
+			targetProxy = F9E1DCCEBDB31A9A449A66F7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2C5380A3656924469A6B7F66 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				519BC9281B01CB86A4335AE2 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4DC490277107A3E8A6390BF5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FFD6E4063A595FAEDDF8C57D /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		86CEE2A8D4C117DDB40A0C6C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8FC054996FF769EB141EAEC5 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		019808F165D281C8348351E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayvault.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DayVault;
+			};
+			name = Debug;
+		};
+		044540B828C5EE65FD7EB6D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = (
+					AppIconEmerald,
+					AppIconGraphite,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = DayVault/DayVault.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = DayVault/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayvault.app;
+				PRODUCT_NAME = DayVault;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		0E9F1EDEA60B304AEE51E9D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = DayVaultWidgets/DayVaultWidgets.entitlements;
+				INFOPLIST_FILE = DayVaultWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayvault.app.widgets;
+				PRODUCT_NAME = DayVaultWidgets;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		33E961EF8862767C61953FDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		8C2B805B03D9F8860DA7A95D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = DayVaultWidgets/DayVaultWidgets.entitlements;
+				INFOPLIST_FILE = DayVaultWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayvault.app.widgets;
+				PRODUCT_NAME = DayVaultWidgets;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		8DC5653F28734E2C7474EF72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayvault.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DayVault.app/DayVault";
+			};
+			name = Debug;
+		};
+		9FDDE00778841232F3B87847 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		D1B5E0198D1CB20C218C00D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayvault.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DayVault.app/DayVault";
+			};
+			name = Release;
+		};
+		DE14FC4966A0641178E97D89 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = (
+					AppIconEmerald,
+					AppIconGraphite,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = DayVault/DayVault.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = DayVault/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayvault.app;
+				PRODUCT_NAME = DayVault;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E178DD77EC33FF3F92DFAB31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayvault.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DayVault;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		351F407F8FAD259A6CD0E334 /* Build configuration list for PBXNativeTarget "DayVaultUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				019808F165D281C8348351E7 /* Debug */,
+				E178DD77EC33FF3F92DFAB31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7CE44E2EBAAA5CD5957996AE /* Build configuration list for PBXProject "DayVault" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33E961EF8862767C61953FDE /* Debug */,
+				9FDDE00778841232F3B87847 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AEDAAF14D8062C7F6F0B091C /* Build configuration list for PBXNativeTarget "DayVault" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE14FC4966A0641178E97D89 /* Debug */,
+				044540B828C5EE65FD7EB6D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BE35B91B61F8BF39FA234443 /* Build configuration list for PBXNativeTarget "DayVaultWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8C2B805B03D9F8860DA7A95D /* Debug */,
+				0E9F1EDEA60B304AEE51E9D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E7B0BB4402CD1750B5A288FB /* Build configuration list for PBXNativeTarget "DayVaultTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DC5653F28734E2C7474EF72 /* Debug */,
+				D1B5E0198D1CB20C218C00D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B971D790DEE7172D54ED5F22 /* XCLocalSwiftPackageReference "Packages/DayVaultCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/DayVaultCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		512F44610AEF5CC830C629BB /* DayVaultCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DayVaultCore;
+		};
+		7625499619F9D9865C737CCF /* DayVaultCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DayVaultCore;
+		};
+		B9BB49CDBC0AD476BC481B49 /* DayVaultCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DayVaultCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AB9C30B8DD7C7D497777242B /* Project object */;
+}

@@ -1,0 +1,3 @@
+"NSCalendarsFullAccessUsageDescription" = "DayVault 会在计划旁显示您选择的日历事件，帮助您避免时间冲突。";
+"NSCalendarsWriteOnlyAccessUsageDescription" = "DayVault 可将日程项目导出为独立的日历事件。";
+"NSUserNotificationsUsageDescription" = "DayVault 可在计划时间块即将开始时提醒您。";

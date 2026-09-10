@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "dayvault_planner_turn",
+  "strict": true,
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["kind", "question", "plan"],
+    "properties": {
+      "kind": { "type": "string", "enum": ["clarification", "plan"] },
+      "question": { "type": ["string", "null"] },
+      "plan": {
+        "anyOf": [
+          { "type": "null" },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "skillVersion", "title", "clarifiedGoal", "deadline", "phases", "milestones", "initialBlocks", "recurringPatterns", "recommendedChallengeID", "assumptions", "warnings"],
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "skillVersion": { "type": "string" },
+              "title": { "type": "string" },
+              "clarifiedGoal": { "type": "string" },
+              "deadline": { "type": "string", "format": "date-time" },
+              "phases": {
+                "type": "array", "minItems": 2, "maxItems": 5,
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["id", "title", "summary", "start", "end"],
+                  "properties": {
+                    "id": { "type": "string", "format": "uuid" },
+                    "title": { "type": "string" },
+                    "summary": { "type": "string" },
+                    "start": { "type": "string", "format": "date-time" },
+                    "end": { "type": "string", "format": "date-time" }
+                  }
+                }
+              },
+              "milestones": {
+                "type": "array", "minItems": 1, "maxItems": 12,
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["id", "title", "due", "definitionOfDone"],
+                  "properties": {
+                    "id": { "type": "string", "format": "uuid" },
+                    "title": { "type": "string" },
+                    "due": { "type": "string", "format": "date-time" },
+                    "definitionOfDone": { "type": "string" }
+                  }
+                }
+              },
+              "initialBlocks": {
+                "type": "array", "minItems": 1, "maxItems": 100,
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["id", "title", "start", "durationMinutes", "notes", "balanceGroup"],
+                  "properties": {
+                    "id": { "type": "string", "format": "uuid" },
+                    "title": { "type": "string" },
+                    "start": { "type": "string", "format": "date-time" },
+                    "durationMinutes": { "type": "integer", "minimum": 15, "maximum": 180 },
+                    "notes": { "type": "string" },
+                    "balanceGroup": { "type": "string", "enum": ["focus", "care", "rest", "other"] }
+                  }
+                }
+              },
+              "recurringPatterns": {
+                "type": "array", "maxItems": 8,
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["id", "title", "weekdays", "startMinutesFromMidnight", "durationMinutes", "endDate", "balanceGroup"],
+                  "properties": {
+                    "id": { "type": "string", "format": "uuid" },
+                    "title": { "type": "string" },
+                    "weekdays": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 7 }, "uniqueItems": true },
+                    "startMinutesFromMidnight": { "type": "integer", "minimum": 0, "maximum": 1425 },
+                    "durationMinutes": { "type": "integer", "minimum": 15, "maximum": 180 },
+                    "endDate": { "type": "string", "format": "date-time" },
+                    "balanceGroup": { "type": "string", "enum": ["focus", "care", "rest", "other"] }
+                  }
+                }
+              },
+              "recommendedChallengeID": { "type": ["string", "null"], "format": "uuid" },
+              "assumptions": { "type": "array", "maxItems": 6, "items": { "type": "string" } },
+              "warnings": { "type": "array", "maxItems": 6, "items": { "type": "string" } }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

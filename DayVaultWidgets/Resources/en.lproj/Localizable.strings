@@ -1,0 +1,5 @@
+"widget.today.title" = "Today's Schedule";
+"widget.today.description" = "See your next DayVault block and complete it from the widget.";
+"widget.complete" = "Complete";
+"widget.clear" = "Schedule clear";
+"widget.clear.subtitle" = "Nothing left for today.";

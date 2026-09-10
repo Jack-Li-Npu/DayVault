@@ -1,0 +1,4 @@
+project_id = "dayvault"
+
+[functions.generate-plan]
+verify_jwt = false

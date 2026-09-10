@@ -1,0 +1,96 @@
+name: DayVault
+options:
+  bundleIdPrefix: com.dayvault
+  developmentLanguage: zh-Hans
+  deploymentTarget:
+    iOS: "18.0"
+  xcodeVersion: "26.2"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+packages:
+  DayVaultCore:
+    path: Packages/DayVaultCore
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: ""
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: 1.0.0
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+targets:
+  DayVault:
+    type: application
+    platform: iOS
+    sources:
+      - path: DayVault
+        excludes:
+          - Resources/**/*.strings
+      - path: DayVault/Resources
+        excludes:
+          - en.lproj/**
+        buildPhase: resources
+    dependencies:
+      - package: DayVaultCore
+      - target: DayVaultWidgets
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dayvault.app
+        PRODUCT_NAME: DayVault
+        INFOPLIST_FILE: DayVault/Info.plist
+        CODE_SIGN_ENTITLEMENTS: DayVault/DayVault.entitlements
+        TARGETED_DEVICE_FAMILY: 1
+        SUPPORTS_MACCATALYST: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES:
+          - AppIconEmerald
+          - AppIconGraphite
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: YES
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    scheme:
+      testTargets:
+        - DayVaultTests
+        - DayVaultUITests
+      gatherCoverageData: true
+      storeKitConfiguration: Config/DayVault.storekit
+  DayVaultWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: DayVaultWidgets
+        excludes:
+          - Resources/en.lproj/**
+    dependencies:
+      - package: DayVaultCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dayvault.app.widgets
+        PRODUCT_NAME: DayVaultWidgets
+        INFOPLIST_FILE: DayVaultWidgets/Info.plist
+        CODE_SIGN_ENTITLEMENTS: DayVaultWidgets/DayVaultWidgets.entitlements
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: 1
+  DayVaultTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: DayVaultTests
+    dependencies:
+      - target: DayVault
+      - package: DayVaultCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dayvault.app.tests
+        GENERATE_INFOPLIST_FILE: YES
+  DayVaultUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: DayVaultUITests
+    dependencies:
+      - target: DayVault
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dayvault.app.uitests
+        GENERATE_INFOPLIST_FILE: YES

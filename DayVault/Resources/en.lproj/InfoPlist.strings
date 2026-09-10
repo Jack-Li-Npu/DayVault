@@ -1,0 +1,3 @@
+"NSCalendarsFullAccessUsageDescription" = "DayVault shows events from calendars you select beside your plan so you can avoid conflicts.";
+"NSCalendarsWriteOnlyAccessUsageDescription" = "DayVault lets you export a schedule item as an independent Calendar event.";
+"NSUserNotificationsUsageDescription" = "DayVault can remind you when a planned block is about to begin.";

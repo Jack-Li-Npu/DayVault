@@ -1,0 +1,21 @@
+{
+  "identifier" : "DayVaultStoreKitConfiguration",
+  "nonRenewingSubscriptions" : [],
+  "products" : [
+    {
+      "displayPrice" : "14.99",
+      "familyShareable" : true,
+      "internalID" : "pro-lifetime",
+      "localizations" : [
+        {"description" : "Unlock themes, advanced insights, and unlimited templates.", "displayName" : "DayVault Pro Lifetime", "locale" : "en_US"},
+        {"description" : "解锁主题、高级洞察和无限模板。", "displayName" : "DayVault Pro 永久版", "locale" : "zh_CN"}
+      ],
+      "productID" : "com.dayvault.app.pro.lifetime",
+      "referenceName" : "DayVault Pro Lifetime",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {"_applicationInternalID" : "dayvault-local"},
+  "subscriptionGroups" : [],
+  "version" : {"major" : 3, "minor" : 0}
+}

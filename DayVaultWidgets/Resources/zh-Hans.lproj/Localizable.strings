@@ -1,0 +1,5 @@
+"widget.today.title" = "今日日程";
+"widget.today.description" = "查看下一个 DayVault 时间块，并可直接完成。";
+"widget.complete" = "完成";
+"widget.clear" = "日程已清空";
+"widget.clear.subtitle" = "今天没有待办项目。";

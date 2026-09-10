@@ -1,0 +1,29 @@
+.DS_Store
+DerivedData/
+.build/
+.swiftpm/
+*.xcuserstate
+xcuserdata/
+
+# Local credentials and environment overrides. Keep safe setup examples.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.p8
+*.mobileprovision
+
+# Local databases, runtime logs, and test/build artifacts.
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+*.store
+*.store-*
+*.log
+*.xcresult/
+*.xcarchive/

@@ -1,0 +1,176 @@
+import DayVaultCore
+import SwiftUI
+
+struct GoalManagerView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    @State private var title = ""
+    @State private var error: String?
+    @State private var selectedDetail: PersonalGoal?
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("先留下一件想坚持的事。")
+                        .font(.title2.weight(.bold))
+                    HStack {
+                        TextField("例如：每周去健身", text: $title)
+                            .accessibilityIdentifier("goal-title")
+                        Button("建立") { create() }
+                            .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                            .frame(minWidth: 44, minHeight: 44)
+                    }
+                    .padding(14).background(EditorialPalette.sheet)
+                    .overlay { Rectangle().stroke(EditorialPalette.rule) }
+                    if let error { Text(error).font(.caption).foregroundStyle(EditorialPalette.coralText) }
+                    ForEach(model.goals) { goal in
+                        HStack {
+                            Button {
+                                model.selectedGoalID = goal.id
+                                dismiss()
+                            } label: {
+                                HStack {
+                                    Text(goal.title).font(.headline)
+                                    Spacer()
+                                    if model.selectedGoalID == goal.id { Image(systemName: "checkmark") }
+                                }.frame(minHeight: 48)
+                            }
+                            Button("详情") { selectedDetail = goal }
+                                .frame(minWidth: 44, minHeight: 44)
+                        }
+                        .padding(14).background(EditorialPalette.sheet)
+                    }
+                    Text("不建立目标，也能照常记录。挑战模板在「AI 帮我安排」中选择，不代表线上报名。")
+                        .font(.caption).foregroundStyle(EditorialPalette.muted)
+                }.padding(20)
+            }
+            .background(EditorialPalette.paper)
+            .foregroundStyle(EditorialPalette.ink)
+            .navigationTitle("我的目标")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("返回") { dismiss() }.accessibilityIdentifier("goals-close") } }
+            .sheet(item: $selectedDetail) { GoalDetailView(goal: $0) }
+        }
+    }
+
+    private func create() {
+        do {
+            let id = try model.createGoal(title: title)
+            title = ""
+            selectedDetail = model.goals.first { $0.id == id }
+        } catch { self.error = error.localizedDescription }
+    }
+}
+
+struct GoalDetailView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    let goal: PersonalGoal
+    @State private var showsHistory = false
+    @State private var showsCompanion = false
+    @State private var weeklyDays = 0
+    @State private var restDays: Set<Int> = []
+    @State private var error: String?
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text(goal.title).font(.title.weight(.black))
+                    Text("已记录 \(model.logs.filter { $0.goalID == goal.id && $0.status == .completed }.count) 次完成")
+                        .font(.subheadline).foregroundStyle(EditorialPalette.muted)
+                    Button("和搭档聊聊") { showsCompanion = true }
+                        .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
+                    Button("关联已有记录") { showsHistory = true }
+                        .frame(minHeight: 44)
+                    DisclosureGroup("节奏与休息日（可选）") {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Picker("每周行动日", selection: $weeklyDays) {
+                                Text("尚未确定").tag(0)
+                                ForEach(1...7, id: \.self) { Text("\($0) 天").tag($0) }
+                            }
+                            ForEach(1...7, id: \.self) { weekday in
+                                Toggle("周\(["日", "一", "二", "三", "四", "五", "六"][weekday - 1])休息", isOn: Binding(
+                                    get: { restDays.contains(weekday) },
+                                    set: { if $0 { restDays.insert(weekday) } else { restDays.remove(weekday) } }
+                                ))
+                            }
+                            Button("保存节奏") {
+                                guard weeklyDays == 0 || weeklyDays <= 7 - restDays.count else {
+                                    error = "行动日多于可用天数，请调整。"; return
+                                }
+                                goal.weeklyTargetDays = weeklyDays == 0 ? nil : weeklyDays
+                                goal.restWeekdaysCSV = restDays.sorted().map(String.init).joined(separator: ",")
+                                goal.updatedAt = Date()
+                                do { try model.saveJourney() } catch { self.error = error.localizedDescription }
+                            }.frame(minHeight: 44)
+                            Text("已启用成就的条件不会随这里的修改而改变。")
+                                .font(.caption).foregroundStyle(EditorialPalette.muted)
+                        }.padding(.top, 10)
+                    }
+                    if let plan = JourneyJSON.decode(GeneratedProjectPlan.self, from: goal.acceptedPlanJSON) {
+                        DisclosureGroup("原计划与阶段") {
+                            VStack(alignment: .leading, spacing: 14) {
+                                Text(plan.clarifiedGoal)
+                                ForEach(plan.phases) { phase in
+                                    VStack(alignment: .leading) {
+                                        Text(phase.title).font(.headline)
+                                        Text(phase.summary).font(.caption)
+                                    }
+                                }
+                            }.padding(.top, 10)
+                        }
+                    }
+                    if let error { Text(error).foregroundStyle(EditorialPalette.coralText) }
+                }.padding(20)
+            }
+            .background(EditorialPalette.paper).foregroundStyle(EditorialPalette.ink)
+            .navigationTitle("目标详情").navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("返回") { dismiss() }.accessibilityIdentifier("goal-detail-close") } }
+            .onAppear {
+                weeklyDays = goal.weeklyTargetDays ?? 0
+                restDays = Set(goal.restWeekdaysCSV.split(separator: ",").compactMap { Int($0) })
+            }
+            .sheet(isPresented: $showsHistory) { HistoryAssociationView(goal: goal) }
+            .sheet(isPresented: $showsCompanion) { CompanionSheet(goalID: goal.id) }
+        }
+    }
+}
+
+private struct HistoryAssociationView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    let goal: PersonalGoal
+    @State private var selection: Set<UUID> = []
+    @State private var error: String?
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    Text("只会关联你选中的事项及其未归属的完成记录。历史积累可计入个人成就，不计入搭档默契。")
+                        .font(.subheadline)
+                    ForEach(model.items.filter { $0.goalID == nil }) { item in
+                        Toggle(item.title, isOn: Binding(get: { selection.contains(item.id) }, set: {
+                            if $0 { selection.insert(item.id) } else { selection.remove(item.id) }
+                        }))
+                        .padding(12).background(EditorialPalette.sheet)
+                    }
+                    if model.items.allSatisfy({ $0.goalID != nil }) { Text("没有未关联的事项。") }
+                    if let error { Text(error).foregroundStyle(EditorialPalette.coralText) }
+                }.padding(20)
+            }.background(EditorialPalette.paper)
+            .navigationTitle("关联到：\(goal.title)").navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("返回") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("确认关联") {
+                        do { try model.associateHistory(itemIDs: selection, with: goal.id); dismiss() }
+                        catch { self.error = error.localizedDescription }
+                    }.disabled(selection.isEmpty)
+                }
+            }
+        }
+    }
+}
