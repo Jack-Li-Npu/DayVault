@@ -1,0 +1,32 @@
+# DayVault writing notes / 文案维护
+
+2026-09-11：通过 Skills CLI 搜索，安装并阅读了下列上游写作技能。安装目录与原有技能分开，没有覆盖旧技能。
+
+| 用途 | 来源 | 固定提交 |
+| --- | --- | --- |
+| 英文与文章结构 | [blader/humanizer](https://github.com/blader/humanizer) | `9862685f575c65a8247f90369951df1b3416e3d6` |
+| 中文表达 | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) | `91f3d394db8419c20d67ebe22a96cf8fee0a404b` |
+
+本地安装名为 `humanizer-editor` 和 `humanizer-zh-editor`，不随 App 分发。采用的原则是删去空泛口号、重复铺垫和机械排比，保留事实与作者原意。没有采用“伪造经历”“刻意犯错”或隐藏 AI 来源的方法，也没有做检测器评分承诺。
+
+App 的固定文案在本轮直接修改。模型使用的短版规则在 [AI/Editorial/voice.md](../AI/Editorial/voice.md)，由 `Scripts/bundle-ai-skill.mjs` 加入初次排程、陪伴、成就设计和改期四种运行时指令。它是针对 DayVault 编写的规则，不是把通用编辑技能整份塞进每次请求。输出结构、隐藏成就条件及写入权限不变。
+
+修改文案时先确认页面用途，再读一遍改写后的句子。按钮说清操作，错误说明原因和下一步。AI 回应中出现日期、次数或过往经历，必须有相应来源。不要删除未完成验证、隐私、费用或模型来源的说明。
+
+## Examples / 改写示例
+
+| 位置 | 原文 | 改后 |
+| --- | --- | --- |
+| 排程页标题 | 你想让什么发生？ | 最近想做什么？ |
+| 排程页说明 | 一句话就够了，我来整理前进的路径。 | 写下目标和大概期限，先看看怎么安排。 |
+| 等待提示 | 正在为真实生活留出空间… | 还在等待 AI 回复… |
+| 成就册 | 每次坚持，都会留下痕迹。 | 看看已经完成了哪些成就。 |
+| English planner | One sentence is enough. I’ll shape the path. | Describe your goal and roughly when you want to finish. |
+
+The installed skills guide editing, not claims of human authorship. The shared runtime rules preserve evidence, consent, hidden achievement boundaries and response schemas. Automated checks confirm bundling and UI behavior; they do not establish how natural a model's replies will sound. This revision does not send private records to a writing service or rerun paid model tests.
+
+The second release remains `v1.1.0`. Its GitHub description is updated; the original source tag stays fixed. Revised copy and instructions are in the current branch, with a commit-specific link in the release notes.
+
+## 本次检查 / Checks
+
+47 项服务端测试、13 项 iOS 单元测试、3 项中文 UI 测试通过。检查覆盖共享写作规则的实际打包、各操作响应结构不变、AI 来源标识，以及精简编辑器。中英文资源文件语法、README 图片与文件链接和私人配置模式扫描通过。这些检查不等于自然语言质量的用户评测，也没有运行 AI 检测器。

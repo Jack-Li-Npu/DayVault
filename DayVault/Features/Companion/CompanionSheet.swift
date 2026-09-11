@@ -28,7 +28,7 @@ struct CompanionSheet: View {
                             }
                         }
                         if goal.aiEnabledAt == nil {
-                            Text("记录照常保存。开启后，搭档可以围绕这个目标回应、设计个人成就和提出安排建议。")
+                            Text("开启 AI 后，可以聊聊这个目标，设计个人成就，或查看改期建议。不开启也能照常记录。")
                                 .font(.subheadline)
                             Button("开启这个目标的 AI 陪伴") { showsConsent = true }
                                 .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
@@ -78,7 +78,7 @@ struct CompanionSheet: View {
         }
         let messages = model.companionMessages.filter { $0.goalID == goal.id && ["user", "assistant"].contains($0.role) && !$0.text.isEmpty }
         if messages.isEmpty {
-            Text("想记一句今天的感受，或说说这周哪里需要调整？")
+            Text("今天做得怎么样？有想记下来的事，可以在这里说。")
                 .foregroundStyle(EditorialPalette.muted)
         }
         ForEach(messages) { message in
@@ -125,7 +125,7 @@ struct CompanionSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("只围绕这个目标。") .font(.title2.weight(.bold))
+                    Text("开启前，看看会发送什么") .font(.title2.weight(.bold))
                     Text("发送：目标名称、已关联完成记录摘要、你主动说的话和确认过的记忆。调整安排时额外发送匿名忙闲区间。不会发送其他目标、全部日记或日历标题。")
                     Text("连接：\(providerDescription)").font(.caption).foregroundStyle(EditorialPalette.muted)
                     Text("首次开启后，为这个目标设计最多两项明确成就和一项隐藏彩蛋。不会额外安排任务；任何日程修改都需要你确认。")
@@ -163,7 +163,7 @@ private struct CompanionMemoryView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("只有你确认的经验，才会用于后续建议。")
+                    Text("确认后，这些内容才会用于以后的建议。")
                     ForEach(model.companionMemories.filter { $0.goalID == goalID }) { memory in
                         MemoryEditor(memory: memory) { action in
                             do { try action() } catch { self.error = error.localizedDescription }
@@ -185,7 +185,7 @@ private struct MemoryEditor: View {
     @State private var text = ""
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(memory.isConfirmed ? "已确认" : "搭档提议 · 等你确认").font(.caption.weight(.bold))
+            Text(memory.isConfirmed ? "已确认" : "要记住这件事吗？").font(.caption.weight(.bold))
             TextField("这条经验", text: $text, axis: .vertical)
             if !memory.sourceOccurrenceKeys.isEmpty {
                 DisclosureGroup("查看依据") {

@@ -19,15 +19,23 @@ async function source(path: string): Promise<string> {
   return await Deno.readTextFile(new URL(path, skillRoot));
 }
 
+async function voiceSource(): Promise<string> {
+  return await Deno.readTextFile(
+    new URL("../../Editorial/voice.md", skillRoot),
+  );
+}
+
 Deno.test("initial planner bundles every runtime reference without stale content", async () => {
   const documents = await Promise.all(
     ["SKILL.md", ...initialReferences].map(source),
   );
-  if (plannerInstructions !== documents.join("\n\n")) {
+  if (
+    plannerInstructions !== [...documents, await voiceSource()].join("\n\n")
+  ) {
     throw new Error("Regenerate the planner bundle from all runtime sources");
   }
   const version = documents[0].match(/version:\s*([^\s]+)/)?.[1];
-  if (skillVersion !== version || skillVersion !== "1.1.0") {
+  if (skillVersion !== version || skillVersion !== "1.1.1") {
     throw new Error("Planner bundle version does not match its source");
   }
 });
@@ -47,6 +55,35 @@ Deno.test("readable Chinese prompt is exactly the runtime instructions", async (
   }
 });
 
+Deno.test("all AI operations load the same voice rules without changing response schemas", async () => {
+  const voice = await voiceSource();
+  if (!plannerInstructions.endsWith(voice)) {
+    throw new Error("Planner voice rules missing");
+  }
+  for (const bundle of Object.values(journeyBundles)) {
+    if (!bundle.instructions.endsWith(voice)) {
+      throw new Error("Journey voice rules missing");
+    }
+    if (bundle.schema.properties.skillVersion.enum[0] !== "1.0.0") {
+      throw new Error(
+        "Editorial changes must not change the response contract",
+      );
+    }
+  }
+  for (
+    const boundary of [
+      "不冒充真人",
+      "不得为了使文字自然而添加数据",
+      "保留“AI 生成”“本地演示”等来源标识",
+      "不能以“更自然”为由删掉",
+    ]
+  ) {
+    if (!voice.includes(boundary)) {
+      throw new Error("Editorial safety boundary missing");
+    }
+  }
+});
+
 Deno.test("adjustment keeps its own policy and frozen response version", async () => {
   const [entry, policy, schemaText, ...initialOnly] = await Promise.all([
     source("SKILL.md"),
@@ -55,7 +92,9 @@ Deno.test("adjustment keeps its own policy and frozen response version", async (
     ...initialReferences.map(source),
   ]);
   const bundle = journeyBundles.suggestAdjustment;
-  if (bundle.instructions !== `${entry}\n\n${policy}`) {
+  if (
+    bundle.instructions !== `${entry}\n\n${policy}\n\n${await voiceSource()}`
+  ) {
     throw new Error(
       "Adjustment must load only the shared entry and its own policy",
     );

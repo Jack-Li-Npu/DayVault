@@ -16,7 +16,7 @@ final class DayVaultUITests: XCTestCase {
         XCTAssertTrue(app.buttons["home-add-item"].exists)
         XCTAssertTrue(app.buttons["home-open-planner"].exists)
         XCTAssertFalse(app.textFields["描述一个目标…"].exists)
-        XCTAssertFalse(app.buttons["制定计划"].exists)
+        XCTAssertFalse(app.buttons["帮我安排"].exists)
         XCTAssertEqual(app.tabBars.count, 0)
         let home = XCTAttachment(screenshot: app.screenshot())
         home.name = "daily-first-launch"
@@ -39,11 +39,15 @@ final class DayVaultUITests: XCTestCase {
         XCTAssertTrue(planner.waitForExistence(timeout: 5))
         planner.tap()
 
+        XCTAssertTrue(app.staticTexts["最近想做什么？"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["写下目标和大概期限，先看看怎么安排。"].exists)
+        XCTAssertFalse(app.staticTexts["正在为真实生活留出空间…"].exists)
+
         let goal = app.textFields["描述一个目标…"]
         XCTAssertTrue(goal.waitForExistence(timeout: 5))
         goal.tap()
         goal.typeText("I want to learn pottery")
-        app.buttons["制定计划"].tap()
+        app.buttons["帮我安排"].tap()
 
         XCTAssertTrue(app.staticTexts["你希望什么时候看到成果？"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["本地演示 · 非 AI 生成"].exists)
@@ -60,7 +64,7 @@ final class DayVaultUITests: XCTestCase {
         XCTAssertTrue(goal.waitForExistence(timeout: 5))
         goal.tap()
         goal.typeText("Give a speech in 6 weeks")
-        app.buttons["制定计划"].tap()
+        app.buttons["帮我安排"].tap()
         XCTAssertTrue(app.staticTexts["本地演示 · 非 AI 生成"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["AI 草案"].exists)
         XCTAssertFalse(app.staticTexts["AI 生成 · 待你确认"].exists)

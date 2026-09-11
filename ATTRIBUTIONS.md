@@ -42,3 +42,6 @@ Their copyright and MIT notices are preserved in
 [the planner's third-party notices](AI/Skills/dayvault-goal-planner/THIRD_PARTY_NOTICES.md).
 The [skill research inventory](docs/AI-PLANNER-SKILL-RESEARCH.zh-CN.md) records
 verified sources, versions, exclusions and the original DayVault synthesis.
+# Writing references (2026-09-11)
+
+The copy revision used [blader/humanizer](https://github.com/blader/humanizer) (commit `9862685f575c65a8247f90369951df1b3416e3d6`) and [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) (commit `91f3d394db8419c20d67ebe22a96cf8fee0a404b`) as editing guides. Both were installed locally with their license files; their packages are not distributed in the app. DayVault's shorter runtime writing instructions are project-specific text. See [the writing notes](docs/WRITING.md) for scope and examples. No AI-detection guarantee or claim of exclusively human authorship is made.

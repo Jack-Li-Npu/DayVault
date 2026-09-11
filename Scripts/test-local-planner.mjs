@@ -3,7 +3,7 @@
 import { writeFile } from 'node:fs/promises';
 const endpoint = 'http://127.0.0.1:8000';
 const health = await fetch(`${endpoint}/health`).then((response) => response.json());
-if (health.skillVersion !== '1.1.0') {
+if (health.skillVersion !== '1.1.1') {
   throw new Error('Unexpected local proxy model/skill version; restart the current proxy.');
 }
 const request = {

@@ -317,9 +317,9 @@ Deno.test("seven calendar days preserves local time across a daylight-saving tra
 
 Deno.test("bundled journey skills include actual rules and strict schemas for all operations", () => {
   const expectedPromptVersions = {
-    designAchievements: "1.0.0",
-    companionReply: "1.0.0",
-    suggestAdjustment: "1.1.0",
+    designAchievements: "1.0.1",
+    companionReply: "1.0.1",
+    suggestAdjustment: "1.1.1",
   };
   for (
     const operation of [

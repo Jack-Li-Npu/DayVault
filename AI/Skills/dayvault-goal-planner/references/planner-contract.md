@@ -8,7 +8,7 @@
 - `currentDate`、`timeZoneID`：时间依据。
 - `busyWindows`：仅开始/结束的忙闲区间；`existingDailyLoads`：已安排分钟数。它们不代表已授权读取所有 Calendar 内容。
 - `activeChallengeIDs`：可推荐 ID 白名单，不包含热门排名。
-- 宿主附加的 `skillVersion`：新计划的指令版本，填入 `plan.skillVersion`。本版本为 `1.1.0`。
+- 宿主附加的 `skillVersion`：新计划的指令版本，填入 `plan.skillVersion`。本版本为 `1.1.1`。
 - `locale` 可用于理解输入，但首版的标题、备注、问题和说明都用简体中文。
 
 这里没有长期记忆、考试评分、具体日期精度字段、日程写入工具，也没有网络搜索工具。不要虚构这些上下文或执行结果。

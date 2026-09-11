@@ -110,7 +110,7 @@ node Scripts/bundle-ai-skill.mjs
 
 脚本重新生成 `supabase/functions/_shared` 下的 `dayvault-goal-planner.bundle.ts` 和 `dayvault-journey.bundle.ts`。请保持源文件和生成包一致。模型输出始终是不可信提案：服务端与 App 都会拒绝未知引用、不支持的规则、多余字段和越界范围。模型不能直接写入进度、解锁日期、装备资格或可执行代码。
 
-“AI 帮我排”指令已升级为 `1.1.0`：构建明确包含排程规则、学习/职业/项目/习惯方法及接口语义约定，同时输出 [完整中文 Prompt](../AI/Skills/dayvault-goal-planner/PROMPT.zh-CN.md)。调研清单、许可、18 个待模型评测场景和现有接口限制见 [技能调研与适配说明](AI-PLANNER-SKILL-RESEARCH.zh-CN.md)。用户授权后已完成初次排程的真实代理测试，详见 [链路修复与验收记录](AI-PLANNER-LIVE-VALIDATION.zh-CN.md)。
+“AI 帮我排”当前指令为 `1.1.1`，陪伴与成就设计为 `1.0.1`。构建包含排程规则、领域方法和接口约定，并将 [DayVault 文案规则](../AI/Editorial/voice.md) 加入全部四种操作。可直接查看 [完整中文 Prompt](../AI/Skills/dayvault-goal-planner/PROMPT.zh-CN.md)。输出结构没有因文案改写而改变。技能来源与改写范围见 [文案维护](WRITING.md)，领域方法与待评测场景见 [排程调研](AI-PLANNER-SKILL-RESEARCH.zh-CN.md)。之前版本的真实调用及失败记录见 [链路验收](AI-PLANNER-LIVE-VALIDATION.zh-CN.md)；本次文案修订没有重新调用付费模型。
 
 ### 本地 macOS 中转测试
 

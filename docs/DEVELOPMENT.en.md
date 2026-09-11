@@ -110,7 +110,7 @@ node Scripts/bundle-ai-skill.mjs
 
 This regenerates `dayvault-goal-planner.bundle.ts` and `dayvault-journey.bundle.ts` in `supabase/functions/_shared`. Keep the canonical files and generated bundles consistent. The model output is an untrusted proposal: server and app validators reject unknown sources, unsupported rules, extra fields and invalid scope. The model cannot directly write progress, unlock dates, equipment ownership or executable code.
 
-The initial planner prompt is now `1.1.0`. Its build explicitly includes scheduling policy, learning/career/project/habit guidance and the existing API contract semantics, and exports the identical [complete Chinese prompt](../AI/Skills/dayvault-goal-planner/PROMPT.zh-CN.md). See the [Chinese research inventory](AI-PLANNER-SKILL-RESEARCH.zh-CN.md) for sources, licenses and 18 pending behavioral-evaluation cases. User-authorized initial-planning relay tests have now succeeded; see the [live integration record and limitations](AI-PLANNER-LIVE-VALIDATION.zh-CN.md).
+The planner instruction revision is `1.1.1`; companion and achievement-design instructions are `1.0.1`. The build includes scheduling policy, domain guidance and the existing contract, then appends the [shared writing rules](../AI/Editorial/voice.md) to all four operations. The [complete Chinese prompt](../AI/Skills/dayvault-goal-planner/PROMPT.zh-CN.md) matches the runtime input. Response schemas are unchanged. See [writing notes](WRITING.md), [planning research](AI-PLANNER-SKILL-RESEARCH.zh-CN.md) and the [earlier live integration results](AI-PLANNER-LIVE-VALIDATION.zh-CN.md). This copy revision did not rerun paid model tests.
 
 ### Local macOS relay
 
