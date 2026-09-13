@@ -56,11 +56,11 @@ struct TodayView: View {
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 let actionLayout = dynamicTypeSize.isAccessibilitySize ? AnyLayout(VStackLayout(spacing: 12)) : AnyLayout(HStackLayout(spacing: 12))
                 actionLayout {
-                    Button("记一件事") { model.showEditor(at: defaultStart) }
+                    Button("editor.new_item") { model.showEditor(at: defaultStart) }
                         .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
                         .accessibilityIdentifier("home-add-item")
                     Button(action: openPlanner) {
-                        Text("AI 帮我排")
+                        Text("landing.kicker")
                             .font(.subheadline.weight(.bold))
                             .foregroundStyle(EditorialPalette.ink)
                             .frame(minWidth: 104, minHeight: 48)
@@ -124,7 +124,7 @@ struct TodayView: View {
             .padding(.leading, 8)
             Spacer(minLength: 0)
             Menu {
-                Button("目标与挑战", action: openGoals)
+                Button("目标管理", action: openGoals)
                 Button("calendar.title", action: openCalendar)
                 Button("today.review") { reviewing = true }
                 Button("insights.title", action: openInsights)

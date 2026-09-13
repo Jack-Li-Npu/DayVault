@@ -2,7 +2,7 @@
 
 Record what you do. Look back at how long you have kept at it.
 
-[简体中文](README.md) · [Second release](docs/releases/v1.1.0.md) · [GitHub Release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.1.0) · [Original version](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.en.md)
+[简体中文](README.md) · [v1.2 introduction](docs/releases/v1.2.0.md) · [GitHub Release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.2.0) · [v1.1 introduction](docs/releases/v1.1.0.md) · [Original version](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.en.md)
 
 ![DayVault brand illustration](Design/Previews/dayvault-readme-banner.svg)
 
@@ -10,7 +10,7 @@ DayVault is an iPhone daily recorder with a Simplified Chinese interface. Write 
 
 The idea came from wanting to share the satisfaction of sticking with something for a long time. DayVault keeps those records in an achievement collection, with short character animations and an optional AI companion. When the companion mentions your past progress, its reply should point to records you actually shared.
 
-This is a private development prototype, not an App Store release. Recording, existing achievements and animation work offline. Live AI planning has returned useful plans, but recent tests still hit upstream HTTP 504. See the [integration record](docs/AI-PLANNER-LIVE-VALIDATION.zh-CN.md).
+This is a development prototype in a public repository, not an App Store release. Recording, existing achievements and animation work offline. Live AI planning has returned useful plans, but recent tests still hit upstream HTTP 504. See the [integration record](docs/AI-PLANNER-LIVE-VALIDATION.zh-CN.md).
 
 ## A look inside
 
@@ -71,7 +71,7 @@ Share cards can include your character, an achievement, the recorded activity sp
 
 ## Optional AI help
 
-“AI 帮我排” (Help me plan) accepts a goal such as “give a talk in two weeks.” It asks one question when a necessary detail is missing, then proposes stages and near-term tasks. You review the draft before adding it to the schedule. Built-in challenges are plan templates, not live competitions or enrollment systems.
+“智能排程” (AI scheduling) accepts a goal such as “give a talk in two weeks.” It asks one question when a necessary detail is missing, then proposes stages and near-term tasks. You review the draft before adding it to the schedule. Built-in challenges are plan templates, not live competitions or enrollment systems.
 
 Tap the origami companion to discuss the current goal. Automatic replies appear at most once a day, with additional replies allowed for major personal achievements. Messages you initiate are not subject to that display limit. Suggested memories require confirmation and can be edited or deleted. Replies and memories with invalidated sources are withdrawn.
 
@@ -81,13 +81,13 @@ The build includes shared writing rules in actual model requests: name the actio
 
 ## Your first minute
 
-1. Tap “记一件事” (Record something), enter a title and save. You do not need a goal or AI setup.
+1. Tap “新增事项” (New item), enter a title and save. You do not need a goal or AI setup.
 2. Check the item when you finish. Tap your character to browse achievements and clothing.
 3. Create a goal when you want to track something over time. Enable planning or companionship after reviewing what will be sent.
 
 ## Run it locally
 
-You need a Mac, Xcode 26 or newer and an iPhone simulator. The deployment target is iOS 18+. Repository access is required while the project is private.
+You need a Mac, Xcode 26 or newer and an iPhone simulator. The deployment target is iOS 18+. The repository is public, but no project-wide open-source redistribution license has been granted.
 
 ```sh
 git clone https://github.com/Jack-Li-Npu/DayVault.git

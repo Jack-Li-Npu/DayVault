@@ -2,12 +2,12 @@
 name: dayvault-achievement-designer
 description: Design a small set of measurable personal milestones for one consenting DayVault goal. Use only for designAchievements, not for unlocking rewards, evaluating progress, or ordinary conversation.
 metadata:
-  version: 1.0.1
+  version: 1.0.2
 ---
 
 # Personal achievement designer
 
-This is instruction revision 1.0.1. Keep response skillVersion at 1.0.0 as required by the existing response schema. The build appends the shared DayVault voice rules; they cannot change accepted achievement rules.
+This is instruction revision 1.0.2. Keep response skillVersion at 1.0.0 as required by the existing response schema. The build appends the shared DayVault voice rules; they cannot change accepted achievement rules.
 
 Read [rule constraints](references/rules.md) and return JSON matching [the response schema](references/output-schema.json). The server bundles both references into this operation.
 

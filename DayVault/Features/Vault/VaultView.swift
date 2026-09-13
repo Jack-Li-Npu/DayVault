@@ -39,8 +39,8 @@ struct VaultView: View {
                         VStack(alignment: .leading, spacing: 20) {
                             if showsCollection {
                                 HStack(spacing: 12) {
-                                    collectionFilter("通用成就", personal: false)
-                                    collectionFilter("我的里程碑", personal: true)
+                                    collectionFilter("公共成就", personal: false)
+                                    collectionFilter("个人成就", personal: true)
                                 }
                                 if showsPersonalAchievements {
                                     PersonalAchievementsView()

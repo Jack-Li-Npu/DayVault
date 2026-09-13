@@ -24,27 +24,27 @@ public enum AvatarRewardCatalog {
     public static let all: [AvatarReward] = [
         AvatarReward(
             id: "starter_band", slot: .accessory, achievementID: "first_check",
-            name: "启程护腕", detail: "第一件装备，留给真正开始行动的你。"
+            name: "启程护腕", detail: "首次完成事项时获得。"
         ),
         AvatarReward(
             id: "rhythm_cap", slot: .head, achievementID: "steady_start",
-            name: "节奏棒球帽", detail: "帽檐压低一点，按自己的节奏来。"
+            name: "节奏棒球帽", detail: "连续三个有安排的日子完成事项时获得。"
         ),
         AvatarReward(
             id: "ten_jacket", slot: .outerwear, achievementID: "timekeeper_1",
-            name: "十次行动夹克", detail: "把一次次完成，穿在身上。"
+            name: "十次行动夹克", detail: "累计完成十个事项时获得。"
         ),
         AvatarReward(
             id: "rhythm_varsity", slot: .outerwear, achievementID: "in_rhythm",
-            name: "VII 棒球外套", detail: "袖口的 VII，是你留下的印记。"
+            name: "VII 棒球外套", detail: "连续七个有安排的日子完成事项时获得。"
         ),
         AvatarReward(
             id: "month_satchel", slot: .accessory, achievementID: "month_in_motion",
-            name: "月行斜挎包", detail: "装上这段时间积累的小事，继续走。"
+            name: "月行斜挎包", detail: "最近三十天中，二十个日程日期留有完成记录时获得。"
         ),
         AvatarReward(
             id: "comeback_bandana", slot: .head, achievementID: "second_wind",
-            name: "回归头巾", detail: "这件装备，藏着一段只有你知道的故事。"
+            name: "回归头巾", detail: "隐藏成就奖励，解锁后可装备。"
         ),
     ]
 

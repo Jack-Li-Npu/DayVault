@@ -5,6 +5,42 @@ import XCTest
 @testable import DayVault
 
 final class DayVaultTests: XCTestCase {
+    func testPublicAchievementCopyCoversTheUnchangedCatalog() throws {
+        let path = try XCTUnwrap(Bundle.main.path(forResource: "zh-Hans", ofType: "lproj"))
+        let strings = try XCTUnwrap(Bundle(path: path))
+        XCTAssertEqual(AchievementCatalog.all.count, 24)
+        XCTAssertEqual(AchievementCatalog.all.filter(\.isHidden).count, 8)
+        var titles = Set<String>()
+        for definition in AchievementCatalog.all {
+            let title = strings.localizedString(forKey: definition.titleKey, value: nil, table: nil)
+            XCTAssertTrue(titles.insert(title).inserted, "Duplicate achievement title: \(definition.id)")
+            let keys = [definition.titleKey, definition.descriptionKey] + [definition.clueKey].compactMap { $0 }
+            for key in keys {
+                let value = strings.localizedString(forKey: key, value: nil, table: nil)
+                XCTAssertNotEqual(value, key, "Missing catalog copy: \(key)")
+                XCTAssertFalse(value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+            XCTAssertEqual(definition.version, 1, "A copy edit must not change an achievement rule version")
+        }
+    }
+
+    func testChineseInterfaceUsesConsistentCategoryAndActionNames() throws {
+        let path = try XCTUnwrap(Bundle.main.path(forResource: "zh-Hans", ofType: "lproj"))
+        let strings = try XCTUnwrap(Bundle(path: path))
+        let expected = [
+            "category.focus": "专注", "category.study": "学习",
+            "category.care": "健康", "category.rest": "休息",
+            "category.personal": "个人事务", "balance.care": "健康",
+            "editor.no_category": "未分类", "editor.new_item": "新增事项",
+            "editor.what": "事项名称", "editor.when": "计划日期",
+            "landing.kicker": "智能排程", "landing.send": "生成计划",
+            "tab.insights": "统计", "insights.title": "统计",
+        ]
+        for (key, label) in expected {
+            XCTAssertEqual(strings.localizedString(forKey: key, value: nil, table: nil), label, key)
+        }
+    }
+
     @MainActor
     func testInMemoryPersistenceIncludesEveryModel() throws {
         let container = PersistenceController.makeContainer(inMemory: true)

@@ -23,14 +23,14 @@ struct CompanionSheet: View {
                                 .frame(width: 72, height: 72)
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(goal.title).font(.title3.weight(.bold))
-                                Text("一起记录了 \(model.companionDayCount(for: goal.id)) 天")
+                                Text("陪伴记录：\(model.companionDayCount(for: goal.id)) 天")
                                     .font(.caption).foregroundStyle(EditorialPalette.muted)
                             }
                         }
                         if goal.aiEnabledAt == nil {
-                            Text("开启 AI 后，可以聊聊这个目标，设计个人成就，或查看改期建议。不开启也能照常记录。")
+                            Text("AI 可提供目标对话、个人成就设计与日程调整建议。未启用时仍可正常记录。")
                                 .font(.subheadline)
-                            Button("开启这个目标的 AI 陪伴") { showsConsent = true }
+                            Button("启用 AI 陪伴") { showsConsent = true }
                                 .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
                                 .accessibilityIdentifier("companion-enable")
                         } else {
@@ -43,13 +43,13 @@ struct CompanionSheet: View {
                     }.padding(20)
                 }
                 .background(EditorialPalette.paper).foregroundStyle(EditorialPalette.ink)
-                .navigationTitle("搭档").navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("AI 陪伴").navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Menu {
-                            Button("查看与管理记忆") { showsMemories = true }
-                            Button("看看我们的配合") { showsDuet = true }
-                            Button("清除这段对话", role: .destructive) {
+                            Button("记忆管理") { showsMemories = true }
+                            Button("回顾成长演出") { showsDuet = true }
+                            Button("清除对话", role: .destructive) {
                                 perform { try model.clearConversation(goalID: goal.id) }
                             }
                             if goal.aiEnabledAt != nil {
@@ -72,13 +72,13 @@ struct CompanionSheet: View {
 
     @ViewBuilder private func conversation(_ goal: PersonalGoal) -> some View {
         if goal.achievementGenerationState != "complete" {
-            Button("重试设计个人成就") {
+            Button("重新生成个人成就") {
                 Task { do { try await model.generatePersonalAchievements(goal.id) } catch { self.error = error.localizedDescription } }
             }.disabled(model.journeyBusy).frame(minHeight: 44)
         }
         let messages = model.companionMessages.filter { $0.goalID == goal.id && ["user", "assistant"].contains($0.role) && !$0.text.isEmpty }
         if messages.isEmpty {
-            Text("今天做得怎么样？有想记下来的事，可以在这里说。")
+            Text("可记录目标进展或提交日程调整需求。")
                 .foregroundStyle(EditorialPalette.muted)
         }
         ForEach(messages) { message in
@@ -97,7 +97,7 @@ struct CompanionSheet: View {
             .background(message.role == "user" ? EditorialPalette.acid.opacity(0.2) : EditorialPalette.sheet)
         }
         HStack(alignment: .bottom) {
-            TextField("聊聊这个目标…", text: $input, axis: .vertical)
+            TextField("输入目标进展或问题…", text: $input, axis: .vertical)
                 .lineLimit(1...4).accessibilityIdentifier("companion-input")
             Button("发送") {
                 let text = input.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -107,7 +107,7 @@ struct CompanionSheet: View {
                 .frame(minWidth: 44, minHeight: 44)
         }.padding(14).background(EditorialPalette.sheet)
         if model.journeyBusy { ProgressView("正在处理，可以先返回记录。") }
-        Button("看看未来七天怎么调整") {
+        Button("生成七日调整建议") {
             Task {
                 do {
                     let id = try await model.proposeAdjustment(goalID: goal.id, message: input.isEmpty ? "在不减少任务量的前提下，检查未来七天是否需要调整。" : input)
@@ -125,11 +125,11 @@ struct CompanionSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("开启前，看看会发送什么") .font(.title2.weight(.bold))
+                    Text("AI 数据使用说明") .font(.title2.weight(.bold))
                     Text("发送：目标名称、已关联完成记录摘要、你主动说的话和确认过的记忆。调整安排时额外发送匿名忙闲区间。不会发送其他目标、全部日记或日历标题。")
                     Text("连接：\(providerDescription)").font(.caption).foregroundStyle(EditorialPalette.muted)
                     Text("首次开启后，为这个目标设计最多两项明确成就和一项隐藏彩蛋。不会额外安排任务；任何日程修改都需要你确认。")
-                    Button("同意并开启") {
+                    Button("同意并启用") {
                         showsConsent = false
                         Task { do { try await model.enableGoalAI(goal.id) } catch { self.error = error.localizedDescription } }
                     }.buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
@@ -138,7 +138,7 @@ struct CompanionSheet: View {
                         .font(.caption).foregroundStyle(EditorialPalette.muted)
                 }.padding(24)
             }.background(EditorialPalette.paper)
-            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("暂不开启") { showsConsent = false } } }
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("暂不启用") { showsConsent = false } } }
         }
     }
 
@@ -172,7 +172,7 @@ private struct CompanionMemoryView: View {
                     if let error { Text(error).foregroundStyle(.red) }
                 }.padding(20)
             }.background(EditorialPalette.paper)
-            .navigationTitle("我们试过的方法").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("记忆管理").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("返回") { dismiss() } } }
         }
     }
@@ -185,8 +185,8 @@ private struct MemoryEditor: View {
     @State private var text = ""
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(memory.isConfirmed ? "已确认" : "要记住这件事吗？").font(.caption.weight(.bold))
-            TextField("这条经验", text: $text, axis: .vertical)
+            Text(memory.isConfirmed ? "已确认" : "待确认记忆").font(.caption.weight(.bold))
+            TextField("记忆内容", text: $text, axis: .vertical)
             if !memory.sourceOccurrenceKeys.isEmpty {
                 DisclosureGroup("查看依据") {
                     ForEach(memory.sourceOccurrenceKeys, id: \.self) { key in
@@ -195,7 +195,7 @@ private struct MemoryEditor: View {
                 }.font(.caption)
             }
             HStack {
-                Button(memory.isConfirmed ? "保存修改" : "确认记住") { perform { try model.confirmMemory(memory, text: text) } }
+                Button(memory.isConfirmed ? "保存修改" : "确认保存") { perform { try model.confirmMemory(memory, text: text) } }
                 Spacer()
                 Button("删除", role: .destructive) { perform { try model.deleteMemory(memory) } }
             }.frame(minHeight: 44)
@@ -231,7 +231,7 @@ struct AdjustmentPreviewView: View {
                     }
                     if record.revertedAt != nil { Text("已撤销，原安排已恢复。") }
                     else {
-                        Button(record.appliedAt == nil ? "确认这次调整" : "撤销这次调整") {
+                        Button(record.appliedAt == nil ? "确认调整" : "撤销调整") {
                             applying = true
                             Task {
                                 do {
@@ -246,7 +246,7 @@ struct AdjustmentPreviewView: View {
                     if let error { Text(error).foregroundStyle(EditorialPalette.coralText) }
                 }.padding(20)
             }.background(EditorialPalette.paper)
-            .navigationTitle(record.appliedAt == nil ? "先看看改哪里" : "调整记录").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(record.appliedAt == nil ? "调整预览" : "调整记录").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("返回") { dismiss() } } }
         }
     }

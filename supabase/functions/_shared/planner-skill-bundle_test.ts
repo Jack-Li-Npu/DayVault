@@ -115,6 +115,25 @@ Deno.test("adjustment keeps its own policy and frozen response version", async (
   }
 });
 
+Deno.test("achievement designer loads its exact source rules and frozen schema", async () => {
+  const root = new URL("../dayvault-achievement-designer/", skillRoot);
+  const [entry, rules, schema] = await Promise.all([
+    Deno.readTextFile(new URL("SKILL.md", root)),
+    Deno.readTextFile(new URL("references/rules.md", root)),
+    Deno.readTextFile(new URL("references/output-schema.json", root)),
+  ]);
+  const bundle = journeyBundles.designAchievements;
+  if (bundle.instructions !== `${entry}\n\n${rules}\n\n${await voiceSource()}`) {
+    throw new Error("Achievement designer is missing current source guidance");
+  }
+  if (bundle.version !== entry.match(/version:\s*([^\s]+)/)?.[1]) {
+    throw new Error("Achievement designer version differs from source");
+  }
+  if (JSON.stringify(bundle.schema) !== JSON.stringify(JSON.parse(schema).schema)) {
+    throw new Error("Achievement design schema differs from its source contract");
+  }
+});
+
 interface PlannerEvalCase {
   id: string;
   request: {

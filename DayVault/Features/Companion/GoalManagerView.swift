@@ -12,10 +12,10 @@ struct GoalManagerView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("先留下一件想坚持的事。")
+                    Text("创建目标")
                         .font(.title2.weight(.bold))
                     HStack {
-                        TextField("例如：每周去健身", text: $title)
+                        TextField("输入目标名称", text: $title)
                             .accessibilityIdentifier("goal-title")
                         Button("建立") { create() }
                             .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
@@ -41,7 +41,7 @@ struct GoalManagerView: View {
                         }
                         .padding(14).background(EditorialPalette.sheet)
                     }
-                    Text("不建立目标，也能照常记录。挑战模板在「AI 帮我安排」中选择，不代表线上报名。")
+                    Text("目标为可选设置。计划模板可在“智能排程”中选择，不涉及线上报名。")
                         .font(.caption).foregroundStyle(EditorialPalette.muted)
                 }.padding(20)
             }
@@ -80,13 +80,13 @@ struct GoalDetailView: View {
                     Text(goal.title).font(.title.weight(.black))
                     Text("已记录 \(model.logs.filter { $0.goalID == goal.id && $0.status == .completed }.count) 次完成")
                         .font(.subheadline).foregroundStyle(EditorialPalette.muted)
-                    Button("和搭档聊聊") { showsCompanion = true }
+                    Button("目标对话") { showsCompanion = true }
                         .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
                     Button("关联已有记录") { showsHistory = true }
                         .frame(minHeight: 44)
-                    DisclosureGroup("节奏与休息日（可选）") {
+                    DisclosureGroup("执行频率与休息日") {
                         VStack(alignment: .leading, spacing: 12) {
-                            Picker("每周行动日", selection: $weeklyDays) {
+                            Picker("每周执行天数", selection: $weeklyDays) {
                                 Text("尚未确定").tag(0)
                                 ForEach(1...7, id: \.self) { Text("\($0) 天").tag($0) }
                             }
@@ -96,7 +96,7 @@ struct GoalDetailView: View {
                                     set: { if $0 { restDays.insert(weekday) } else { restDays.remove(weekday) } }
                                 ))
                             }
-                            Button("保存节奏") {
+                            Button("保存频率") {
                                 guard weeklyDays == 0 || weeklyDays <= 7 - restDays.count else {
                                     error = "行动日多于可用天数，请调整。"; return
                                 }
@@ -105,7 +105,7 @@ struct GoalDetailView: View {
                                 goal.updatedAt = Date()
                                 do { try model.saveJourney() } catch { self.error = error.localizedDescription }
                             }.frame(minHeight: 44)
-                            Text("已启用成就的条件不会随这里的修改而改变。")
+                            Text("此设置不会修改已启用成就的条件。")
                                 .font(.caption).foregroundStyle(EditorialPalette.muted)
                         }.padding(.top, 10)
                     }

@@ -106,14 +106,14 @@ struct AvatarUnlockCeremony: View {
                     .opacity(ready || reduceMotion ? 1 : 0.35)
 
                     if ready {
-                        Button(isPreview ? "返回我的角色" : "穿上，继续出发") {
+                        Button(isPreview ? "返回我的角色" : "装备并继续") {
                             if canEquip { model.equipAvatarReward(reward.id) }
                             finish()
                         }
                         .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: .black))
                         .accessibilityIdentifier("avatar-ceremony-continue")
                         if !isPreview {
-                            Button("先收进衣橱", action: finish)
+                            Button("保存至衣橱", action: finish)
                                 .font(.subheadline.weight(.medium))
                                 .foregroundStyle(.white.opacity(0.7))
                                 .frame(minHeight: 44)

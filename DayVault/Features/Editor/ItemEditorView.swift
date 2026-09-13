@@ -332,13 +332,13 @@ struct ItemEditorView: View {
 
     private var timingModePicker: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("怎么安排")
+            Text("时间设置")
                 .font(.caption.weight(.bold))
                 .foregroundStyle(EditorialPalette.muted)
             HStack(spacing: 8) {
-                timingChoice("只定日期", precision: .dateOnly)
+                timingChoice("仅日期", precision: .dateOnly)
                 timingChoice("具体时间", precision: .timed)
-                timingChoice("先收着", precision: .inbox)
+                timingChoice("待安排", precision: .inbox)
             }
             Text(timingModeHint)
                 .font(.caption)
@@ -348,9 +348,9 @@ struct ItemEditorView: View {
 
     private var timingModeHint: String {
         switch draft.timePrecision {
-        case .dateOnly: "当天做就好。没有指定时间，不会发送提醒。"
+        case .dateOnly: "仅指定日期，不设置时刻或提醒。"
         case .timed: "按指定时间安排；提醒默认关闭。"
-        case .inbox: "先放入待安排，不指定日期，也不会发送提醒。"
+        case .inbox: "不指定日期，不发送提醒。"
         }
     }
 

@@ -29,7 +29,7 @@ struct AvatarStudioView: View {
             : AnyLayout(HStackLayout(alignment: .top, spacing: 16))
         VStack(alignment: .leading, spacing: 22) {
             headerLayout {
-                Text("这是现在的你。")
+                Text("角色档案")
                     .font(.title2.weight(.black))
                     .foregroundStyle(.white)
                 if !dynamicTypeSize.isAccessibilitySize { Spacer() }
@@ -42,7 +42,7 @@ struct AvatarStudioView: View {
                 AvatarDisplayStage(outfit: model.avatarOutfit, pose: pose)
                     .frame(height: 300)
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("你的日常，留下了痕迹")
+                        Text("累计完成记录")
                             .font(.caption2.weight(.medium))
                         Text("已完成 \(completionCount) 件事")
                             .font(.subheadline.weight(.black))
@@ -57,7 +57,7 @@ struct AvatarStudioView: View {
                 .accessibilityIdentifier("avatar-current-character")
 
             actionLayout {
-                Button("展示一下", action: changePose)
+                Button("切换姿态", action: changePose)
                     .buttonStyle(AvatarOutlineButtonStyle())
                     .accessibilityIdentifier("avatar-change-pose")
                 Button(action: renderShareCard) {
@@ -71,7 +71,7 @@ struct AvatarStudioView: View {
                 HStack(spacing: 12) {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("我的衣橱").font(.title3.weight(.black))
-                        Text(model.earnedAvatarRewards.isEmpty ? "完成第一件事，领一副启程护腕。" : "每件装备，都有来历。")
+                        Text(model.earnedAvatarRewards.isEmpty ? "首次完成事项可解锁启程护腕。" : "查看已获装备及解锁条件。")
                             .font(.caption)
                     }
                     Spacer(minLength: 8)
@@ -91,7 +91,7 @@ struct AvatarStudioView: View {
                     .foregroundStyle(.white.opacity(0.65))
                     .fixedSize(horizontal: false, vertical: true)
                 if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: 0) }
-                Button("看看解锁演出") { previewCeremony = true }
+                Button("预览解锁动画") { previewCeremony = true }
                     .font(.caption.weight(.bold))
                     .foregroundStyle(EditorialPalette.acid)
                     .frame(minHeight: 44)
@@ -113,7 +113,7 @@ struct AvatarStudioView: View {
             }
         }
         .alert("分享卡暂时没有生成", isPresented: $shareFailed) {
-            Button("再试一次", action: renderShareCard)
+            Button("重试", action: renderShareCard)
             Button("返回", role: .cancel) {}
         } message: {
             Text("你的穿搭已保留，可以稍后再试。")
@@ -201,9 +201,9 @@ private struct AvatarWardrobeView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("把经历，穿在身上。")
+                    Text("成就装备")
                         .font(.title2.weight(.black))
-                    Text("选择一件查看来历。未获得的装备可以试穿，完成对应成就后才能穿出门。")
+                    Text("选择装备查看解锁条件。未获得的装备仅可预览，解锁后可保存穿搭。")
                         .font(.subheadline)
                         .foregroundStyle(.white.opacity(0.65))
                     LazyVGrid(columns: columns, spacing: 12) {
@@ -265,10 +265,10 @@ private struct AvatarWardrobeView: View {
                             .background(EditorialPalette.acid)
                     }
                 }
-                Text(concealed ? "未署名装备" : reward.name)
+                Text(concealed ? "隐藏装备" : reward.name)
                     .font(.subheadline.weight(.bold))
                     .foregroundStyle(.white)
-                Text(earned ? "已获得 · 查看来历" : concealed ? "某段经历，会留下记号" : "未获得 · 可以试穿")
+                Text(earned ? "已获得 · 查看解锁记录" : concealed ? "尚未解锁" : "未获得 · 可以试穿")
                     .font(.caption2)
                     .foregroundStyle(earned ? EditorialPalette.acid : .white.opacity(0.6))
                     .fixedSize(horizontal: false, vertical: true)
@@ -279,7 +279,7 @@ private struct AvatarWardrobeView: View {
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("avatar-reward-\(reward.id)")
-        .accessibilityLabel(concealed ? "未署名装备，尚未获得" : "\(reward.name)，\(equipped ? "穿戴中" : earned ? "已获得" : "未获得，可以试穿")")
+        .accessibilityLabel(concealed ? "隐藏装备，尚未获得" : "\(reward.name)，\(equipped ? "穿戴中" : earned ? "已获得" : "未获得，可以试穿")")
     }
 }
 
@@ -302,8 +302,8 @@ private struct AvatarRewardDetailView: View {
                             .font(.system(size: 100, weight: .black, design: .monospaced))
                             .frame(maxWidth: .infinity, minHeight: 210)
                             .background(EditorialPalette.vaultSheet)
-                        Text("未署名装备").font(.title.weight(.black))
-                        Text("先留一点悬念。某段经历，会让它显露原貌。")
+                        Text("隐藏装备").font(.title.weight(.black))
+                        Text("隐藏装备，解锁后显示详情。")
                             .foregroundStyle(.white.opacity(0.7))
                     } else {
                         AvatarDisplayStage(
@@ -396,12 +396,12 @@ private struct AvatarShareCard: View {
             .font(.system(size: 11, weight: .bold, design: .monospaced))
             AvatarDisplayStage(outfit: outfit, pose: .proud, animated: false)
                 .frame(height: 320)
-            Text("这些，是我做过的事。")
+            Text("个人成就记录")
                 .font(.system(size: 23, weight: .black))
             Text("已完成 \(completionCount) 件事")
                 .font(.system(size: 17, weight: .bold))
                 .foregroundStyle(EditorialPalette.acid)
-            Text(equipment.isEmpty ? "从平常的一天开始。" : equipment.joined(separator: " / "))
+            Text(equipment.isEmpty ? "暂无成就装备" : equipment.joined(separator: " / "))
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(.white.opacity(0.7))
                 .fixedSize(horizontal: false, vertical: true)

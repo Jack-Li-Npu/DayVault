@@ -1,5 +1,33 @@
 # DayVault writing notes / 文案维护
 
+## v1.2 成就文案（2026-09-13）
+
+公共成就改用与记录行为有关的短名称，描述对应当前判定条件。公开成就的次数、范围和限制直接说明；隐藏项目解锁前仍不公开名称和阈值。角色装备说明与个人安全线索同步调整，既有 ID、资格和装备对应关系不变。
+
+本轮参考 Steam 官方成就列表，而非复制游戏台词或资产。中文编辑技能用于去掉空泛隐喻，界面文案规范用于保留准确动作。[参照来源、改写示例与已知实现缺口](PRODUCT-COMPARISON-2026-09.md)。
+
+`dayvault-achievement-designer` 指令更新到 1.0.2，输出契约保持 1.0.0，重新打包后进入新的成就设计请求。冻结的个人定义不重写。48 项服务端测试验证契约与打包，不代表已验收真实模型文风；本轮没有付费模型调用。
+
+## 当前界面命名规范（2026-09-13）
+
+界面名称采用简洁、明确的产品术语。自然表达不等于聊天口吻：导航和分类使用名词，按钮使用操作名称，表单标题直接说明字段用途。此规范取代下方历史示例中的问句式界面标题。
+
+| 用途 | 统一名称 |
+| --- | --- |
+| 默认事项分类 | 专注、学习、健康、休息、个人事务；无分类时显示“未分类” |
+| 记录入口与表单 | 新增事项、事项名称、计划日期、高级选项 |
+| 时间精度 | 仅日期、具体时间、待安排 |
+| AI 规划 | 智能排程、目标规划、生成计划、实施阶段、近期安排 |
+| 目标与陪伴 | 目标管理、目标对话、记忆管理、调整预览 |
+| 成就分组 | 公共成就、个人成就 |
+| 角色与分享 | 角色档案、成就装备、分享预览 |
+
+角色台词、已解锁成就名称和隐藏线索可以保留表现力；不得将这类表达用作操作标签。错误提示仍需说明原因和可执行的下一步，隐私授权及 AI 来源提示不得省略。默认分类只改显示名称，保留原有本地化键、分类 ID 和统计分组，不改写历史记录或用户自定义名称。
+
+UI labels use concise product terminology, not conversational questions. Keep expressive dialogue and achievement clues separate from navigation, form labels and actions. This naming pass changes display text only; it does not change stored category IDs, achievement rules or AI prompts.
+
+本次检查：14 项 iOS 单元测试、6 项中文界面测试通过；中英文资源语法与差异检查通过。已在模拟器检查新增事项页面的实际显示效果。未调用远端模型。
+
 2026-09-11：通过 Skills CLI 搜索，安装并阅读了下列上游写作技能。安装目录与原有技能分开，没有覆盖旧技能。
 
 | 用途 | 来源 | 固定提交 |
@@ -13,7 +41,7 @@ App 的固定文案在本轮直接修改。模型使用的短版规则在 [AI/Ed
 
 修改文案时先确认页面用途，再读一遍改写后的句子。按钮说清操作，错误说明原因和下一步。AI 回应中出现日期、次数或过往经历，必须有相应来源。不要删除未完成验证、隐私、费用或模型来源的说明。
 
-## Examples / 改写示例
+## Historical examples / 2026-09-11 历史示例
 
 | 位置 | 原文 | 改后 |
 | --- | --- | --- |
@@ -27,6 +55,6 @@ The installed skills guide editing, not claims of human authorship. The shared r
 
 The second release remains `v1.1.0`. Its GitHub description is updated; the original source tag stays fixed. Revised copy and instructions are in the current branch, with a commit-specific link in the release notes.
 
-## 本次检查 / Checks
+## 2026-09-11 检查 / Earlier checks
 
 47 项服务端测试、13 项 iOS 单元测试、3 项中文 UI 测试通过。检查覆盖共享写作规则的实际打包、各操作响应结构不变、AI 来源标识，以及精简编辑器。中英文资源文件语法、README 图片与文件链接和私人配置模式扫描通过。这些检查不等于自然语言质量的用户评测，也没有运行 AI 检测器。

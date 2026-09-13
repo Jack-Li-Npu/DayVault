@@ -97,7 +97,7 @@ struct RootTabView: View {
                 )
                 .safeAreaInset(edge: .top, spacing: 0) {
                     HStack {
-                        Text("AI 帮我安排").font(.headline.weight(.bold))
+                        Text("landing.kicker").font(.headline.weight(.bold))
                         Spacer()
                         Button("返回") { homeSheet = nil }
                             .font(.subheadline.weight(.bold))
@@ -130,7 +130,7 @@ struct RootTabView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text(unlockCount == 1 ? "新成就，收下了。" : "收下了 \(unlockCount) 项新成就。")
                                 .font(.subheadline.weight(.bold))
-                            Text("去成就册看看")
+                            Text("查看成就册")
                                 .font(.caption)
                                 .foregroundStyle(.white.opacity(0.7))
                         }

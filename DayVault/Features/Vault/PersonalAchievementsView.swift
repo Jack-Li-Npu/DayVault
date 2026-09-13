@@ -7,7 +7,8 @@ struct PersonalAchievementsView: View {
     @State private var selected: PersonalAchievementDefinition?
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("只属于这段旅程。")
+            Text("个人成就")
+                .accessibilityIdentifier("personal-achievements-heading")
                 .font(.title2.weight(.black)).foregroundStyle(.white)
             Text("依据个人记录 · 不参与公共成就数量或全球排名")
                 .font(.caption).foregroundStyle(.white.opacity(0.65))
@@ -24,7 +25,7 @@ struct PersonalAchievementsView: View {
                         PersonalBadgeView(style: concealed ? "concealed" : definition.badgeStyleID)
                             .frame(width: 66, height: 66)
                         VStack(alignment: .leading, spacing: 6) {
-                            Text(concealed ? "未署名的成就" : definition.title).font(.headline.weight(.bold))
+                            Text(concealed ? "隐藏成就" : definition.title).font(.headline.weight(.bold))
                             Text(model.goals.first { $0.id == definition.goalID }?.title ?? "个人目标")
                                 .font(.caption).foregroundStyle(.white.opacity(0.6))
                             if !model.activePersonalDefinitionKeys.contains(definition.definitionKey) {
@@ -98,11 +99,11 @@ private struct PersonalAchievementDetail: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     PersonalBadgeView(style: concealed ? "concealed" : definition.badgeStyleID).frame(width: 110, height: 110)
-                    Text(concealed ? "未署名的成就" : definition.title).font(.largeTitle.weight(.black))
+                    Text(concealed ? "隐藏成就" : definition.title).font(.largeTitle.weight(.black))
                     if concealed {
                         Text(signalName(state?.signal ?? .dormant)).foregroundStyle(EditorialPalette.acid)
                         if state?.signal == .resonant { Text(concealedClue(definition)) }
-                        else { Text("先留一点悬念。继续记录就好。").foregroundStyle(.white.opacity(0.65)) }
+                        else { Text("线索尚未解锁。").foregroundStyle(.white.opacity(0.65)) }
                     } else {
                         Text(definition.detail)
                         Text(ruleDescription(definition)).font(.subheadline).foregroundStyle(EditorialPalette.acid)
@@ -112,7 +113,7 @@ private struct PersonalAchievementDetail: View {
                     }
                     if let date = state?.unlockedAt {
                         Text("获得于 \(date.formatted(date: .abbreviated, time: .omitted))").font(.caption)
-                        Button("看看我们的配合") { showsDuet = true }
+                        Button("回顾成长演出") { showsDuet = true }
                             .buttonStyle(AvatarOutlineButtonStyle())
                         Button("预览分享卡") { showsShare = true }
                             .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: .black))
@@ -128,7 +129,7 @@ private struct PersonalAchievementDetail: View {
                             }.font(.caption)
                         }
                     } else {
-                        Button("停用这项成就") {
+                        Button("停用成就") {
                             do { try model.archivePersonalAchievement(definition); dismiss() }
                             catch { self.error = error.localizedDescription }
                         }.frame(minHeight: 44)
@@ -172,7 +173,7 @@ private struct PersonalSharePreview: View {
     }
     private var card: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("DAYVAULT / 我的旅程").font(.caption.monospaced().weight(.bold))
+            Text("DAYVAULT / 成就档案").font(.caption.monospaced().weight(.bold))
             HStack {
                 DayVaultAvatar(outfit: model.avatarOutfit, pose: .proud, animated: false).frame(width: 180, height: 220)
                 PersonalBadgeView(style: definition.badgeStyleID).frame(width: 88, height: 88)
@@ -201,14 +202,14 @@ private struct PersonalSharePreview: View {
                             Text(memory.text).tag(Optional(memory.id))
                         }
                     }
-                    Button("分享这张卡") {
+                    Button("分享卡片") {
                         let renderer = ImageRenderer(content: card)
                         renderer.scale = 3
                         if let rendered = renderer.uiImage { image = SharedJourneyImage(image: rendered) }
                     }.buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: .black))
                 }.padding(16)
             }.background(EditorialPalette.paper)
-            .navigationTitle("分享前看一眼").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("分享预览").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("返回") { dismiss() } } }
             .sheet(item: $image) { JourneyActivitySheet(image: $0.image) }
         }
@@ -223,16 +224,16 @@ private struct JourneyActivitySheet: UIViewControllerRepresentable {
 }
 
 private func signalName(_ signal: HiddenSignal) -> String {
-    switch signal { case .dormant: "尚未苏醒"; case .faint: "微弱信号"; case .resonant: "正在共鸣" }
+    NSLocalizedString("signal.\(signal.rawValue)", comment: "")
 }
 
 private func concealedClue(_ definition: PersonalAchievementDefinition) -> String {
     // Model-authored clues may contain exact thresholds; only local copy is safe before unlock.
     switch definition.rule?.kind {
-    case .completionCount: "那些做完的小事，正在留下轮廓。"
-    case .activeDays: "散落在日历里的脚印，开始连起来了。"
-    case .completedCycles: "熟悉的节奏里，藏着新的回响。"
-    case nil: "轮廓渐渐清晰。继续按自己的节奏记录。"
+    case .completionCount: "奖励藏在平常的完成记录里。"
+    case .activeDays: "有些奖励，要分几天寻找。"
+    case .completedCycles: "按约定的安排完成，再回来看看。"
+    case nil: "继续记录，线索会逐步出现。"
     }
 }
 
