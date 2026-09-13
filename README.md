@@ -2,7 +2,7 @@
 
 记录每天做了什么，回头看看自己坚持了多久。
 
-[English](README.en.md) · [v1.2 介绍](docs/releases/v1.2.0.md) · [GitHub Release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.2.0) · [v1.1 介绍](docs/releases/v1.1.0.md) · [原版存档](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.md)
+[English](README.en.md) · [v1.3 介绍](docs/releases/v1.3.0.md) · [GitHub Release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0) · [v1.2 介绍](docs/releases/v1.2.0.md) · [v1.1 介绍](docs/releases/v1.1.0.md) · [原版存档](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.md)
 
 ![DayVault 品牌插画](Design/Previews/dayvault-readme-banner.svg)
 
@@ -44,6 +44,8 @@ DayVault 是一个中文 iPhone 日常记录器。首页是一张清单，可以
 开启某个目标的 AI 后，它还能设计最多两项明确成就和一项隐藏成就。程序按完成次数、不同完成日期或已确认节奏下的达标周期计算进度。规则接受后冻结，AI 不能在聊天中降低门槛或直接授奖，个人成就也不影响公共装备资格。
 
 旧记录需要你确认关联目标才会计入。已获得的成就保留；后来更正记录时，详情会说明依据的变化。
+
+v1.3 将个人成就的主标题统一为规则对应的里程碑，例如“首次完成”“累计记录 7 天”。卡片、详情和分享卡使用相同名称，条件区分次数、天数与达标周期。以前生成的成就也会更新显示，无需重新生成；AI 原始文案保留在详情的折叠项中，隐藏成就解锁前不显示。
 
 <table>
   <tr>

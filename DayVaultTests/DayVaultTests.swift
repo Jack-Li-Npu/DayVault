@@ -5,6 +5,70 @@ import XCTest
 @testable import DayVault
 
 final class DayVaultTests: XCTestCase {
+    @MainActor
+    func testPersonalAchievementDisplayUsesFrozenRuleWithoutRewritingAIText() {
+        let rule = PersonalAchievementRule(kind: .activeDays, target: 7, startsAt: .distantPast, timeZoneID: "Asia/Shanghai")
+        let definition = PersonalAchievementDefinition(goalID: UUID(), batchID: UUID(), title: "半程灯", detail: "旧模型说明", rule: rule)
+        let originalKey = definition.definitionKey
+        let originalRule = definition.ruleJSON
+        let originalUpdatedAt = definition.updatedAt
+        let copy = PersonalAchievementCopy(definition: definition, isUnlocked: false)
+
+        XCTAssertEqual(copy.title, "累计记录 7 天")
+        XCTAssertTrue(copy.condition.contains("无需连续"))
+        XCTAssertEqual(copy.progressLabel(value: 1), "1 / 7 天")
+        XCTAssertEqual(definition.title, "半程灯")
+        XCTAssertEqual(definition.detail, "旧模型说明")
+        XCTAssertEqual(definition.definitionKey, originalKey)
+        XCTAssertEqual(definition.ruleJSON, originalRule)
+        XCTAssertEqual(definition.updatedAt, originalUpdatedAt)
+    }
+
+    @MainActor
+    func testPersonalAchievementCopyDistinguishesCountsDaysAndCycles() {
+        let start = Date(timeIntervalSince1970: 1_800_000_000)
+        let cases: [(PersonalAchievementRuleKind, Int, String, String)] = [
+            (.completionCount, 1, "首次完成", "1 / 1 次"),
+            (.completionCount, 7, "完成 7 次", "1 / 7 次"),
+            (.activeDays, 1, "首次完成", "1 / 1 天"),
+            (.activeDays, 7, "累计记录 7 天", "1 / 7 天"),
+            (.completedCycles, 4, "达标 4 个周期", "1 / 4 个周期"),
+        ]
+        for (kind, target, title, progress) in cases {
+            let rule = PersonalAchievementRule(kind: kind, target: target, startsAt: start, timeZoneID: "UTC",
+                                              cycleLengthDays: 14, requiredDaysPerCycle: 3, cycleAnchor: start)
+            let definition = PersonalAchievementDefinition(goalID: UUID(), batchID: UUID(), title: "模型名称", rule: rule)
+            let copy = PersonalAchievementCopy(definition: definition, isUnlocked: true)
+            XCTAssertEqual(copy.title, title)
+            XCTAssertEqual(copy.progressLabel(value: 1), progress)
+            if kind == .completedCycles {
+                XCTAssertTrue(copy.condition.contains("每 14 天"))
+                XCTAssertTrue(copy.condition.contains("至少 3 天"))
+            }
+        }
+    }
+
+    @MainActor
+    func testPersonalAchievementCopyConcealsTitleConditionAndNumericProgress() {
+        let rule = PersonalAchievementRule(kind: .completionCount, target: 7, startsAt: .distantPast, timeZoneID: "UTC")
+        let definition = PersonalAchievementDefinition(goalID: UUID(), batchID: UUID(), title: "隐藏答案", isHidden: true, rule: rule)
+        let locked = PersonalAchievementCopy(definition: definition, isUnlocked: false)
+        XCTAssertEqual(locked.title, "隐藏成就")
+        XCTAssertEqual(locked.condition, "解锁后显示条件。")
+        XCTAssertEqual(locked.progressLabel(value: 5), "")
+        XCTAssertEqual(PersonalAchievementCopy(definition: definition, isUnlocked: true).title, "完成 7 次")
+    }
+
+    @MainActor
+    func testInvalidPersonalRuleDoesNotPromiseSynchronizationOrShowProgress() {
+        let rule = PersonalAchievementRule(kind: .completionCount, target: 0, startsAt: .distantPast, timeZoneID: "UTC")
+        let definition = PersonalAchievementDefinition(goalID: UUID(), batchID: UUID(), title: "模型名称", rule: rule)
+        let copy = PersonalAchievementCopy(definition: definition, isUnlocked: false)
+        XCTAssertEqual(copy.title, "个人成就")
+        XCTAssertEqual(copy.condition, "成就条件暂不可用。")
+        XCTAssertEqual(copy.progressLabel(value: 1), "")
+    }
+
     func testPublicAchievementCopyCoversTheUnchangedCatalog() throws {
         let path = try XCTUnwrap(Bundle.main.path(forResource: "zh-Hans", ofType: "lproj"))
         let strings = try XCTUnwrap(Bundle(path: path))

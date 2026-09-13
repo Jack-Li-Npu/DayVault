@@ -2,7 +2,7 @@
 
 Record what you do. Look back at how long you have kept at it.
 
-[简体中文](README.md) · [v1.2 introduction](docs/releases/v1.2.0.md) · [GitHub Release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.2.0) · [v1.1 introduction](docs/releases/v1.1.0.md) · [Original version](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.en.md)
+[简体中文](README.md) · [v1.3 introduction](docs/releases/v1.3.0.md) · [GitHub Release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0) · [v1.2 introduction](docs/releases/v1.2.0.md) · [v1.1 introduction](docs/releases/v1.1.0.md) · [Original version](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.en.md)
 
 ![DayVault brand illustration](Design/Previews/dayvault-readme-banner.svg)
 
@@ -49,6 +49,8 @@ The shared catalog has 24 achievements, including 8 hidden ones. Visible achieve
 With your consent, AI can design up to two visible achievements and one concealed achievement for a goal. The app evaluates completion counts, distinct days or completed cycles based on your confirmed routine. Accepted rules are frozen. AI cannot award an achievement in chat or lower its conditions, and personal achievements do not affect shared equipment eligibility.
 
 Older records count only after you associate them with a goal. Unlocked achievements remain yours; corrections to their evidence are reflected in the details.
+
+In v1.3, personal achievement headings use milestones derived from accepted rules, such as “首次完成” (First completion) and “累计记录 7 天” (Record activity on 7 days). Cards, details and share previews use the same names, with conditions that distinguish counts, days and qualifying cycles. Existing achievements update their display without regeneration. Original AI wording remains in a collapsed detail section and stays concealed until a hidden achievement unlocks.
 
 <table>
   <tr>

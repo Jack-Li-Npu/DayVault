@@ -10,22 +10,23 @@ struct PersonalAchievementsView: View {
             Text("个人成就")
                 .accessibilityIdentifier("personal-achievements-heading")
                 .font(.title2.weight(.black)).foregroundStyle(.white)
-            Text("依据个人记录 · 不参与公共成就数量或全球排名")
+            Text("按目标收集的个人成就")
                 .font(.caption).foregroundStyle(.white.opacity(0.65))
             if model.personalAchievements.isEmpty {
-                Text("在目标中开启 AI 陪伴后，搭档会设计最多两项明确成就和一个隐藏彩蛋。尚未连接 AI 时，不会生成虚假的专属成就。")
+                Text("在目标详情中启用 AI 陪伴，即可生成个人成就。每个目标最多有两项普通成就和一项隐藏成就。")
                     .font(.subheadline).foregroundStyle(.white.opacity(0.75))
                     .padding(18).background(EditorialPalette.vaultSheet)
             }
             ForEach(model.visiblePersonalAchievements.filter { $0.archivedAt == nil || model.personalState($0)?.unlockedAt != nil }) { definition in
                 let state = model.personalState(definition)
                 let concealed = definition.isHidden && state?.unlockedAt == nil
+                let copy = PersonalAchievementCopy(definition: definition, isUnlocked: state?.unlockedAt != nil)
                 Button { selected = definition } label: {
                     HStack(spacing: 16) {
                         PersonalBadgeView(style: concealed ? "concealed" : definition.badgeStyleID)
                             .frame(width: 66, height: 66)
                         VStack(alignment: .leading, spacing: 6) {
-                            Text(concealed ? "隐藏成就" : definition.title).font(.headline.weight(.bold))
+                            Text(copy.title).font(.headline.weight(.bold))
                             Text(model.goals.first { $0.id == definition.goalID }?.title ?? "个人目标")
                                 .font(.caption).foregroundStyle(.white.opacity(0.6))
                             if !model.activePersonalDefinitionKeys.contains(definition.definitionKey) {
@@ -37,7 +38,7 @@ struct PersonalAchievementsView: View {
                                 Text("已获得").font(.caption).foregroundStyle(EditorialPalette.acid)
                             } else {
                                 ProgressView(value: state?.progress ?? 0).tint(EditorialPalette.acid)
-                                Text(ruleDescription(definition)).font(.caption).foregroundStyle(.white.opacity(0.7))
+                                Text(copy.condition).font(.caption).foregroundStyle(.white.opacity(0.7))
                             }
                         }
                         Spacer(minLength: 0)
@@ -94,22 +95,32 @@ private struct PersonalAchievementDetail: View {
     @State private var error: String?
     private var state: AchievementState? { model.personalState(definition) }
     private var concealed: Bool { definition.isHidden && state?.unlockedAt == nil }
+    private var copy: PersonalAchievementCopy {
+        PersonalAchievementCopy(definition: definition, isUnlocked: state?.unlockedAt != nil)
+    }
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     PersonalBadgeView(style: concealed ? "concealed" : definition.badgeStyleID).frame(width: 110, height: 110)
-                    Text(concealed ? "隐藏成就" : definition.title).font(.largeTitle.weight(.black))
+                    Text(copy.title).font(.largeTitle.weight(.black))
                     if concealed {
                         Text(signalName(state?.signal ?? .dormant)).foregroundStyle(EditorialPalette.acid)
                         if state?.signal == .resonant { Text(concealedClue(definition)) }
                         else { Text("线索尚未解锁。").foregroundStyle(.white.opacity(0.65)) }
                     } else {
-                        Text(definition.detail)
-                        Text(ruleDescription(definition)).font(.subheadline).foregroundStyle(EditorialPalette.acid)
+                        Text(copy.condition).font(.subheadline).foregroundStyle(EditorialPalette.acid)
                         let result = PersonalAchievementEngine.evaluate(definition, logs: model.logs)
-                        Text("当前记录：\(result.metricValue) / \(definition.rule?.target ?? 0)")
+                        Text(copy.progressLabel(value: result.metricValue))
                             .font(.caption.monospacedDigit())
+                        DisclosureGroup("AI 原始文案") {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(definition.title).font(.headline)
+                                Text(definition.detail)
+                                Text("保留生成时的文案。成就条件以当前显示的规则为准，名称调整不影响解锁记录。")
+                                    .font(.caption).foregroundStyle(.white.opacity(0.6))
+                            }.padding(.top, 8)
+                        }.font(.caption)
                     }
                     if let date = state?.unlockedAt {
                         Text("获得于 \(date.formatted(date: .abbreviated, time: .omitted))").font(.caption)
@@ -172,14 +183,15 @@ private struct PersonalSharePreview: View {
         }.sorted()
     }
     private var card: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        let copy = PersonalAchievementCopy(definition: definition, isUnlocked: model.personalState(definition)?.unlockedAt != nil)
+        return VStack(alignment: .leading, spacing: 14) {
             Text("DAYVAULT / 成就档案").font(.caption.monospaced().weight(.bold))
             HStack {
                 DayVaultAvatar(outfit: model.avatarOutfit, pose: .proud, animated: false).frame(width: 180, height: 220)
                 PersonalBadgeView(style: definition.badgeStyleID).frame(width: 88, height: 88)
             }
-            Text(definition.title).font(.title.weight(.black))
-            Text(ruleDescription(definition)).font(.subheadline)
+            Text(copy.title).font(.title.weight(.black))
+            Text(copy.condition).font(.subheadline)
             if let first = dates.first, let last = dates.last {
                 Text("\(first.formatted(date: .abbreviated, time: .omitted)) — \(last.formatted(date: .abbreviated, time: .omitted))")
                     .font(.caption)
@@ -237,11 +249,49 @@ private func concealedClue(_ definition: PersonalAchievementDefinition) -> Strin
     }
 }
 
-private func ruleDescription(_ definition: PersonalAchievementDefinition) -> String {
-    guard let rule = definition.rule else { return "等待完整定义同步" }
-    switch rule.kind {
-    case .completionCount: return "这个目标累计完成 \(rule.target) 次"
-    case .activeDays: return "在 \(rule.target) 个不同日期留下完成记录"
-    case .completedCycles: return "每 \(rule.cycleLengthDays) 天行动 \(rule.requiredDaysPerCycle) 天，累计完成 \(rule.target) 个周期"
+/// Presentation only: persisted AI text and frozen eligibility rules stay untouched.
+struct PersonalAchievementCopy {
+    let title: String
+    let condition: String
+    private let target: Int?
+    private let unit: String
+
+    init(definition: PersonalAchievementDefinition, isUnlocked: Bool) {
+        guard !definition.isHidden || isUnlocked else {
+            title = "隐藏成就"
+            condition = "解锁后显示条件。"
+            target = nil
+            unit = ""
+            return
+        }
+        guard let rule = definition.rule, rule.isValid else {
+            title = "个人成就"
+            condition = "成就条件暂不可用。"
+            target = nil
+            unit = ""
+            return
+        }
+        target = rule.target
+        switch rule.kind {
+        case .completionCount:
+            title = rule.target == 1 ? "首次完成" : "完成 \(rule.target) 次"
+            condition = "累计完成 \(rule.target) 项关联事项。"
+            unit = "次"
+        case .activeDays:
+            title = rule.target == 1 ? "首次完成" : "累计记录 \(rule.target) 天"
+            condition = rule.target == 1
+                ? "完成目标内的一项任务。"
+                : "累计 \(rule.target) 天完成过目标内的事项，无需连续。"
+            unit = "天"
+        case .completedCycles:
+            title = "达标 \(rule.target) 个周期"
+            condition = "每 \(rule.cycleLengthDays) 天中，至少 \(rule.requiredDaysPerCycle) 天完成过目标内的事项；累计达标 \(rule.target) 个周期。"
+            unit = "个周期"
+        }
+    }
+
+    func progressLabel(value: Int) -> String {
+        guard let target else { return "" }
+        return "\(value) / \(target) \(unit)"
     }
 }
