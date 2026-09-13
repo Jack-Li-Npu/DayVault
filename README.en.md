@@ -2,7 +2,9 @@
 
 Record what you do. Look back at how long you have kept at it.
 
-[简体中文](README.md) · [v1.3 introduction](docs/releases/v1.3.0.md) · [GitHub Release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0) · [v1.2 introduction](docs/releases/v1.2.0.md) · [v1.1 introduction](docs/releases/v1.1.0.md) · [Original version](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.en.md)
+[简体中文](README.md) · **English**
+
+[Getting started](#your-first-minute) · [Run locally](#run-it-locally) · [Developer guide](docs/DEVELOPMENT.en.md)
 
 ![DayVault brand illustration](Design/Previews/dayvault-readme-banner.svg)
 
@@ -11,6 +13,15 @@ DayVault is an iPhone daily recorder with a Simplified Chinese interface. Write 
 The idea came from wanting to share the satisfaction of sticking with something for a long time. DayVault keeps those records in an achievement collection, with short character animations and an optional AI companion. When the companion mentions your past progress, its reply should point to records you actually shared.
 
 This is a development prototype in a public repository, not an App Store release. Recording, existing achievements and animation work offline. Live AI planning has returned useful plans, but recent tests still hit upstream HTTP 504. See the [integration record](docs/AI-PLANNER-LIVE-VALIDATION.zh-CN.md).
+
+## Releases
+
+- [v1.3.0](docs/releases/v1.3.0.md) (current) · Personal achievement copy · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0)
+- [v1.2.0](docs/releases/v1.2.0.md) · UI terminology and achievement copy · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.2.0)
+- [v1.1.0](docs/releases/v1.1.0.md) · Planner instructions, connection fixes and private configuration · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.1.0)
+- [v1.0.0](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.en.md) · Original version · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.0.0)
+
+[All releases](https://github.com/Jack-Li-Npu/DayVault/releases)
 
 ## A look inside
 

@@ -2,7 +2,9 @@
 
 记录每天做了什么，回头看看自己坚持了多久。
 
-[English](README.en.md) · [v1.3 介绍](docs/releases/v1.3.0.md) · [GitHub Release](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0) · [v1.2 介绍](docs/releases/v1.2.0.md) · [v1.1 介绍](docs/releases/v1.1.0.md) · [原版存档](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.md)
+**简体中文** · [English](README.en.md)
+
+[使用说明](#第一次使用) · [本地运行](#本地运行) · [开发文档](docs/DEVELOPMENT.zh-CN.md)
 
 ![DayVault 品牌插画](Design/Previews/dayvault-readme-banner.svg)
 
@@ -11,6 +13,15 @@ DayVault 是一个中文 iPhone 日常记录器。首页是一张清单，可以
 做这个项目的起因，是坚持一件事很久之后想把成果拿出来看看，也想有人知道这段时间做过什么。DayVault 因此有了成就册、可以回看的双人动画，以及一个可选的 AI 搭档。搭档只根据你授权的记录回应；它说起某次经历时，应该能找到对应的记录。
 
 目前是公开仓库中的开发原型，尚未上架 App Store。记录、已有成就和动画可离线使用。真实 AI 排程曾成功返回计划，但最近仍有上游 HTTP 504。[测试记录](docs/AI-PLANNER-LIVE-VALIDATION.zh-CN.md)列出了具体范围。
+
+## 版本记录
+
+- [v1.3.0](docs/releases/v1.3.0.md)（当前版本） · 个人成就文案修订 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0)
+- [v1.2.0](docs/releases/v1.2.0.md) · 界面命名与成就文案 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.2.0)
+- [v1.1.0](docs/releases/v1.1.0.md) · 排程指令、连接修复与私人配置 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.1.0)
+- [v1.0.0](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.md) · 原版存档 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.0.0)
+
+[查看全部发布版本](https://github.com/Jack-Li-Npu/DayVault/releases)
 
 ## 看看界面
 
