@@ -1,5 +1,7 @@
 # DayVault 开发指南
 
+> 当前范围（2026-09-14）：App 已停用远端 AI，不需要代理或 API 密钥。下文 AI 配置、接口与联调说明保留作历史实现参考，不能仅靠环境变量重新启用；恢复功能需要修改代码并重新验收。已有目标、记录和个人成就保留，iCloud、Calendar 与 StoreKit 不受本次范围调整影响。
+
 > Release privacy note / 发布脱敏说明：`api.example.com`, `example-model` and legacy model labels are placeholders, not actual provider settings. 私人接口与模型仅保存在忽略的本地配置中；历史测试结论保留。
 
 [English](DEVELOPMENT.en.md) · [项目介绍](../README.md) · [隐私说明](../PRIVACY.md)

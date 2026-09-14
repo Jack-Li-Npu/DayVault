@@ -93,6 +93,7 @@ extension AppModel {
     }
 
     func proposeAdjustment(goalID: UUID, message: String) async throws -> UUID {
+        try requireJourneyAI()
         guard !journeyBusy else { throw JourneyActionError.stale }
         let epoch = try adjustmentAuthorizationEpoch(goalID: goalID)
         journeyBusy = true

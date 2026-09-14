@@ -7,7 +7,7 @@ enum JourneyActionError: LocalizedError {
     case unavailableGoal, stale, invalid, noChanges, saveFailed
     var errorDescription: String? {
         switch self {
-        case .unavailableGoal: "请先选择目标并开启 AI 陪伴。"
+        case .unavailableGoal: "此目标暂不可用于调整。请在日程中手动修改相关事项。"
         case .stale: "记录已经变化，请重新查看建议。"
         case .invalid: "这份建议未通过检查，没有修改你的记录。"
         case .noChanges: "目前没有可调整的事项。"
@@ -131,7 +131,8 @@ extension AppModel {
     }
 
     func recordCompanionDay(goalID: UUID?, at date: Date) {
-        guard let goal = goals.first(where: { $0.id == goalID }), let enabled = goal.aiEnabledAt,
+        guard usesInjectedJourneyTestDouble,
+              let goal = goals.first(where: { $0.id == goalID }), let enabled = goal.aiEnabledAt,
               date >= enabled, date <= Date().addingTimeInterval(1) else { return }
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: goal.timeZoneID) ?? .current
@@ -194,6 +195,7 @@ extension AppModel {
     }
 
     func enableGoalAI(_ goalID: UUID) async throws {
+        try requireJourneyAI()
         guard let goal = goals.first(where: { $0.id == goalID }) else { throw JourneyActionError.invalid }
         if goal.aiEnabledAt == nil { goal.aiEnabledAt = Date() }
         if goal.achievementBatchID == nil { goal.achievementBatchID = stableJourneyID("\(goal.id.uuidString):personal:v1") }
@@ -210,6 +212,7 @@ extension AppModel {
     }
 
     func generatePersonalAchievements(_ goalID: UUID) async throws {
+        try requireJourneyAI()
         guard !journeyBusy, let goal = goals.first(where: { $0.id == goalID }), goal.aiEnabledAt != nil else { throw JourneyActionError.unavailableGoal }
         guard goal.achievementGenerationState != "complete" else { return }
         journeyBusy = true
@@ -293,6 +296,7 @@ extension AppModel {
     }
 
     func sendCompanionMessage(goalID: UUID, text: String, triggerKey: String? = nil) async throws {
+        try requireJourneyAI()
         guard !journeyBusy, let goal = goals.first(where: { $0.id == goalID }), goal.aiEnabledAt != nil else { throw JourneyActionError.unavailableGoal }
         journeyBusy = true
         defer { journeyBusy = false }
@@ -336,21 +340,7 @@ extension AppModel {
     }
 
     func scheduleDailyCompanionReply(goalID: UUID?, milestone: Bool = false) {
-        guard AIPlannerServiceFactory.isRemoteConfigured, !journeyBusy,
-              let goal = goals.first(where: { $0.id == goalID }), goal.aiEnabledAt != nil else { return }
-        let day = Calendar.current.startOfDay(for: Date()).timeIntervalSince1970
-        let key = milestone ? "milestone:\(personalUnlockIDs.sorted().joined(separator: ","))" : "daily:\(day)"
-        guard !companionMessages.contains(where: { $0.triggerKey == key }) else { return }
-        let reservation = CompanionMessage(goalID: goal.id, role: "event", text: "")
-        reservation.triggerKey = key
-        context.insert(reservation)
-        guard (try? saveJourney()) != nil else { return }
-        Task {
-            do {
-                try await sendCompanionMessage(goalID: goal.id,
-                    text: milestone ? "我刚获得一项个人成就，请结合提供的记录简短回应，不猜测隐藏条件。" : "回应今天留下的行动，用一句话就好。", triggerKey: key)
-            } catch { /* Automatic replies never interrupt recording. Manual chat exposes errors. */ }
-        }
+        // Kept as a harmless completion hook for existing records. No background AI or reservations.
     }
 
     func confirmMemory(_ memory: CompanionMemory, text: String) throws {

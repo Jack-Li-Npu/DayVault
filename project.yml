@@ -25,6 +25,7 @@ targets:
       - path: DayVault
         excludes:
           - Resources/**/*.strings
+          - Features/Landing/AILandingView.swift
       - path: DayVault/Resources
         excludes:
           - en.lproj/**

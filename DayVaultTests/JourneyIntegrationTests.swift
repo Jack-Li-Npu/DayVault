@@ -6,6 +6,100 @@ import XCTest
 
 final class JourneyIntegrationTests: XCTestCase {
     @MainActor
+    func testDefaultModelRejectsAIRequestsBeforeChangingRecordsOrConsent() async throws {
+        let model = makeModel(ai: nil)
+        let fresh = try insertGoal(in: model)
+        let legacy = try insertGoal(in: model, enabled: true)
+        let legacyConsent = legacy.aiEnabledAt
+        let originalGenerationState = legacy.achievementGenerationState
+
+        do {
+            try await model.enableGoalAI(fresh.id)
+            XCTFail("The release cannot enable new AI consent")
+        } catch let error as JourneyAIServiceError { XCTAssertEqual(error, .disabled) }
+        do {
+            try await model.generatePersonalAchievements(legacy.id)
+            XCTFail("Existing consent must not enable AI generation")
+        } catch let error as JourneyAIServiceError { XCTAssertEqual(error, .disabled) }
+        do {
+            try await model.sendCompanionMessage(goalID: legacy.id, text: "不要发送或保存这条测试消息")
+            XCTFail("Chat must be rejected before persisting the user message")
+        } catch let error as JourneyAIServiceError { XCTAssertEqual(error, .disabled) }
+        do {
+            _ = try await model.proposeAdjustment(goalID: legacy.id, message: "稍晚一些")
+            XCTFail("New adjustment generation must be disabled")
+        } catch let error as JourneyAIServiceError { XCTAssertEqual(error, .disabled) }
+
+        XCTAssertNil(fresh.aiEnabledAt)
+        XCTAssertNil(fresh.achievementBatchID)
+        XCTAssertEqual(legacy.aiEnabledAt, legacyConsent)
+        XCTAssertEqual(legacy.achievementGenerationState, originalGenerationState)
+        XCTAssertTrue(model.companionMessages.isEmpty)
+        XCTAssertTrue(model.companionMemories.isEmpty)
+        XCTAssertTrue(model.personalAchievements.isEmpty)
+        XCTAssertTrue(model.adjustmentRecords.isEmpty)
+        XCTAssertFalse(model.journeyBusy)
+    }
+
+    @MainActor
+    func testCompletionNeverRequestsAnAutomaticReplyEvenWithAnInjectedService() async throws {
+        let fake = JourneyFakeAI()
+        let model = makeModel(ai: fake)
+        let goal = try insertGoal(in: model, enabled: true)
+        let occurrence = try insertOccurrence(in: model, goalID: goal.id,
+            start: Calendar.current.startOfDay(for: Date()), precision: .dateOnly)
+
+        model.complete(occurrence)
+        model.scheduleDailyCompanionReply(goalID: goal.id)
+        model.scheduleDailyCompanionReply(goalID: goal.id, milestone: true)
+        await Task.yield()
+
+        let replyCount = await fake.replyRequestCount
+        XCTAssertEqual(replyCount, 0)
+        XCTAssertTrue(model.companionMessages.isEmpty, "No automatic reply or daily reservation is created")
+        XCTAssertTrue(model.companionMemories.isEmpty)
+        XCTAssertEqual(model.logs.first?.status, .completed)
+    }
+
+    @MainActor
+    func testDisabledAIKeepsLocalPersonalProgressAndLegacyHistoryAcrossRelaunch() throws {
+        let model = makeModel(ai: nil)
+        let goal = try insertGoal(in: model, enabled: true)
+        goal.companionRecordedDayKeysJSON = "[\"1725926400.0\"]"
+        let definitions = makeBatch(goalID: goal.id, batchID: UUID(), generationID: UUID(),
+            createdAt: Date().addingTimeInterval(-60))
+        definitions.forEach { model.context.insert($0) }
+        let oldMessage = CompanionMessage(goalID: goal.id, role: "assistant", text: "已保存的历史回复")
+        let oldMemory = CompanionMemory(goalID: goal.id, text: "已确认的历史偏好")
+        oldMemory.isConfirmed = true
+        model.context.insert(oldMessage)
+        model.context.insert(oldMemory)
+        try model.saveJourney()
+        let occurrence = try insertOccurrence(in: model, goalID: goal.id,
+            start: Calendar.current.startOfDay(for: Date()), precision: .dateOnly)
+
+        model.complete(occurrence)
+
+        let log = try XCTUnwrap(model.logs.first { $0.occurrenceKey == occurrence.id })
+        XCTAssertFalse(log.recordedDuringCompanionship, "New activity cannot claim discontinued AI companionship")
+        XCTAssertNil(log.companionSessionID)
+        XCTAssertEqual(model.companionDayCount(for: goal.id), 1)
+        XCTAssertNotNil(model.personalState(definitions[0])?.unlockedAt)
+        XCTAssertEqual(model.personalState(definitions[1])?.progress, 0.5)
+        XCTAssertEqual(model.personalEvidence.count, 1)
+        XCTAssertTrue(model.unlockedAchievementIDs.contains("first_check"))
+
+        let restored = makeModel(container: model.container, ai: nil)
+        XCTAssertEqual(restored.personalAchievements.count, 2)
+        XCTAssertEqual(restored.personalEvidence.count, 1)
+        XCTAssertEqual(restored.logs.first?.goalID, goal.id)
+        XCTAssertTrue(restored.personalUnlockIDs.isEmpty)
+        XCTAssertEqual(restored.companionMessages.map(\.text), [oldMessage.text])
+        XCTAssertEqual(restored.companionMemories.map(\.text), [oldMemory.text])
+        XCTAssertEqual(restored.companionDayCount(for: goal.id), 1)
+    }
+
+    @MainActor
     func testExplicitHistoryAssociationIsGoalScopedAndDoesNotInventSharedDays() throws {
         let model = makeModel()
         let first = try insertGoal(in: model, title: "训练")
@@ -563,7 +657,7 @@ final class JourneyIntegrationTests: XCTestCase {
     }
 
     @MainActor
-    private func makeModel(container: ModelContainer? = nil, ai: any JourneyAI = JourneyFakeAI()) -> AppModel {
+    private func makeModel(container: ModelContainer? = nil, ai: (any JourneyAI)? = JourneyFakeAI()) -> AppModel {
         let model = AppModel(container: container ?? PersistenceController.makeContainer(inMemory: true),
             persistAvatarPreferences: false, journeyAI: ai)
         model.calendarEnabled = false
@@ -629,6 +723,7 @@ private actor JourneyFakeAI: JourneyAI {
     var replySources: [String]
     let memoryCandidate: String?
     private(set) var designRequestCount = 0
+    private(set) var replyRequestCount = 0
     private var reachedPause = false
     private var pauseWaiter: CheckedContinuation<Void, Never>?
     private var responseWaiter: CheckedContinuation<Void, Never>?
@@ -674,6 +769,7 @@ private actor JourneyFakeAI: JourneyAI {
     }
 
     func companionReply(_ request: JourneyAIRequest) async throws -> JourneyCompanionReply {
+        replyRequestCount += 1
         await pauseIfNeeded(.companionReply)
         return JourneyCompanionReply(goalID: request.goalID, text: "你留下了自己的记录。",
             sourceIDs: replySources, memoryCandidate: memoryCandidate)

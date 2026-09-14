@@ -18,6 +18,7 @@ struct GoalManagerView: View {
                         TextField("输入目标名称", text: $title)
                             .accessibilityIdentifier("goal-title")
                         Button("建立") { create() }
+                            .accessibilityIdentifier("goal-create")
                             .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                             .frame(minWidth: 44, minHeight: 44)
                     }
@@ -41,7 +42,7 @@ struct GoalManagerView: View {
                         }
                         .padding(14).background(EditorialPalette.sheet)
                     }
-                    Text("目标为可选设置。计划模板可在“智能排程”中选择，不涉及线上报名。")
+                    Text("目标用于归类事项，也可以不设目标，直接记录。")
                         .font(.caption).foregroundStyle(EditorialPalette.muted)
                 }.padding(20)
             }
@@ -68,10 +69,17 @@ struct GoalDetailView: View {
     @Environment(\.dismiss) private var dismiss
     let goal: PersonalGoal
     @State private var showsHistory = false
-    @State private var showsCompanion = false
+    @State private var showsArchive = false
     @State private var weeklyDays = 0
     @State private var restDays: Set<Int> = []
     @State private var error: String?
+
+    private var hasArchivedCompanionship: Bool {
+        model.companionDayCount(for: goal.id) > 0
+            || model.companionMessages.contains { $0.goalID == goal.id && !$0.text.isEmpty }
+            || model.companionMemories.contains { $0.goalID == goal.id }
+            || model.adjustmentRecords.contains { $0.goalID == goal.id && $0.appliedAt != nil }
+    }
 
     var body: some View {
         NavigationStack {
@@ -80,10 +88,13 @@ struct GoalDetailView: View {
                     Text(goal.title).font(.title.weight(.black))
                     Text("已记录 \(model.logs.filter { $0.goalID == goal.id && $0.status == .completed }.count) 次完成")
                         .font(.subheadline).foregroundStyle(EditorialPalette.muted)
-                    Button("目标对话") { showsCompanion = true }
-                        .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
                     Button("关联已有记录") { showsHistory = true }
                         .frame(minHeight: 44)
+                    if hasArchivedCompanionship {
+                        Button("历史陪伴记录") { showsArchive = true }
+                            .frame(minHeight: 44)
+                            .accessibilityIdentifier("goal-history-archive")
+                    }
                     DisclosureGroup("执行频率与休息日") {
                         VStack(alignment: .leading, spacing: 12) {
                             Picker("每周执行天数", selection: $weeklyDays) {
@@ -133,7 +144,7 @@ struct GoalDetailView: View {
                 restDays = Set(goal.restWeekdaysCSV.split(separator: ",").compactMap { Int($0) })
             }
             .sheet(isPresented: $showsHistory) { HistoryAssociationView(goal: goal) }
-            .sheet(isPresented: $showsCompanion) { CompanionSheet(goalID: goal.id) }
+            .sheet(isPresented: $showsArchive) { CompanionSheet(goalID: goal.id) }
         }
     }
 }
@@ -149,7 +160,7 @@ private struct HistoryAssociationView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
-                    Text("只会关联你选中的事项及其未归属的完成记录。历史积累可计入个人成就，不计入搭档默契。")
+                    Text("只会关联所选事项及其未归属的完成记录。已有个人成就会按原条件重新统计。")
                         .font(.subheadline)
                     ForEach(model.items.filter { $0.goalID == nil }) { item in
                         Toggle(item.title, isOn: Binding(get: { selection.contains(item.id) }, set: {

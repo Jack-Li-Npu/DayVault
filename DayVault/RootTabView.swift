@@ -8,7 +8,7 @@ struct RootTabView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
     @State private var activeScreen: SecondaryScreen?
-    @State private var homeSheet: HomeSheet?
+    @State private var showsGoals = false
     @State private var opensCollection = false
     @State private var opensPersonalCollection = false
     @AppStorage("accentHex") private var accentHex = "#4F46E5"
@@ -27,14 +27,14 @@ struct RootTabView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             today
-            if activeScreen == nil && homeSheet == nil && !model.isPresentingEditor { unlockSummary }
+            if activeScreen == nil && !showsGoals && !model.isPresentingEditor { unlockSummary }
         }
         .sheet(isPresented: Binding(
             get: { model.isPresentingEditor && activeScreen == nil },
             set: { model.isPresentingEditor = $0 }
         )) { ItemEditorView(initialDate: model.editorDate) }
-        .sheet(item: $homeSheet) { sheet in
-            homeSheetView(sheet)
+        .sheet(isPresented: $showsGoals) {
+            GoalManagerView()
                 .dynamicTypeSize(dynamicTypeSize)
                 .environment(\.avatarReducedMotionPreview, previewReduceMotion)
         }
@@ -71,44 +71,11 @@ struct RootTabView: View {
                 opensPersonalCollection = false
                 activeScreen = .vault
             },
-            openPlanner: { homeSheet = .planner },
-            openCompanion: { homeSheet = .companion },
-            openGoals: { homeSheet = .goals },
+            openGoals: { showsGoals = true },
             openCalendar: { activeScreen = .calendar },
             openInsights: { activeScreen = .insights },
             openSettings: { activeScreen = .settings }
         )
-    }
-
-    @ViewBuilder
-    private func homeSheetView(_ sheet: HomeSheet) -> some View {
-        switch sheet {
-        case .companion: CompanionSheet(goalID: model.selectedGoalID)
-        case .goals: GoalManagerView()
-        case .planner:
-            NavigationStack {
-                AILandingView(
-                    openVault: { homeSheet = nil },
-                    openToday: { homeSheet = nil },
-                    openCalendar: { homeSheet = nil },
-                    openInsights: { homeSheet = nil },
-                    openSettings: { homeSheet = nil },
-                    showsNavigationHeader: false
-                )
-                .safeAreaInset(edge: .top, spacing: 0) {
-                    HStack {
-                        Text("landing.kicker").font(.headline.weight(.bold))
-                        Spacer()
-                        Button("返回") { homeSheet = nil }
-                            .font(.subheadline.weight(.bold))
-                            .frame(minWidth: 44, minHeight: 44)
-                            .accessibilityIdentifier("planner-close")
-                    }
-                    .padding(.horizontal, 20)
-                    .background(EditorialPalette.paper)
-                }
-            }
-        }
     }
 
     private var unlockCount: Int { model.unlockQueue.count + Set(model.personalUnlockIDs).count }
@@ -204,10 +171,5 @@ struct RootTabView: View {
 
 private enum SecondaryScreen: String, Identifiable {
     case today, calendar, vault, insights, settings
-    var id: String { rawValue }
-}
-
-private enum HomeSheet: String, Identifiable {
-    case planner, companion, goals
     var id: String { rawValue }
 }

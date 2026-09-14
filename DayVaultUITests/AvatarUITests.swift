@@ -65,7 +65,7 @@ final class AvatarUITests: XCTestCase {
     @MainActor
     func testLockedEquipmentCanBePreviewedButCannotBeEquipped() {
         let app = launchVault()
-        XCTAssertTrue(app.staticTexts["这是现在的你。"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts["角色档案"].waitForExistence(timeout: 8))
         XCTAssertTrue(app.staticTexts["0 / 6 件"].exists)
         captureScreenshot(named: "studio", in: app)
 
@@ -137,14 +137,14 @@ final class AvatarUITests: XCTestCase {
     @MainActor
     func testConcealedEquipmentDoesNotRevealItsNameOrUnlockRule() {
         let app = launchVault()
-        XCTAssertTrue(app.staticTexts["这是现在的你。"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts["角色档案"].waitForExistence(timeout: 8))
         tapAfterScrolling(app.buttons["avatar-open-wardrobe"], in: app)
         let reward = app.buttons["avatar-reward-comeback_bandana"]
         scrollIntoView(reward, in: app)
-        XCTAssertEqual(reward.label, "未署名装备，尚未获得")
+        XCTAssertEqual(reward.label, "隐藏装备，尚未获得")
         reward.tap()
 
-        XCTAssertTrue(app.staticTexts["先留一点悬念。某段经历，会让它显露原貌。"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["隐藏装备，解锁后显示详情。"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["回归头巾"].exists)
         XCTAssertFalse(app.staticTexts["获得方式"].exists)
         XCTAssertFalse(app.buttons["avatar-equip-reward"].exists)
@@ -153,7 +153,7 @@ final class AvatarUITests: XCTestCase {
     @MainActor
     func testLargeTypeAndReduceMotionKeepWardrobeAndCeremonyUsable() {
         let app = launchVault(accessibility: true)
-        XCTAssertTrue(app.staticTexts["这是现在的你。"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts["角色档案"].waitForExistence(timeout: 8))
         captureScreenshot(named: "accessibility-studio", in: app)
         tapAfterScrolling(app.buttons["avatar-open-wardrobe"], in: app)
         tapAfterScrolling(app.buttons["avatar-reward-ten_jacket"], in: app)
@@ -198,10 +198,10 @@ final class AvatarUITests: XCTestCase {
 
     @MainActor
     private func saveNewSchedule(named name: String, in app: XCUIApplication) {
-        XCTAssertTrue(app.staticTexts["加一件事"].waitForExistence(timeout: 5))
-        let title = app.textFields["写下这件事"].exists
-            ? app.textFields["写下这件事"]
-            : app.textViews["写下这件事"]
+        XCTAssertTrue(app.staticTexts["新增事项"].waitForExistence(timeout: 5))
+        let title = app.textFields["输入事项名称"].exists
+            ? app.textFields["输入事项名称"]
+            : app.textViews["输入事项名称"]
         XCTAssertTrue(title.waitForExistence(timeout: 5))
         title.tap()
         title.typeText(name)

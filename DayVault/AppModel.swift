@@ -18,6 +18,7 @@ final class AppModel {
     let notificationService = SystemNotificationService()
     var aiPlanner: HybridAIPlannerService { AIPlannerServiceFactory.make() }
     let journeyAI: any JourneyAI
+    let usesInjectedJourneyTestDouble: Bool
 
     var goals: [PersonalGoal] = []
     var personalAchievements: [PersonalAchievementDefinition] = []
@@ -78,7 +79,13 @@ final class AppModel {
     init(container: ModelContainer, avatarDefaults: UserDefaults = .standard, persistAvatarPreferences: Bool = true, journeyAI: (any JourneyAI)? = nil) {
         self.container = container
         self.context = container.mainContext
+#if DEBUG
         self.journeyAI = journeyAI ?? JourneyAIServiceFactory.make()
+        self.usesInjectedJourneyTestDouble = journeyAI != nil && !(journeyAI is DisabledJourneyAIService)
+#else
+        self.journeyAI = JourneyAIServiceFactory.make()
+        self.usesInjectedJourneyTestDouble = false
+#endif
         self.avatarDefaults = avatarDefaults
         self.persistAvatarPreferences = persistAvatarPreferences
         if persistAvatarPreferences,
@@ -93,11 +100,16 @@ final class AppModel {
         refresh()
 #if DEBUG
         seedPreviewDataIfRequested()
+        seedArchivedJourneyPreviewIfRequested()
         refresh()
 #endif
         reconcileAchievements(presentNewUnlocks: false)
         reconcilePersonalAchievements(presentNewUnlocks: false)
         Task { await refreshExternalEvents() }
+    }
+
+    func requireJourneyAI() throws {
+        guard usesInjectedJourneyTestDouble else { throw JourneyAIServiceError.disabled }
     }
 
     func refresh() {
@@ -322,7 +334,8 @@ final class AppModel {
         log.completedAt = date
         log.goalID = occurrence.goalID
         log.timePrecision = occurrence.timePrecision
-        if let goal = goals.first(where: { $0.id == occurrence.goalID }), let enabled = goal.aiEnabledAt, date >= enabled {
+        if usesInjectedJourneyTestDouble,
+           let goal = goals.first(where: { $0.id == occurrence.goalID }), let enabled = goal.aiEnabledAt, date >= enabled {
             log.recordedDuringCompanionship = true
             log.companionSessionID = goal.id
             recordCompanionDay(goalID: goal.id, at: date)

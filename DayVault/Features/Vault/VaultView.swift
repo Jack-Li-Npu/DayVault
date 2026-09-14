@@ -38,11 +38,13 @@ struct VaultView: View {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 20) {
                             if showsCollection {
-                                HStack(spacing: 12) {
-                                    collectionFilter("公共成就", personal: false)
-                                    collectionFilter("个人成就", personal: true)
+                                if !model.personalAchievements.isEmpty {
+                                    HStack(spacing: 12) {
+                                        collectionFilter("公共成就", personal: false)
+                                        collectionFilter("个人成就", personal: true)
+                                    }
                                 }
-                                if showsPersonalAchievements {
+                                if showsPersonalAchievements && !model.personalAchievements.isEmpty {
                                     PersonalAchievementsView()
                                 } else {
                                     header

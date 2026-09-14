@@ -12,27 +12,11 @@ enum DayVaultAIEndpoint {
 }
 
 enum AIPlannerServiceFactory {
-    private static var endpointText: String? {
-#if DEBUG
-        // Regular UI tests must never spend tokens or send fixture data remotely.
-        if ProcessInfo.processInfo.arguments.contains("-ui-testing"),
-           !ProcessInfo.processInfo.arguments.contains("-live-ai-test") { return nil }
-#endif
-        return ProcessInfo.processInfo.environment["DAYVAULT_AI_ENDPOINT"]
-            ?? UserDefaults.standard.string(forKey: "aiPlannerEndpoint")
-    }
-
-    static var isRemoteConfigured: Bool {
-        return endpointText.flatMap(URL.init(string:)) != nil
-    }
+    // This release has no AI service, including for previously configured installs.
+    static var isRemoteConfigured: Bool { false }
 
     static func make() -> HybridAIPlannerService {
-        let environment = ProcessInfo.processInfo.environment
-        let defaults = UserDefaults.standard
-        let publishableKey = environment["DAYVAULT_SUPABASE_KEY"] ?? defaults.string(forKey: "aiPlannerPublishableKey")
-        let accessToken = environment["DAYVAULT_SUPABASE_ACCESS_TOKEN"] ?? defaults.string(forKey: "aiPlannerAccessToken")
-        let endpoint = endpointText.flatMap(URL.init(string:))
-        return HybridAIPlannerService(endpoint: endpoint, publishableKey: publishableKey, accessToken: accessToken)
+        HybridAIPlannerService(endpoint: nil, publishableKey: nil, accessToken: nil)
     }
 }
 
@@ -63,6 +47,7 @@ struct AIPlannerResult: Sendable {
 }
 
 enum AIPlannerServiceError: LocalizedError, Equatable {
+    case disabled
     case invalidResponse
     case providerAuthenticationFailed
     case providerRateLimited
@@ -76,6 +61,8 @@ enum AIPlannerServiceError: LocalizedError, Equatable {
 
     var errorDescription: String? {
         switch self {
+        case .disabled:
+            "此版本不提供 AI 功能。已有记录和成就不受影响。"
         case .invalidResponse:
             String(localized: "ai.error.invalid_response")
         case .providerAuthenticationFailed:
@@ -111,13 +98,18 @@ actor HybridAIPlannerService: AIPlanning {
     private let publishableKey: String?
     private let accessToken: String?
     private let localPlanner = LocalGoalPlanner()
-    private let transport: Transport
+    private let transport: Transport?
 
-    init(endpoint: URL?, publishableKey: String?, accessToken: String?, transport: @escaping Transport = { try await URLSession.shared.data(for: $0) }) {
+    init(endpoint: URL?, publishableKey: String?, accessToken: String?, transport: Transport? = nil) {
         self.endpoint = endpoint.map(DayVaultAIEndpoint.normalized)
         self.publishableKey = publishableKey
         self.accessToken = accessToken
+#if DEBUG
+        // Explicit test doubles preserve protocol regression coverage without a live transport.
         self.transport = transport
+#else
+        self.transport = nil
+#endif
     }
 
     func generate(_ request: PlannerRequest) async throws -> PlannerTurn {
@@ -125,6 +117,7 @@ actor HybridAIPlannerService: AIPlanning {
     }
 
     func generateResult(_ request: PlannerRequest) async throws -> AIPlannerResult {
+        guard let transport else { throw AIPlannerServiceError.disabled }
         guard let endpoint else {
             let turn = try await localPlanner.generate(request)
             return AIPlannerResult(turn: turn, source: .localDemo)

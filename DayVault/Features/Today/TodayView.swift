@@ -4,14 +4,11 @@ import SwiftUI
 struct TodayView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var reviewing = false
     @State private var celebrating = false
     @State private var completionPulseID: UUID?
 
     var openVault: () -> Void = {}
-    var openPlanner: () -> Void = {}
-    var openCompanion: () -> Void = {}
     var openGoals: () -> Void = {}
     var openCalendar: () -> Void = {}
     var openInsights: () -> Void = {}
@@ -28,20 +25,6 @@ struct TodayView: View {
                 EditorialBackdrop()
                 VStack(spacing: 0) {
                     homeHeader
-                    if let text = model.latestCompanionText, !text.isEmpty {
-                        Button(action: openCompanion) {
-                            HStack(alignment: .top, spacing: 8) {
-                                Text("↳").font(.subheadline.weight(.bold))
-                                Text(text).font(.subheadline).lineLimit(3)
-                                Spacer(minLength: 0)
-                            }
-                            .foregroundStyle(EditorialPalette.muted)
-                            .padding(.horizontal, 18)
-                            .padding(.bottom, 8)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("home-companion-response")
-                    }
                     DayDateRail(selectedDate: $model.selectedDate)
                         .padding(.top, 6)
                     if !inbox.isEmpty {
@@ -54,24 +37,12 @@ struct TodayView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .bottom, spacing: 0) {
-                let actionLayout = dynamicTypeSize.isAccessibilitySize ? AnyLayout(VStackLayout(spacing: 12)) : AnyLayout(HStackLayout(spacing: 12))
-                actionLayout {
-                    Button("editor.new_item") { model.showEditor(at: defaultStart) }
-                        .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
-                        .accessibilityIdentifier("home-add-item")
-                    Button(action: openPlanner) {
-                        Text("landing.kicker")
-                            .font(.subheadline.weight(.bold))
-                            .foregroundStyle(EditorialPalette.ink)
-                            .frame(minWidth: 104, minHeight: 48)
-                            .overlay { Rectangle().stroke(EditorialPalette.ink, lineWidth: 1) }
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("home-open-planner")
-                }
-                .padding(.horizontal, 18)
-                .padding(.vertical, 10)
-                .background(EditorialPalette.paper)
+                Button("editor.new_item") { model.showEditor(at: defaultStart) }
+                    .buttonStyle(EditorialPrimaryButtonStyle(fill: EditorialPalette.acid, foreground: Color(hex: "#171714")))
+                    .accessibilityIdentifier("home-add-item")
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 10)
+                    .background(EditorialPalette.paper)
             }
             .sheet(isPresented: $reviewing, onDismiss: { model.unlockBlockingSheets.remove("day-review") }) {
                 DayReviewView()
@@ -100,14 +71,9 @@ struct TodayView: View {
             .buttonStyle(.plain)
             .accessibilityLabel("我的角色与成就")
             .accessibilityIdentifier("landing-avatar")
-            Button(action: openCompanion) {
-                OrigamiCompanion(days: model.companionDayCount(for: model.selectedGoalID), isCelebrating: celebrating)
-                    .frame(width: 55, height: 58)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("折纸伙伴")
-            .accessibilityHint("查看当前目标的陪伴设置与记录")
-            .accessibilityIdentifier("home-open-companion")
+            OrigamiCompanion(days: model.companionDayCount(for: model.selectedGoalID), isCelebrating: celebrating)
+                .frame(width: 55, height: 58)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 3) {
                 Text("今天")
                     .font(.title2.weight(.black))

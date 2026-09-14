@@ -10,10 +10,10 @@ struct PersonalAchievementsView: View {
             Text("个人成就")
                 .accessibilityIdentifier("personal-achievements-heading")
                 .font(.title2.weight(.black)).foregroundStyle(.white)
-            Text("按目标收集的个人成就")
+            Text("保留已有成就，按原条件继续积累。")
                 .font(.caption).foregroundStyle(.white.opacity(0.65))
             if model.personalAchievements.isEmpty {
-                Text("在目标详情中启用 AI 陪伴，即可生成个人成就。每个目标最多有两项普通成就和一项隐藏成就。")
+                Text("暂无个人成就。可在公共成就册中查看可收集的成就。")
                     .font(.subheadline).foregroundStyle(.white.opacity(0.75))
                     .padding(18).background(EditorialPalette.vaultSheet)
             }
@@ -113,7 +113,7 @@ private struct PersonalAchievementDetail: View {
                         let result = PersonalAchievementEngine.evaluate(definition, logs: model.logs)
                         Text(copy.progressLabel(value: result.metricValue))
                             .font(.caption.monospacedDigit())
-                        DisclosureGroup("AI 原始文案") {
+                        DisclosureGroup("历史原始文案") {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(definition.title).font(.headline)
                                 Text(definition.detail)

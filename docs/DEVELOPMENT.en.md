@@ -1,5 +1,7 @@
 # DayVault developer guide
 
+> Current scope (September 14, 2026): remote AI is disabled in the app. No proxy or API key is needed. AI configuration, endpoint and integration instructions below describe the historical implementation. Environment variables cannot re-enable it; restoration requires code changes and new validation. Existing goals, records and personal achievements are retained. This scope change does not remove iCloud, Calendar or StoreKit.
+
 > Release privacy note / 发布脱敏说明：`api.example.com`, `example-model` and legacy model labels are placeholders, not actual provider settings. 私人接口与模型仅保存在忽略的本地配置中；历史测试结论保留。
 
 [简体中文](DEVELOPMENT.zh-CN.md) · [Project introduction](../README.md) · [Privacy](../PRIVACY.md)

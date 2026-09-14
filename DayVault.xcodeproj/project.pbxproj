@@ -17,6 +17,7 @@
 		2863261C996D4024619C4844 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45D0ED66C0BD5AA2C2CEC8B /* NotificationService.swift */; };
 		2B9754F1F96C973DB3379C4E /* CalendarExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E26263441C11DBD115B42 /* CalendarExportView.swift */; };
 		31D47FD1562326334F64CAF7 /* DayVaultWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C9EB87980B2841D3CE481F15 /* DayVaultWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		33FE749CBD0905B9627C4CD0 /* AppModelPreviewJourney.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9188266EC1DC7CACAE77B53 /* AppModelPreviewJourney.swift */; };
 		4534EFCEB8725540380068C7 /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932D30C753A73ED6C41E46CA /* NotificationDelegate.swift */; };
 		4BDC5C11D98D78DF35ED1886 /* EditorialDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA47F17CBF2FEE994208E835 /* EditorialDesign.swift */; };
 		50C5F6471C6D0449F859F282 /* DayVaultAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92767AFA5ED391FA8D8E154 /* DayVaultAvatar.swift */; };
@@ -31,7 +32,6 @@
 		792279891D3FA6587636EC6D /* DayVaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01585EE9F34FD734FC494E84 /* DayVaultTests.swift */; };
 		7C5DA1513A85479FFD8DC4EB /* AppModelAdjustments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F57B91B90883E6FC43AC65E /* AppModelAdjustments.swift */; };
 		807E099D198CAD0B207E6EFA /* JourneyIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FE6FDE4E23754B8725C44F /* JourneyIntegrationTests.swift */; };
-		84D054C1EC86921D6B7A60B6 /* AILandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA409D71A4AC9FB25D9C139 /* AILandingView.swift */; };
 		8651455155EDE896522FDD14 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE00AEBF8F68FDFBAB671F6 /* SettingsView.swift */; };
 		88B1241F6925EE5B54C92E97 /* CalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1245CABEC731560469F433 /* CalendarScreen.swift */; };
 		8BB59A98143C28CEB9D21C1E /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E611B2FCCCB7E57CC1181532 /* InsightsView.swift */; };
@@ -120,7 +120,6 @@
 		8871333E15F9AAF07FAB9284 /* AvatarIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarIntegrationTests.swift; sourceTree = "<group>"; };
 		8A2289EC94ACA010135D5F81 /* OrigamiCompanion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrigamiCompanion.swift; sourceTree = "<group>"; };
 		8B3427C95EF0DEFC3FA1EBC8 /* JourneyAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyAIService.swift; sourceTree = "<group>"; };
-		8DA409D71A4AC9FB25D9C139 /* AILandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AILandingView.swift; sourceTree = "<group>"; };
 		8FC054996FF769EB141EAEC5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		90706508ED3980640BA716B1 /* DayVaultWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayVaultWidgets.swift; sourceTree = "<group>"; };
 		932D30C753A73ED6C41E46CA /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +134,7 @@
 		BF825359F67D54F971EDF017 /* DayTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTimelineView.swift; sourceTree = "<group>"; };
 		C2C97BDCDFB539830BBC960A /* AchievementBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementBadge.swift; sourceTree = "<group>"; };
 		C8FE6FDE4E23754B8725C44F /* JourneyIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyIntegrationTests.swift; sourceTree = "<group>"; };
+		C9188266EC1DC7CACAE77B53 /* AppModelPreviewJourney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelPreviewJourney.swift; sourceTree = "<group>"; };
 		C9EB87980B2841D3CE481F15 /* DayVaultWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DayVaultWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA47F17CBF2FEE994208E835 /* EditorialDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorialDesign.swift; sourceTree = "<group>"; };
 		CCE75C116B88D64E9EEF25EA /* AvatarStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarStudioView.swift; sourceTree = "<group>"; };
@@ -226,6 +226,7 @@
 				3D1270932BC76B24ADEBB02F /* AppModel.swift */,
 				3F57B91B90883E6FC43AC65E /* AppModelAdjustments.swift */,
 				9CAEF4ACA1E6124B2BA35C56 /* AppModelJourney.swift */,
+				C9188266EC1DC7CACAE77B53 /* AppModelPreviewJourney.swift */,
 				787C8CF64D706272EDE5E949 /* AppTheme.swift */,
 				5F84C42CDE4C081CA19D7782 /* Assets.xcassets */,
 				EC8D9C3E7D670FC218A5EB2E /* DayVault.entitlements */,
@@ -324,7 +325,6 @@
 				B65E6C0F5F4BFB5860BD8AF7 /* Companion */,
 				77E8A0EB78B01755A2098297 /* Editor */,
 				56F3B8730B7FBBA2E3208C83 /* Insights */,
-				FB0EC037304C272AEDD90B84 /* Landing */,
 				E6F51BF0F929EEC55E5C0B5F /* Settings */,
 				DEE4A38363C37CC6FBC9040A /* Today */,
 				FEB2DFD7710968343ACD79C1 /* Vault */,
@@ -366,14 +366,6 @@
 				60D6E03C93A19C84DE735D80 /* DayVaultCore */,
 			);
 			path = Packages;
-			sourceTree = "<group>";
-		};
-		FB0EC037304C272AEDD90B84 /* Landing */ = {
-			isa = PBXGroup;
-			children = (
-				8DA409D71A4AC9FB25D9C139 /* AILandingView.swift */,
-			);
-			path = Landing;
 			sourceTree = "<group>";
 		};
 		FEB2DFD7710968343ACD79C1 /* Vault */ = {
@@ -562,13 +554,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84D054C1EC86921D6B7A60B6 /* AILandingView.swift in Sources */,
 				9BDB08ABF8753BA1F5D42FAB /* AIPlannerService.swift in Sources */,
 				233DDE49B2FD0BBDAB7594DD /* AchievementBadge.swift in Sources */,
 				62B154875F2CF7914352919B /* AchievementUnlockBanner.swift in Sources */,
 				B9AC5162D70CAB97732D4515 /* AppModel.swift in Sources */,
 				7C5DA1513A85479FFD8DC4EB /* AppModelAdjustments.swift in Sources */,
 				9DCBA355AA7F8E80E4322424 /* AppModelJourney.swift in Sources */,
+				33FE749CBD0905B9627C4CD0 /* AppModelPreviewJourney.swift in Sources */,
 				ED9478A663696568D976FDEF /* AppTheme.swift in Sources */,
 				61436C3AC2CC01675CD58A5B /* AvatarStudioView.swift in Sources */,
 				229885687D06DA5D5CA1AA48 /* AvatarUnlockCeremony.swift in Sources */,

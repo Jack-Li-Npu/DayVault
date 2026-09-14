@@ -177,6 +177,56 @@ final class DayVaultTests: XCTestCase {
         XCTAssertEqual(result.turn.kind, .plan)
     }
 
+    func testConfiguredPlannerWithoutInjectedTestTransportIsDisabled() async throws {
+        let service = HybridAIPlannerService(endpoint: URL(string: "https://example.invalid/generate-plan"),
+            publishableKey: "legacy-fixture", accessToken: "legacy-fixture")
+
+        do {
+            _ = try await service.generateResult(PlannerRequest(goalText: "六周后演讲"))
+            XCTFail("A saved endpoint must never enable this release or return a local AI imitation")
+        } catch let error as AIPlannerServiceError {
+            XCTAssertEqual(error, .disabled)
+        }
+    }
+
+    @MainActor
+    func testFactoriesIgnoreLegacyAIConfigurationAndRejectEveryOperation() async throws {
+        let defaults = UserDefaults.standard
+        let domain = defaults.volatileDomain(forName: UserDefaults.argumentDomain)
+        var fixture = domain
+        fixture["aiPlannerEndpoint"] = "https://example.invalid/generate-plan"
+        fixture["aiPlannerPublishableKey"] = "legacy-fixture"
+        fixture["aiPlannerAccessToken"] = "legacy-fixture"
+        defaults.setVolatileDomain(fixture, forName: UserDefaults.argumentDomain)
+        defer { defaults.setVolatileDomain(domain, forName: UserDefaults.argumentDomain) }
+
+        XCTAssertFalse(AIPlannerServiceFactory.isRemoteConfigured)
+        XCTAssertFalse(JourneyAIServiceFactory.isConfigured)
+        do {
+            _ = try await AIPlannerServiceFactory.make().generate(PlannerRequest(goalText: "六周后演讲"))
+            XCTFail("The application planner must fail explicitly, even with legacy configuration")
+        } catch let error as AIPlannerServiceError {
+            XCTAssertEqual(error, .disabled)
+        }
+
+        let journey = JourneyAIServiceFactory.make()
+        XCTAssertTrue(journey is DisabledJourneyAIService)
+        let goalID = UUID()
+        for operation in [JourneyAIOperation.designAchievements, .companionReply, .suggestAdjustment] {
+            let request = JourneyAIRequest(operation: operation, goalID: goalID, goalTitle: "测试目标")
+            do {
+                switch operation {
+                case .designAchievements: _ = try await journey.designAchievements(request)
+                case .companionReply: _ = try await journey.companionReply(request)
+                case .suggestAdjustment: _ = try await journey.suggestAdjustment(request)
+                }
+                XCTFail("Every discontinued AI operation must be disabled")
+            } catch let error as JourneyAIServiceError {
+                XCTAssertEqual(error, .disabled)
+            }
+        }
+    }
+
     func testRemoteResultUsesServerMetadataNotModelAuthoredVersion() async throws {
         let endpoint = try XCTUnwrap(URL(string: "https://example.com/planner"))
         let service = HybridAIPlannerService(endpoint: endpoint, publishableKey: nil, accessToken: nil) { request in
