@@ -1,128 +1,129 @@
 # DayVault
 
-记录每天做了什么，回头看看自己坚持了多久。
+一张日常清单，一本留得住的成就册。
 
 **简体中文** · [English](README.en.md)
 
-[使用说明](#第一次使用) · [本地运行](#本地运行) · [开发文档](docs/DEVELOPMENT.zh-CN.md)
+[开始使用](#第一次使用) · [本地运行](#本地运行) · [MCP 接入](docs/MCP.zh-CN.md) · [开发指南](docs/DEVELOPMENT.zh-CN.md) · [隐私](PRIVACY.md)
 
 ![DayVault 品牌插画](Design/Previews/dayvault-readme-banner.svg)
 
-DayVault 是一个中文 iPhone 日常记录器。首页是一张清单，可以记下训练、阅读，或今天想做的一件小事。完成记录会累积成就，也能解锁角色的穿搭。
+DayVault 是一个简体中文 iPhone 日常记录器。记下今天的安排，完成后勾选；积累的记录可以解锁成就和角色装备。首页保留顺序清单，不要求先建目标、填问卷或开始聊天。
 
-做这个项目的起因，是坚持一件事很久之后想把成果拿出来看看，也想有人知道这段时间做过什么。成就册和可以回看的角色演出，记录的是你实际完成过的事项。
+项目起于一个很具体的念头：坚持训练、阅读或学习很久之后，想把这段付出拿出来看看，也想分享给别人。成就册、原创人物和可以回看的演出，都是围绕这些记录做的。
 
-当前开发版已停止提供 AI 排程、聊天、新个人成就生成和自动改期建议，不发起模型请求。记录、已有成就判定和角色动画可离线使用；iCloud、Calendar 和购买相关功能仍按各自设置工作。旧版本中保存的目标、记录和个人成就保留。
+v1.4 停用 App 内 AI，增加可选的本地 MCP 文件交换。日常记录、已有成就判定和动画不需要 AI 服务；需要辅助规划时，可以把所选记录交给自己使用的外部 AI 工具。DayVault 不代付模型费用，也不在后台自动安排事项。
 
-项目尚未上架 App Store。本次范围调整尚未发布新标签，下面的版本链接保留原有发布内容。
+这是源码发布，尚未上架 App Store。“收尾版”指本轮实验的范围已确定，不代表所有上线检查已经完成，也不是永不维护的承诺。
 
 ## 版本记录
 
-- [v1.3.0](docs/releases/v1.3.0.md)（最新已发布版本） · 个人成就文案修订 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0)
+- [v1.4.0](docs/releases/v1.4.0.md)（当前版本） · 离线记录与可选 MCP 文件交换 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.4.0)
+- [v1.3.0](docs/releases/v1.3.0.md) · 个人成就文案修订 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0)
 - [v1.2.0](docs/releases/v1.2.0.md) · 界面命名与成就文案 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.2.0)
 - [v1.1.0](docs/releases/v1.1.0.md) · 排程指令、连接修复与私人配置 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.1.0)
 - [v1.0.0](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.md) · 原版存档 · [发布页](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.0.0)
 
-[查看全部发布版本](https://github.com/Jack-Li-Npu/DayVault/releases)
+[全部发布版本](https://github.com/Jack-Li-Npu/DayVault/releases)
 
-## 看看界面
+## 界面
 
 <table>
+  <tr><th align="center">今日清单</th><th align="center">新增事项</th><th align="center">演出回看</th></tr>
   <tr>
-    <td align="center"><strong>今日清单</strong><br/>按顺序看安排，不被小时刻度淹没</td>
-    <td align="center"><strong>轻量新增</strong><br/>标题和日期先行，复杂选项收起来</td>
-    <td align="center"><strong>双人片段</strong><br/>把积累变成可以回看的小演出</td>
-  </tr>
-  <tr>
-    <td align="center"><img src="Design/Previews/journey-today.png" width="260" alt="今日页面的四件演示事项、用户角色、折纸搭档与新增入口" /></td>
-    <td align="center"><img src="Design/Previews/journey-editor.png" width="260" alt="新增页面默认只有标题、日期、折叠的更多设置与保存按钮" /></td>
-    <td align="center"><img src="Design/Previews/journey-duet.png" width="260" alt="真实模拟器中的双人演出回看界面，提供继续今天和再看一次按钮" /></td>
+    <td align="center"><img src="Design/Previews/journey-today.png" width="260" alt="历史版本的今日清单，使用隔离的示例记录" /></td>
+    <td align="center"><img src="Design/Previews/journey-editor.png" width="260" alt="标题、日期和折叠高级选项组成的事项编辑器" /></td>
+    <td align="center"><img src="Design/Previews/journey-duet.png" width="260" alt="用户人物与折纸搭档的本地双人演出，支持跳过和回看" /></td>
   </tr>
 </table>
 
-这些是之前版本的真实模拟器截图，使用隔离的示例数据，保留作设计参考。旧图中的 AI 或聊天入口不代表当前功能；本次调整后的界面截图尚未更新。页首横幅是品牌插画，折纸搭档是本地动画角色。
+以上为历史版本的真实模拟器截图，全部使用隔离的示例数据。旧图中的 AI、聊天入口已移除；当前功能以本文及 v1.4 说明为准。横幅是品牌插画，不是 App 截图。
 
-## 先把今天记下来
+## 日常记录
 
-只填标题就能保存，日期默认是今天。时刻、重复、提醒和模板放在“高级选项”里；日历、统计、外观及设置保留在二级入口。没有问卷或强制聊天。
+只填标题即可保存，日期默认是今天。时刻、时长、分类、重复、提醒和模板收在高级选项中。日历、统计、外观及设置在二级入口，不占满首页。
 
-事项可以只指定日期，也可以指定时刻，或先放进“待安排”。没有时刻的事项不会变成凌晨零点的预约，也不计入计划分钟或准时率。完成时可以直接勾选，需要实际用时再点“开始”。计划与实际时间分别保存。
+事项可以仅指定日期，也可以指定具体时刻，或先放进待安排。没有时刻的事项不算午夜预约，也不参与计划分钟、准时率和时间冲突统计。完成时直接勾选即可；需要记录实际用时，再使用“开始”。计划时间和实际时间分别保留。
 
-重复安排、单次改期、日终回顾、Apple Calendar 叠加、提醒和小组件都在。拒绝 Calendar 和通知权限不会妨碍基本记录。
+重复安排支持单次改期。目标可以手动创建，再关联相关事项。Apple Calendar 叠加、提醒和小组件保留，拒绝 Calendar 或通知权限不会妨碍基本记录。
 
-## 成就与角色
+## 成就与人物
 
-公共目录有 24 项成就，其中 8 项隐藏。明确成就显示进度，隐藏项解锁前只给信号与线索。六件角色装备与公共成就对应。“公共”指共用目录，你的记录不会因此公开。
+公共成就册有 24 项成就，其中 8 项隐藏。明确成就显示条件与进度；隐藏项解锁前只给信号和线索。六件人物装备与公共成就对应。“公共”指所有人使用同一份目录，你的记录不会因此公开。
 
-旧版本已经生成并保存的个人成就仍按原规则在本地计算：完成次数、不同完成日期，或已确认节奏下的达标周期。规则和已获资格保留，个人成就不影响公共装备资格。本次不再生成新的个人成就。
-
-旧记录需要你确认关联目标才会计入。已获得的成就保留；后来更正记录时，详情会说明依据的变化。
-
-个人成就的主标题沿用 v1.3 的规则里程碑，例如“首次完成”“累计记录 7 天”。卡片、详情和分享卡使用相同名称，条件区分次数、天数与达标周期。历史生成文案仍属于原记录，不代表当前在调用 AI；隐藏成就解锁前不显示相关内容。
+已有个人成就继续按保存的规则在本地判定，条件包括完成次数、不同完成日期或达标周期。旧记录只有经过确认并关联目标后才会计入。已获资格保留，之后更正记录时，详情会说明依据的变化。v1.4 不再生成新的个人成就，也不会虚构“超过全球多少用户”的比例。
 
 <table>
+  <tr><th align="center">角色与成就</th><th align="center">装备试穿</th><th align="center">日历</th></tr>
   <tr>
-    <td align="center"><strong>角色与成就入口</strong></td>
-    <td align="center"><strong>已获装备与试穿</strong></td>
-    <td align="center"><strong>二级日历页面</strong></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="Design/Previews/readme-vault.png" width="260" alt="旧版 DayVault 深色 Vault 角色展示与成就入口" /></td>
-    <td align="center"><img src="Design/Previews/avatar-wardrobe.png" width="260" alt="原创角色衣橱，区分已解锁装备与未解锁试穿，隐藏装备保持问号" /></td>
-    <td align="center"><img src="Design/Previews/readme-calendar.png" width="260" alt="旧版日历页的月视图与顺序事项，使用内存示例数据" /></td>
+    <td align="center"><img src="Design/Previews/readme-vault.png" width="260" alt="历史版本的深色成就页面与原创角色" /></td>
+    <td align="center"><img src="Design/Previews/avatar-wardrobe.png" width="260" alt="人物衣橱，区分已解锁装备、试穿和隐藏装备" /></td>
+    <td align="center"><img src="Design/Previews/readme-calendar.png" width="260" alt="历史版本日历页的月视图与顺序事项列表" /></td>
   </tr>
 </table>
 
-这些也来自保留功能的旧版截图；衣橱来自更早的角色预览，全部使用示例数据。
+这组截图同样来自早期版本的示例数据，保留作设计参考。
 
-折纸搭档与用户角色一起出场，动作由本地记录驱动，不需要模型回复。既有角色、穿搭和演出保留；演出约六秒，可以跳过或回看，回看不加进度。普通完成只给短反馈，多项解锁合并提示，并支持“减弱动态效果”。
+普通完成得到短反馈；多项解锁合并提示。约六秒的双人演出可以跳过或回看，回看不增加进度。“减弱动态效果”使用静态结果与短淡入。折纸搭档是本地动画角色，不代表 AI 正在回复。
 
-成就可以做成分享卡，包含角色、记录跨度和你选择的一段已确认回忆。先预览，再选发到哪里。私人留言默认不包含，图片在设备上生成，不自动上传，也没有虚构的全球排名。
+分享卡可以包含人物、成就、记录跨度和你选择的一段已确认回忆。先预览，再决定发到哪里；私人留言默认不包含，图片不会自动上传。
 
-## 本次收紧的范围
+## 可选 MCP：把一份记录交给自己的 AI
 
-本次去掉远端 AI 的使用入口和请求路径，减少个人开发者需要承担的持续服务成本。不会用固定模板冒充 AI 回复，也不会让已有记录依赖服务端继续运行。
+v1.4 的 MCP 服务运行在 macOS / Linux 电脑上，面向支持本地 stdio MCP 的工具。仓库提供 Codex、Claude Code 和 Gemini CLI 的配置说明。它不读取这些工具的聊天历史，也不在 iPhone 上监听端口。Windows 的文件权限保护尚未验证。
 
-已经接受的日程、目标、个人成就和历史内容不因停用 AI 而清空。Pro、iCloud、Calendar 与小组件不在本次移除范围内；它们的上线验收仍需分别完成。本次没有更改售价或发布付费承诺。
+<table>
+  <tr><th align="center">导出目标快照</th><th align="center">确认计划草案</th></tr>
+  <tr>
+    <td align="center"><img src="Design/Previews/v1.4-mcp-exchange.png" width="300" alt="v1.4 MCP 文件交换页面，展示阅读目标的七条示例记录、导出预览和导入入口" /></td>
+    <td align="center"><img src="Design/Previews/v1.4-mcp-proposal.png" width="300" alt="v1.4 草案预览显示两条有日期的测试事项，确认前尚未保存" /></td>
+  </tr>
+</table>
 
-目标仍可手动创建，关联已有事项，并设置执行频率与休息日。有旧对话或回忆的目标，可以从详情中的历史陪伴记录入口查看和管理；首页不再展示或生成聊天回应。
+v1.4 的真实模拟器截图。阅读目标、七条记录和两项草案均为隔离的合成测试数据，不包含私人记录，也不是付费模型的实际答复。
 
-仓库保留 AI 指令包、代理代码和[历史联调记录](docs/AI-PLANNER-LIVE-VALIDATION.zh-CN.md)，方便查阅旧版本。开发指南中与模型配置有关的章节也是历史资料，不是当前 App 的使用步骤。上架前的剩余工作见[收尾计划](docs/APP-STORE-LAUNCH-PLAN.zh-CN.md)。
+1. 在 App 的“设置 → MCP 文件交换”中选一个目标，预览后导出 JSON 快照，再自行传到电脑。
+2. 外部 AI 通过 MCP 读取快照，提出新增事项草案。模型由你选用的工具提供，费用及数据政策也由该工具决定。
+3. 把草案文件传回 iPhone，检查预览，确认后才保存。
+
+快照包含所选目标及过去 30 天到未来 14 天范围内的相关事项，不含笔记、聊天、回忆、Calendar 数据或隐藏成就规则。它不是完整备份，也不会自动同步。
+
+首版草案只允许新增有日期、无具体时刻、不重复的事项。MCP 不能完成或删除事项、改写原计划、授予成就。App 保存前再次检查日期、休息日、目标期限和重复项；文件中的文字不能替代你的确认。
+
+[中文接入指南](docs/MCP.zh-CN.md) · [English setup](docs/MCP.en.md) · [数据契约](docs/MCP-CONTRACT.md)
 
 ## 第一次使用
 
-1. 点“新增事项”，填标题并保存。无需先建目标或配置服务。
-2. 做完后勾选，点左上角人物可以看成就和衣橱。
-3. 长期重复的事项可在高级选项中设置重复，也可以手动创建目标来整理相关记录。
+1. 点“新增事项”，填标题并保存。
+2. 完成后勾选，点人物查看成就和装备。
+3. 需要长期整理时再创建目标；MCP 完全可选，不配置也能使用 App。
+
+旧版接受的计划、目标、个人成就以及历史对话没有因停用 App 内 AI 而清空。有历史内容的目标仍可查看和管理历史陪伴记录。旧代理代码和指令包留在仓库中供研究，不能通过填写旧密钥恢复当前 App 的 AI 功能。
 
 ## 本地运行
 
-需要 Mac、Xcode 26 或更新版本及 iPhone 模拟器，最低支持 iOS 18。仓库可公开浏览；项目尚未授予开源再分发许可证。
+需要 Mac、Xcode 26 或更新版本，以及 iPhone 模拟器。最低系统为 iOS 18，当前 App 和小组件使用简体中文；英文文档不代表已提供英文界面。
 
-```bash
+```sh
 git clone https://github.com/Jack-Li-Npu/DayVault.git
 cd DayVault
 open DayVault.xcodeproj
 ```
 
-选择 DayVault Scheme 和模拟器，按 ⌘R。不需要启动 AI 代理、填写 API 密钥或重新生成工程。真机需要设置开发团队、Bundle ID、App Group 和 CloudKit 容器；工程配置变更后用 `xcodegen generate` 重新生成。本地 StoreKit 配置只用于测试购买。
+选择 DayVault Scheme 和模拟器，按 ⌘R。常规运行不需要 API 密钥、Node.js 或 AI 代理。真机需要配置自己的开发团队、Bundle ID、App Group 和 CloudKit 容器。修改工程结构后，用 `xcodegen generate` 更新工程。
 
-[中文开发指南](docs/DEVELOPMENT.zh-CN.md) / [English guide](docs/DEVELOPMENT.en.md)。其中保留的 AI 配置与服务端测试说明仅适用于历史实现。
+App 使用 SwiftUI、SwiftData / CloudKit、EventKit、WidgetKit、StoreKit 2 和 Swift Charts，没有第三方 iOS 运行时包。重复规则与成就判定位于 `Packages/DayVaultCore`；可选 MCP 服务单独位于 `MCP`。
 
-## 技术与验证
+## 验证与未完成事项
 
-App 使用 SwiftUI、SwiftData / CloudKit、EventKit、WidgetKit、StoreKit 2 和 Swift Charts，iOS 运行时没有第三方包。`DayVaultCore` 保存重复规则、成就和版本化模型；历史 Deno / Supabase 代理不属于当前 App 的运行依赖。
+v1.4 完整回归通过：Core 71/71、App 单元与集成测试 76/76、UI 22/22、MCP 33/33。App 与 UI 共 98 项，没有失败或跳过。Release 配置的 iOS 模拟器构建通过，产物版本已核对为 1.4.0、构建号 5；这不等于真机签名归档。测试范围和历史基线见[版本说明](docs/releases/v1.4.0.md)，不同批次不相加。
 
-2026-09-10 的完整本地回归记录为 Core 57 项、App 40 项、UI 15 项、服务端 30 项。之后的连接修复通过服务端 46 项、iOS 单元 13 项及 UI 2 项。它们是不同批次，不能相加当作新总数，也不是线上可靠性证明。
+该项目尚未完成 App Store 上架验收。真机权限、跨设备 CloudKit、购买沙盒、真实旧版升级和锁屏隐私仍需要检查。本地 StoreKit 文件不是已上线商品；Pro 保留在二级页面，本版没有新增付费墙或改变售价。[上架收尾清单](docs/APP-STORE-LAUNCH-PLAN.zh-CN.md)
 
-2026-09-14 停用 AI 后的最终回归：Core 57/57、App 单元与集成测试 60/60、UI 19/19 通过，无跳过；Release 配置的 iOS 模拟器构建成功。这些结果与上面的历史批次分开记录。UI 首轮遇到多行输入框识别问题，改用稳定标识后已完整复跑通过，未削减保存与删除断言。
+## 隐私与参与
 
-Release 模拟器构建不等于签名归档或 App Store 审核通过。上架前仍须验证真机权限、两台设备 CloudKit 同步、购买沙盒，以及真实旧版本升级和断网使用。本次没有把这些项目标为已通过。
+基本记录保存在设备和可用的私人 iCloud 数据库中。App 不请求模型服务。使用 MCP 时，所选外部 AI 工具可能把快照内容发送给模型提供商；本地运行 MCP 不等于模型也在本地。停用旧 AI 功能也不会撤回历史上已发送的数据。[完整隐私说明](PRIVACY.md)
 
-## 隐私与参与开发
+没有广告 SDK、第三方分析或排行榜。项目不承诺托管 AI 服务，也不扩展挑战商城和复杂养成经济。
 
-记录保存在设备和可用的私人 iCloud 数据库中。当前 App 不向模型服务发送记录、目标或聊天请求。停用 AI 不会撤回历史版本曾发送给服务商的数据；历史副本仍受当时服务商的数据政策约束。[隐私说明](PRIVACY.md)
-
-没有广告 SDK、第三方分析、社交动态或排行榜。Pro 入口保留在二级页面，没有新增启动付费墙。近期只验证记录、回看和保存成果的体验，不扩展挑战商城、MCP 或复杂养成系统。
-
-界面使用纸感底色、粗线框和代码绘制角色。设计参考与归属见 [ATTRIBUTIONS.md](ATTRIBUTIONS.md)。行为改动请补测试，截图只用示例数据。仓库尚未授予项目级开源许可证，访问权限不等于重新分发许可。
+界面采用纸感底色、粗线框和代码绘制人物。设计来源见 [ATTRIBUTIONS.md](ATTRIBUTIONS.md)，中英文编辑规范见 [文案维护](docs/WRITING.md)。行为改动请附测试；截图和问题报告不要包含私人记录、快照或密钥。参与前请阅读 [贡献说明](CONTRIBUTING.md) 和 [安全报告说明](SECURITY.md)。项目级再分发许可证仍待确认，公开访问不等于已获得再分发许可。

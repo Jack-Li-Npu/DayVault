@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "dayvault.snapshot",
+  "id": "11111111-1111-4111-8111-111111111111",
+  "exportedAt": "2026-09-14T12:00:00Z",
+  "goal": {
+    "id": "22222222-2222-4222-8222-222222222222",
+    "title": "阅读",
+    "timeZoneID": "Asia/Shanghai",
+    "restWeekdays": [1, 7],
+    "weeklyTargetDays": 5,
+    "deadlineDate": "2026-09-28"
+  },
+  "window": { "startDate": "2026-08-15", "endDate": "2026-09-28" },
+  "records": [
+    {
+      "id": "synthetic-occurrence-2026-09-14",
+      "itemID": "33333333-3333-4333-8333-333333333333",
+      "title": "阅读一章",
+      "date": "2026-09-14",
+      "status": "completed",
+      "timePrecision": "dateOnly"
+    }
+  ]
+}

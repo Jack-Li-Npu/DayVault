@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "dayvault": {
+      "type": "stdio",
+      "command": "/absolute/path/to/node",
+      "args": ["/absolute/path/to/DayVault/MCP/src/server.mjs", "--snapshot", "/absolute/path/to/private/snapshot.json", "--outbox", "/absolute/path/to/private/outbox"]
+    }
+  }
+}

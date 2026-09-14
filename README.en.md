@@ -1,108 +1,108 @@
 # DayVault
 
-Record what you do. Look back at how long you have kept at it.
+A daily list and a record of what you have earned.
 
 [简体中文](README.md) · **English**
 
-[Getting started](#your-first-minute) · [Run locally](#run-it-locally) · [Developer guide](docs/DEVELOPMENT.en.md)
+[Getting started](#getting-started) · [Run locally](#run-locally) · [MCP setup](docs/MCP.en.md) · [Developer guide](docs/DEVELOPMENT.en.md) · [Privacy](PRIVACY.md)
 
 ![DayVault brand illustration](Design/Previews/dayvault-readme-banner.svg)
 
-DayVault is an iPhone daily recorder with a Simplified Chinese interface. Write down a workout, a reading session or something you want to get done. Completed records contribute to achievements and unlock clothing for your character.
+DayVault is an iPhone daily recorder with a Simplified Chinese interface. Write down what you plan to do and check it off when it is done. Completed records contribute to achievements and unlock equipment for your character. The home screen is a list; there is no required questionnaire, goal setup or chat.
 
-The idea came from wanting to share the satisfaction of sticking with something for a long time. The achievement collection and replayable character animations are based on the things you have recorded and completed.
+The project started with a specific feeling: after months of training, reading or learning, it is satisfying to see that effort collected in one place and have something to share. The achievement gallery, original character and replayable animations are built around those records.
 
-The current development build no longer offers AI scheduling, chat, new personal achievement generation or adjustment proposals. It makes no model requests. Recording, existing achievement evaluation and character animations work offline; iCloud, Calendar and purchases still follow their respective settings. Goals, records and personal achievements saved in earlier builds are retained.
+v1.4 disables in-app AI and adds optional local MCP file exchange. Recording, existing achievement evaluation and animation do not require AI. When you want help with planning, you can take selected records to an AI tool you already use. DayVault does not fund model calls or quietly add items to your schedule.
 
-DayVault is not yet on the App Store. This scope change has no new release tag; the links below preserve the previously published versions.
+This is a source release, not an App Store release. The scope of the experiment is settled; that does not mean every launch check is complete, or that the repository will never receive a fix.
 
 ## Releases
 
-- [v1.3.0](docs/releases/v1.3.0.md) (latest published) · Personal achievement copy · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0)
+- [v1.4.0](docs/releases/v1.4.0.md) (current) · Offline recording and optional MCP file exchange · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.4.0)
+- [v1.3.0](docs/releases/v1.3.0.md) · Personal achievement copy · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.3.0)
 - [v1.2.0](docs/releases/v1.2.0.md) · UI terminology and achievement copy · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.2.0)
 - [v1.1.0](docs/releases/v1.1.0.md) · Planner instructions, connection fixes and private configuration · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.1.0)
 - [v1.0.0](https://github.com/Jack-Li-Npu/DayVault/blob/v1.0.0/README.en.md) · Original version · [Release page](https://github.com/Jack-Li-Npu/DayVault/releases/tag/v1.0.0)
 
 [All releases](https://github.com/Jack-Li-Npu/DayVault/releases)
 
-## A look inside
+## Screens
 
 <table>
+  <tr><th align="center">Today</th><th align="center">New item</th><th align="center">Animation replay</th></tr>
   <tr>
-    <th align="center">Start with today</th>
-    <th align="center">Record without a long form</th>
-    <th align="center">Celebrate together</th>
-  </tr>
-  <tr>
-    <td align="center"><img src="Design/Previews/journey-today.png" width="260" alt="Chinese Today screen with a concise daily list and a small companion area" /></td>
-    <td align="center"><img src="Design/Previews/journey-editor.png" width="260" alt="Chinese task editor showing a title, date and collapsed advanced options" /></td>
-    <td align="center"><img src="Design/Previews/journey-duet.png" width="260" alt="Replay screen showing the DayVault character beside an original origami companion" /></td>
-  </tr>
-  <tr>
-    <td align="center">A sequential list, without an hourly ruler.</td>
-    <td align="center">Only add timing details when you need them.</td>
-    <td align="center">A skippable duet, with replay that never adds progress.</td>
+    <td align="center"><img src="Design/Previews/journey-today.png" width="260" alt="Historical Today screen with isolated sample records" /></td>
+    <td align="center"><img src="Design/Previews/journey-editor.png" width="260" alt="Task editor with a title, date and collapsed advanced options" /></td>
+    <td align="center"><img src="Design/Previews/journey-duet.png" width="260" alt="The user character and origami companion in a skippable, replayable local animation" /></td>
   </tr>
 </table>
 
-These are historical iOS Simulator captures with isolated sample data, kept as design references. Any AI or chat entries in them are not current features. Updated captures are still pending. The banner is a brand illustration; the origami companion is a locally animated character.
+These are actual iOS Simulator captures from earlier builds, using isolated sample data. AI and chat entries shown in old screenshots have been removed. This README and the v1.4 notes describe the current features. The banner is an illustration, not an app screenshot.
 
-## What you can do
+## Daily recording
 
-Save an item with just a title. Its date defaults to today. Timing, recurrence, reminders and templates sit behind More settings. Calendar, Insights and appearance controls have secondary entries. There is no required questionnaire or chat.
+Save an item with just a title. Its date defaults to today. Time, duration, category, recurrence, reminders and templates stay in advanced options. Calendar, Insights, appearance and Settings have secondary entries.
 
-An item can have a date only, a specific time, or stay in the inbox. Date-only items do not become midnight appointments or inflate time statistics. Mark an item complete without timing it, or use Start to record actual time separately from planned time.
+An item can have a date only, a specific time, or remain unscheduled. Date-only items do not become midnight appointments or count toward time statistics and conflicts. You can mark an item complete without running a timer. Use Start when actual time matters; planned and actual intervals are stored separately.
 
-Recurrence, single-occurrence moves, day review, Apple Calendar overlays, reminders and widgets remain available. Calendar and notification permissions are optional.
+Recurring items support single-occurrence moves. Create a goal manually to group related records. Apple Calendar overlays, reminders and widgets remain available, with optional permissions.
 
 ## Achievements and your character
 
-The shared catalog has 24 achievements, including 8 hidden ones. Visible achievements show progress; concealed ones offer signals and clues before unlocking. Six clothing pieces are tied to shared achievements. “Shared” refers to the catalog, not public access to your records.
+The common catalog contains 24 achievements, including 8 hidden ones. Visible achievements show conditions and progress; hidden ones offer signals and clues before unlocking. Six equipment pieces are tied to common achievements. The catalog is common to all users; your records are not public.
 
-Personal achievements generated and saved in earlier builds continue to be evaluated locally using their accepted rules: completion counts, distinct days or qualifying cycles based on a confirmed routine. Rules and earned achievements are retained. Personal achievements do not affect shared equipment eligibility. This build does not generate new personal achievements.
-
-Older records count only after you associate them with a goal. Unlocked achievements remain yours; corrections to their evidence are reflected in the details.
-
-Personal achievement headings keep the rule-based milestones introduced in v1.3, such as “首次完成” (First completion) and “累计记录 7 天” (Record activity on 7 days). Cards, details and share previews use the same names, with conditions that distinguish counts, days and qualifying cycles. Previously generated wording is historical content, not a new model response. Hidden achievement content remains concealed until unlocking.
+Previously saved personal achievements still use their accepted local rules: completion counts, distinct activity days or qualifying cycles. Older records count after you confirm their goal association. Earned achievements remain yours, and later corrections are reflected in the evidence details. v1.4 does not generate new personal achievements or invent global rarity percentages.
 
 <table>
+  <tr><th align="center">Character and achievements</th><th align="center">Equipment try-on</th><th align="center">Calendar</th></tr>
   <tr>
-    <th align="center">Your character studio</th>
-    <th align="center">A wardrobe earned through actions</th>
-    <th align="center">Calendar, one level deeper</th>
-  </tr>
-  <tr>
-    <td align="center"><img src="Design/Previews/readme-vault.png" width="260" alt="Earlier dark DayVault Vault screen with the original character and achievement collection entry" /></td>
-    <td align="center"><img src="Design/Previews/avatar-wardrobe.png" width="260" alt="DayVault wardrobe with equipment slots and achievement-linked clothing" /></td>
-    <td align="center"><img src="Design/Previews/readme-calendar.png" width="260" alt="Earlier Chinese Calendar screen with a month view and sequential items using isolated sample data" /></td>
+    <td align="center"><img src="Design/Previews/readme-vault.png" width="260" alt="Earlier dark achievement screen with the original DayVault character" /></td>
+    <td align="center"><img src="Design/Previews/avatar-wardrobe.png" width="260" alt="Character wardrobe distinguishing unlocked, previewable and hidden equipment" /></td>
+    <td align="center"><img src="Design/Previews/readme-calendar.png" width="260" alt="Earlier Calendar screen with a month view and a sequential list" /></td>
   </tr>
 </table>
 
-These captures also show retained features from earlier builds. The wardrobe image comes from an earlier character preview. All use sample data.
+These images also use sample data from earlier builds and remain as design references.
 
-The origami companion appears alongside your character in local animations. Existing characters, outfits and saved performance stages remain. The roughly six-second sequence supports skipping, replay and Reduce Motion. Replay adds no progress. Ordinary completion uses brief visual feedback; multiple unlocks are grouped.
+Ordinary completions have brief feedback; simultaneous unlocks are grouped. The roughly six-second duet can be skipped or replayed without adding progress. Reduce Motion uses a static result and short fade. The origami companion is locally animated, not an AI response.
 
-Share cards can include your character, an achievement, the recorded activity span and a confirmed memory you choose. Private messages are excluded by default. Cards are rendered on the device and shared only through a destination you select. There are no invented global rankings.
+Share cards can include the character, achievement, activity span and a confirmed memory you select. Preview the card before choosing where to send it. Private messages are excluded by default, and images are not uploaded automatically.
 
-## A smaller scope
+## Optional MCP access
 
-Remote AI entry points and model requests have been removed to keep ongoing service costs manageable for an individual developer. Fixed templates are not presented as AI replies, and existing records do not need an AI server to remain usable.
+The v1.4 MCP server targets macOS / Linux computers and tools that support local stdio MCP. Setup examples cover Codex, Claude Code and Gemini CLI. It does not read their chat histories or open a listening port on the iPhone. File-permission protection on Windows has not been verified.
 
-You can create a goal manually, link existing items, and set its weekly frequency and rest days. Previously accepted schedules, goals and personal achievements remain. Goals with saved conversations or memories expose them through the historical companion records entry, rather than the home screen. No new conversation is generated.
+<table>
+  <tr><th align="center">Export a goal snapshot</th><th align="center">Confirm a proposal</th></tr>
+  <tr>
+    <td align="center"><img src="Design/Previews/v1.4-mcp-exchange.png" width="300" alt="v1.4 MCP file exchange screen with a seven-record sample reading goal, export preview and import entry" /></td>
+    <td align="center"><img src="Design/Previews/v1.4-mcp-proposal.png" width="300" alt="v1.4 proposal preview with two dated test items, not yet saved before confirmation" /></td>
+  </tr>
+</table>
 
-Pro, iCloud, Calendar and widgets are not removed by this change. They still need their respective release checks; no pricing change or new paid-service promise is being made.
+Actual v1.4 Simulator captures. The reading goal, seven records and two-item proposal are isolated synthetic test data, not private records or replies from a paid model session.
 
-AI instruction packages, proxy code and [past integration results](docs/AI-PLANNER-LIVE-VALIDATION.zh-CN.md) remain in the repository as historical development material. Model-configuration sections of the developer guides are also legacy references, not setup steps for the current app. See the [release preparation plan](docs/APP-STORE-LAUNCH-PLAN.zh-CN.md) for outstanding work.
+1. Select a goal under Settings → “MCP 文件交换” (MCP file exchange), preview its JSON snapshot and export it to your computer.
+2. Your AI tool reads the snapshot through MCP and proposes new items. That tool supplies the model; its charges and data policies apply.
+3. Transfer the proposal back to the iPhone. Preview it and confirm before anything is saved.
 
-## Your first minute
+A snapshot contains the selected goal and related items from 30 days ago through 14 days ahead. Notes, conversations, memories, Calendar data and hidden achievement rules are excluded. It is neither a complete backup nor a live sync connection.
 
-1. Tap “新增事项” (New item), enter a title and save. You do not need a goal or service configuration.
-2. Check the item when you finish. Tap your character to browse achievements and clothing.
-3. Use the advanced options for recurring items, or create a goal manually to group related records.
+Proposals can add date-only, non-recurring items. MCP cannot complete or delete items, rewrite existing plans or unlock achievements. The app rechecks dates, rest days, deadlines and duplicates at confirmation. Instructions inside a file cannot replace that confirmation.
 
-## Run it locally
+[Setup guide](docs/MCP.en.md) · [中文接入指南](docs/MCP.zh-CN.md) · [Data contract](docs/MCP-CONTRACT.md)
 
-You need a Mac, Xcode 26 or newer and an iPhone simulator. The deployment target is iOS 18+. The repository is public, but no project-wide open-source redistribution license has been granted.
+## Getting started
+
+1. Tap “新增事项” (New item), enter a title and save.
+2. Check it off when done. Tap the character to open achievements and equipment.
+3. Create a goal when you need one. MCP is optional; no setup is required for ordinary use.
+
+Disabling in-app AI does not erase accepted plans, goals, personal achievements or historical conversations. Goals with old companion records retain a history entry. The repository keeps the old proxy and instruction packages for reference; entering old credentials will not restore AI in the current app.
+
+## Run locally
+
+You need a Mac, Xcode 26 or newer and an iPhone simulator. The deployment target is iOS 18. The app and widgets currently use Simplified Chinese; English documentation does not imply an English-language interface.
 
 ```sh
 git clone https://github.com/Jack-Li-Npu/DayVault.git
@@ -110,26 +110,20 @@ cd DayVault
 open DayVault.xcodeproj
 ```
 
-Choose the DayVault scheme and a simulator, then press ⌘R. No AI proxy or API key is needed. The project is checked in; use `xcodegen generate` after changing the project definition. For a physical device, configure your development team, bundle IDs, App Group and CloudKit container. The local StoreKit configuration is for purchase testing, not a live product.
+Choose the DayVault scheme and a simulator, then press ⌘R. No API key, Node.js installation or AI proxy is needed for the app. Physical devices require your development team, bundle IDs, App Group and CloudKit container. Run `xcodegen generate` after changing the project structure.
 
-[English developer guide](docs/DEVELOPMENT.en.md) / [中文开发指南](docs/DEVELOPMENT.zh-CN.md). Their AI setup and server test instructions describe the historical implementation.
+The app uses SwiftUI, SwiftData / CloudKit, EventKit, WidgetKit, StoreKit 2 and Swift Charts, without third-party iOS runtime packages. Recurrence and achievement rules live in `Packages/DayVaultCore`; the optional MCP server is in `MCP`.
 
-## Verification and limitations
+## Verification and unfinished work
 
-The full local regression recorded on September 10, 2026 passed 57 Core, 40 App, 15 UI and 30 server tests. A later connection-fix run passed 46 server, 13 iOS unit and 2 UI tests. These runs overlap; their counts should not be added or treated as production reliability evidence.
+The v1.4 regression passed 71/71 Core, 76/76 App unit and integration, 22/22 UI and 33/33 MCP tests. The 98 App and UI tests had no failures or skips. The Release-configuration iOS Simulator build passed, with its version verified as 1.4.0, build 5. This is not a signed device archive. The [release notes](docs/releases/v1.4.0.md) describe the test scope and separate historical baseline. Counts from different runs are not added together.
 
-On September 14, 2026, the final regression after AI removal passed 57/57 Core tests, 60/60 App unit and integration tests, and 19/19 UI tests, with no skips. The Release-configuration iOS Simulator build also succeeded. These results are separate from the historical runs above. The first UI run encountered a multiline-field lookup issue; the complete suite passed after switching to a stable identifier, retaining the save and delete assertions.
+App Store readiness still requires physical-device permissions, multi-device CloudKit, purchase sandbox checks, upgrades from actual earlier builds and lock-screen privacy validation. The local StoreKit file is not a live product. Pro remains in secondary settings; this release adds no paywall or pricing change. [Launch checklist, in Chinese](docs/APP-STORE-LAUNCH-PLAN.zh-CN.md)
 
-A Release Simulator build is not a signed archive or App Store approval. Signed-device permissions, multi-device CloudKit sync, purchase sandbox tests, upgrades from actual earlier builds and offline behavior still need release validation. Those checks are not marked as passed by this change.
+## Privacy and contributions
 
-## Under the surface
+Basic records stay on the device and, when available, in the private iCloud database. The app makes no model requests. An external AI tool may send the MCP snapshot to its model provider: a local MCP server does not make the model local. Disabling the old AI service does not withdraw data previously sent to providers. [Privacy details](PRIVACY.md)
 
-The app uses SwiftUI, SwiftData / CloudKit, EventKit, WidgetKit, StoreKit 2 and Swift Charts, with no third-party iOS runtime packages. The local `DayVaultCore` package holds recurrence, achievement rules and versioned models. The historical Deno / Supabase proxy is not a runtime dependency of the current app.
+There is no advertising SDK, third-party analytics or leaderboard. The project does not promise a hosted AI service, challenge marketplace or elaborate game economy.
 
-## Privacy and ownership
-
-Records stay on the device and, when available, in your private iCloud database. The current app sends no records, goals or chat requests to a model service. Disabling AI does not withdraw data sent by earlier versions; historical copies remain subject to the provider's applicable data policy. [Privacy summary](PRIVACY.md)
-
-There is no advertising SDK, third-party analytics, social feed or leaderboard. Pro options remain secondary, with no new startup paywall. Near-term work focuses on recording, reviewing and saving achievements, without adding a challenge marketplace, MCP or a complex game economy.
-
-The interface uses paper-like backgrounds, heavy outlines and code-drawn characters. Sources and design references are in [ATTRIBUTIONS.md](ATTRIBUTIONS.md). Behavior changes need tests; screenshots should use isolated sample data. No project-wide open-source license has been granted, and repository access does not grant redistribution rights.
+The interface uses paper-like backgrounds, heavy outlines and code-drawn characters. See [ATTRIBUTIONS.md](ATTRIBUTIONS.md) for sources and [writing notes](docs/WRITING.md) for the Chinese and English copy guidelines. Include tests with behavior changes, and keep private records, snapshots and credentials out of screenshots and issues. Read the [contribution guide](CONTRIBUTING.md) and [security reporting notes](SECURITY.md) before submitting changes. The project-wide redistribution license is still awaiting confirmation; public access does not itself grant redistribution rights.

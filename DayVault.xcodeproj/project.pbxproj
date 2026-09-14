@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		003AC6918B723F9CDB0EDD71 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44BE029A974D4918B7B098B /* PersistenceController.swift */; };
+		07017E3758565E1699ED9886 /* MCPExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98202E92E5E68C069EA90D5E /* MCPExchangeView.swift */; };
 		1CC64B72B5F05849D303C984 /* DayVaultWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90706508ED3980640BA716B1 /* DayVaultWidgets.swift */; };
 		1DE4ABC94FD5B15BF1CC9279 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 86CEE2A8D4C117DDB40A0C6C /* Localizable.strings */; };
 		1ED56F83C02979B5C0E27E8C /* PersonalAchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131DAF5BBF427F5498EB9D44 /* PersonalAchievementsView.swift */; };
@@ -44,9 +45,12 @@
 		AC6C4D19089A4FAD675FCE5F /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BA2BCAA330C159BF039B74 /* CalendarService.swift */; };
 		AD780B152DE38A6E7DB1EE43 /* JourneyAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3427C95EF0DEFC3FA1EBC8 /* JourneyAIService.swift */; };
 		B9AC5162D70CAB97732D4515 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1270932BC76B24ADEBB02F /* AppModel.swift */; };
+		C03CBE384EA4896D1A569EE4 /* AppModelMCP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1B61D58EDBC943515A1BE /* AppModelMCP.swift */; };
+		C2A69A7C8D28797CBCCEE04A /* MCPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6165420E752E99EAC9D67FB4 /* MCPUITests.swift */; };
 		C6B8DD7D1E3B7AB52DE48C52 /* OrigamiCompanion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2289EC94ACA010135D5F81 /* OrigamiCompanion.swift */; };
 		C7751123826A0CEEAED2722E /* DayVaultCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7625499619F9D9865C737CCF /* DayVaultCore */; };
 		CD75731A45B50FAF5B3DB5A6 /* EntitlementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603C9614734C793DC180745B /* EntitlementStore.swift */; };
+		D4DF23BA308DF7D82ECF2294 /* MCPIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F06F8ED5CCDA8B7417303F1 /* MCPIntegrationTests.swift */; };
 		E9B0830D8F5BC1F198CF1BE0 /* DuetCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFADEBBFE5B7BB0F431D798E /* DuetCelebrationView.swift */; };
 		ED9478A663696568D976FDEF /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787C8CF64D706272EDE5E949 /* AppTheme.swift */; };
 		F3F9E9FE90109EA2BB7E5D41 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77AB85518B9E1309224838 /* TodayView.swift */; };
@@ -114,7 +118,10 @@
 		603C9614734C793DC180745B /* EntitlementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementStore.swift; sourceTree = "<group>"; };
 		60D6E03C93A19C84DE735D80 /* DayVaultCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DayVaultCore; path = Packages/DayVaultCore; sourceTree = SOURCE_ROOT; };
 		611B3A031E690150435F04AD /* DayVaultUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DayVaultUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6165420E752E99EAC9D67FB4 /* MCPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPUITests.swift; sourceTree = "<group>"; };
 		6551D60BAA236D1B8BF8EB69 /* DayVault.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DayVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DD1B61D58EDBC943515A1BE /* AppModelMCP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelMCP.swift; sourceTree = "<group>"; };
+		6F06F8ED5CCDA8B7417303F1 /* MCPIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPIntegrationTests.swift; sourceTree = "<group>"; };
 		787C8CF64D706272EDE5E949 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		7A094210AFA96BF6C60F5B57 /* DayVaultTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DayVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8871333E15F9AAF07FAB9284 /* AvatarIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarIntegrationTests.swift; sourceTree = "<group>"; };
@@ -123,6 +130,7 @@
 		8FC054996FF769EB141EAEC5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		90706508ED3980640BA716B1 /* DayVaultWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayVaultWidgets.swift; sourceTree = "<group>"; };
 		932D30C753A73ED6C41E46CA /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
+		98202E92E5E68C069EA90D5E /* MCPExchangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPExchangeView.swift; sourceTree = "<group>"; };
 		9B1245CABEC731560469F433 /* CalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScreen.swift; sourceTree = "<group>"; };
 		9CAEF4ACA1E6124B2BA35C56 /* AppModelJourney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelJourney.swift; sourceTree = "<group>"; };
 		A44BE029A974D4918B7B098B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -183,6 +191,7 @@
 				8871333E15F9AAF07FAB9284 /* AvatarIntegrationTests.swift */,
 				01585EE9F34FD734FC494E84 /* DayVaultTests.swift */,
 				C8FE6FDE4E23754B8725C44F /* JourneyIntegrationTests.swift */,
+				6F06F8ED5CCDA8B7417303F1 /* MCPIntegrationTests.swift */,
 			);
 			path = DayVaultTests;
 			sourceTree = "<group>";
@@ -201,6 +210,7 @@
 			children = (
 				410F1FC2BC3C7CC07F9BD292 /* AvatarUITests.swift */,
 				4B5574FB7D167BCED137D998 /* DayVaultUITests.swift */,
+				6165420E752E99EAC9D67FB4 /* MCPUITests.swift */,
 			);
 			path = DayVaultUITests;
 			sourceTree = "<group>";
@@ -226,6 +236,7 @@
 				3D1270932BC76B24ADEBB02F /* AppModel.swift */,
 				3F57B91B90883E6FC43AC65E /* AppModelAdjustments.swift */,
 				9CAEF4ACA1E6124B2BA35C56 /* AppModelJourney.swift */,
+				6DD1B61D58EDBC943515A1BE /* AppModelMCP.swift */,
 				C9188266EC1DC7CACAE77B53 /* AppModelPreviewJourney.swift */,
 				787C8CF64D706272EDE5E949 /* AppTheme.swift */,
 				5F84C42CDE4C081CA19D7782 /* Assets.xcassets */,
@@ -355,6 +366,7 @@
 		E6F51BF0F929EEC55E5C0B5F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				98202E92E5E68C069EA90D5E /* MCPExchangeView.swift */,
 				ADE00AEBF8F68FDFBAB671F6 /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -539,6 +551,7 @@
 			files = (
 				557AFB3432D72E57E388BB27 /* AvatarUITests.swift in Sources */,
 				FFC556092A15F09ED3255BC3 /* DayVaultUITests.swift in Sources */,
+				C2A69A7C8D28797CBCCEE04A /* MCPUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,6 +573,7 @@
 				B9AC5162D70CAB97732D4515 /* AppModel.swift in Sources */,
 				7C5DA1513A85479FFD8DC4EB /* AppModelAdjustments.swift in Sources */,
 				9DCBA355AA7F8E80E4322424 /* AppModelJourney.swift in Sources */,
+				C03CBE384EA4896D1A569EE4 /* AppModelMCP.swift in Sources */,
 				33FE749CBD0905B9627C4CD0 /* AppModelPreviewJourney.swift in Sources */,
 				ED9478A663696568D976FDEF /* AppTheme.swift in Sources */,
 				61436C3AC2CC01675CD58A5B /* AvatarStudioView.swift in Sources */,
@@ -578,6 +592,7 @@
 				8BB59A98143C28CEB9D21C1E /* InsightsView.swift in Sources */,
 				9BF21B0308AE3F35CB863E6C /* ItemEditorView.swift in Sources */,
 				AD780B152DE38A6E7DB1EE43 /* JourneyAIService.swift in Sources */,
+				07017E3758565E1699ED9886 /* MCPExchangeView.swift in Sources */,
 				4534EFCEB8725540380068C7 /* NotificationDelegate.swift in Sources */,
 				2863261C996D4024619C4844 /* NotificationService.swift in Sources */,
 				C6B8DD7D1E3B7AB52DE48C52 /* OrigamiCompanion.swift in Sources */,
@@ -597,6 +612,7 @@
 				5B91A6C116AB086AD664B775 /* AvatarIntegrationTests.swift in Sources */,
 				792279891D3FA6587636EC6D /* DayVaultTests.swift in Sources */,
 				807E099D198CAD0B207E6EFA /* JourneyIntegrationTests.swift in Sources */,
+				D4DF23BA308DF7D82ECF2294 /* MCPIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,7 +759,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -764,7 +780,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -846,7 +862,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -861,7 +877,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

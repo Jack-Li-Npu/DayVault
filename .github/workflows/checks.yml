@@ -1,0 +1,33 @@
+name: Core and MCP checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Swift core tests
+        run: swift test --package-path Packages/DayVaultCore
+      - name: Whitespace check
+        run: git diff --check
+
+  mcp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: MCP/package-lock.json
+      - run: npm ci --ignore-scripts
+        working-directory: MCP
+      - run: npm test
+        working-directory: MCP

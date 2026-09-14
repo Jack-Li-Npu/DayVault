@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="520" viewBox="0 0 1440 520" role="img" aria-labelledby="title desc">
-  <title id="title">DayVault — 日常记录与共同成长 / Daily records and a growing companion</title>
+  <title id="title">DayVault — 日常记录与成就 / Daily records and achievements</title>
   <desc id="desc">Original editorial banner with bold DayVault lettering and a geometric origami companion. A brand illustration, not an app screenshot.</desc>
   <rect width="1440" height="520" fill="#F4F0E6"/>
   <path d="M38 44H1402V476H38Z M958 44V476 M38 398H1402" fill="none" stroke="#1C1E19" stroke-width="2"/>
@@ -7,12 +7,12 @@
     <text x="76" y="94" font-size="17" font-weight="700" letter-spacing="3">DAYVAULT / 日常记录</text>
     <rect x="76" y="257" width="500" height="16" fill="#DDF853"/>
     <text x="69" y="247" font-size="128" font-weight="900" letter-spacing="-7">DayVault</text>
-    <text x="76" y="323" font-size="30" font-weight="700">记录日常，让坚持有迹可循。</text>
-    <text x="76" y="364" font-size="21" fill="#66695F">Daily records. A growing companion. Achievements you keep.</text>
+    <text x="76" y="323" font-size="30" font-weight="700">记下每天做过的事。</text>
+    <text x="76" y="364" font-size="21" fill="#66695F">A daily record worth looking back on.</text>
     <text x="1002" y="92" font-size="14" font-weight="700" letter-spacing="2">A LITTLE COMPANY</text>
     <text x="1151" y="365" font-size="15" text-anchor="middle" fill="#66695F">折纸搭档 / ORIGAMI COMPANION</text>
     <text x="76" y="446" font-size="18" font-weight="700"><tspan fill="#5144D9">01</tspan><tspan dx="18">轻松记录 / RECORD</tspan></text>
-    <text x="516" y="446" font-size="18" font-weight="700"><tspan fill="#5144D9">02</tspan><tspan dx="18">一起积累 / GROW</tspan></text>
+    <text x="516" y="446" font-size="18" font-weight="700"><tspan fill="#5144D9">02</tspan><tspan dx="18">查看记录 / REVIEW</tspan></text>
     <text x="1002" y="446" font-size="18" font-weight="700"><tspan fill="#5144D9">03</tspan><tspan dx="18">留住成就 / KEEP</tspan></text>
   </g>
   <g stroke="#24291F" stroke-width="3.5" stroke-linejoin="round">

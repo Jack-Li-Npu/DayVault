@@ -27,3 +27,11 @@ xcuserdata/
 *.log
 *.xcresult/
 *.xcarchive/
+
+# Optional local MCP dependencies and private exchange files.
+node_modules/
+.dayvault-exchange/
+*.dayvault-snapshot.json
+*.dayvault-proposal.json
+dayvault-snapshot*.json
+dayvault-proposal*.json

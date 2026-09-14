@@ -45,3 +45,18 @@ verified sources, versions, exclusions and the original DayVault synthesis.
 # Writing references (2026-09-11)
 
 The copy revision used [blader/humanizer](https://github.com/blader/humanizer) (commit `9862685f575c65a8247f90369951df1b3416e3d6`) and [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) (commit `91f3d394db8419c20d67ebe22a96cf8fee0a404b`) as editing guides. Both were installed locally with their license files; their packages are not distributed in the app. DayVault's shorter runtime writing instructions are project-specific text. See [the writing notes](docs/WRITING.md) for scope and examples. No AI-detection guarantee or claim of exclusively human authorship is made.
+
+The v1.4 Chinese and English introductions were edited with the already-installed
+Humanizer guides after rechecking both upstream projects. They remain editing
+references, not dependencies of the app or MCP server.
+
+## Optional MCP dependencies
+
+The local Node server uses the official
+[@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/typescript-sdk)
+1.30.0 and [Zod](https://github.com/colinhacks/zod) 4.6.5. Both installed versions
+declare MIT licenses; their notices are included in the npm packages.
+`MCP/package-lock.json` records the dependency versions and integrity hashes.
+Dependencies are installed by the developer, not copied into the iOS app.
+The DayVault-specific file format, validation and import/export code were written
+for this repository.

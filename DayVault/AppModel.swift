@@ -637,7 +637,7 @@ final class AppModel {
         return nil
     }
 
-    private func reconcileAchievements(presentNewUnlocks: Bool = true) {
+    func reconcileAchievements(presentNewUnlocks: Bool = true) {
         refresh()
         var snapshot = buildAchievementSnapshot()
         var evaluations = AchievementEngine.evaluate(snapshot: snapshot)

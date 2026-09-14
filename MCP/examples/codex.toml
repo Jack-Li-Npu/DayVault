@@ -1,0 +1,7 @@
+# Merge this entry into your Codex configuration after replacing all absolute paths.
+# Do not replace your entire config. No API key is required by this server.
+[mcp_servers.dayvault]
+command = "/absolute/path/to/node"
+args = ["/absolute/path/to/DayVault/MCP/src/server.mjs", "--snapshot", "/absolute/path/to/private/snapshot.json", "--outbox", "/absolute/path/to/private/outbox"]
+startup_timeout_sec = 20
+tool_timeout_sec = 30

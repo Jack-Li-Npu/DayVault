@@ -1,5 +1,19 @@
 # DayVault writing notes / 文案维护
 
+## v1.4 中英文介绍（2026-09-14）
+
+本次重新核对了 [blader/humanizer](https://github.com/blader/humanizer) 和 [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh)。本地已有可读的英文 `humanizer` 和中文 `humanizer-zh` 技能，因此直接使用，没有重复安装或覆盖原副本。它们用于编辑 README、v1.4 说明、MCP 接入指南和隐私说明，不随 App 运行，也不需要把私人记录发送给写作服务。
+
+最新介绍以当前行为为准：App 离线记录，MCP 交换所选目标文件，外部工具负责模型。删除“全能”“无缝”“彻底改变”等宣传语，保留费用、确认流程、旧截图、测试范围和未完成事项。没有编造用户评价或创作者经历；项目缘由只使用原有记录中明确提到的想法。
+
+产品文案保持简洁正式。导航用名词，按钮写操作，错误说明原因与下一步；成就条件写可核实的次数、日期和范围。自然表达不意味着改成聊天口吻，也不意味着省略隐私限制。
+
+This pass checked the upstream [English Humanizer](https://github.com/blader/humanizer) and [Chinese Humanizer](https://github.com/op7418/Humanizer-zh) projects and used the locally installed skills. They guide editing; they are not app dependencies or a runtime language service.
+
+The v1.4 introductions describe what the software does, with specific limits. The edit removes inflated claims and repeated setup while preserving costs, user confirmation, historical screenshot labels and unfinished checks. No testimonials, author experiences or test results were invented. It makes no promise about AI detector scores or human authorship.
+
+The sections below document earlier releases. Their runtime prompt-bundling notes describe the retired in-app AI implementation, not the v1.4 MCP server. Existing version tags and historical writing examples stay intact.
+
 ## v1.2 成就文案（2026-09-13）
 
 公共成就改用与记录行为有关的短名称，描述对应当前判定条件。公开成就的次数、范围和限制直接说明；隐藏项目解锁前仍不公开名称和阈值。角色装备说明与个人安全线索同步调整，既有 ID、资格和装备对应关系不变。

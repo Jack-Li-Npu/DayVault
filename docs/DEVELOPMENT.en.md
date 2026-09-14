@@ -1,10 +1,14 @@
 # DayVault developer guide
 
-> Current scope (September 14, 2026): remote AI is disabled in the app. No proxy or API key is needed. AI configuration, endpoint and integration instructions below describe the historical implementation. Environment variables cannot re-enable it; restoration requires code changes and new validation. Existing goals, records and personal achievements are retained. This scope change does not remove iCloud, Calendar or StoreKit.
+> v1.4 scope (September 14, 2026): remote AI is disabled in the app. Ordinary use needs no proxy or API key. Optional local MCP uses exported goal snapshots, externally generated proposals and explicit iPhone preview and confirmation. See the [MCP guide](MCP.en.md). It does not read external chat histories or restore in-app AI scheduling.
+>
+> AI configuration, endpoints, old UI names and integration instructions below describe the historical implementation. Environment variables cannot re-enable it. Use the [README](../README.en.md) and MCP guide for current entries and workflows. Existing goals, records, personal achievements and companion history remain; iCloud, Calendar and StoreKit are unaffected by this scope change.
+>
+> Known date limitation: MCP proposals are validated and saved in the goal's time zone, while Today still selects its date range using the device time zone. A date-only item may appear on the adjacent day after cross-zone travel. This release does not claim to fix that display behavior.
 
 > Release privacy note / 发布脱敏说明：`api.example.com`, `example-model` and legacy model labels are placeholders, not actual provider settings. 私人接口与模型仅保存在忽略的本地配置中；历史测试结论保留。
 
-[简体中文](DEVELOPMENT.zh-CN.md) · [Project introduction](../README.md) · [Privacy](../PRIVACY.md)
+[简体中文](DEVELOPMENT.zh-CN.md) · [Project introduction](../README.en.md) · [MCP setup](MCP.en.md) · [Privacy](../PRIVACY.md)
 
 This guide covers building, configuration, data boundaries and verification. DayVault is a native iPhone prototype, not a production-ready hosted AI service. The current app ships in Simplified Chinese; English resource files are retained but excluded from the first-release app and widget resources. English documentation does not imply an English-language app release.
 

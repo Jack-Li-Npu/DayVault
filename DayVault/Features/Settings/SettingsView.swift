@@ -27,6 +27,9 @@ struct SettingsView: View {
             Form {
                 Section("settings.integration") {
                     LabeledContent("settings.icloud", value: String(localized: "settings.icloud_value"))
+                    NavigationLink { MCPExchangeView() } label: {
+                        Label("MCP 文件交换", systemImage: "doc.badge.arrow.up")
+                    }.accessibilityIdentifier("settings-mcp")
                     if model.calendarEnabled {
                         Label("settings.calendar_enabled", systemImage: "checkmark.circle.fill").foregroundStyle(DayVaultPalette.success)
                         ForEach(model.availableCalendars) { calendar in

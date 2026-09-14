@@ -1,0 +1,17 @@
+{
+  "name": "dayvault-mcp",
+  "version": "1.4.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "description": "Local, file-based MCP exchange for DayVault; no model calls or direct database writes.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "4.6.5"
+  }
+}

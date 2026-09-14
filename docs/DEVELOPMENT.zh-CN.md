@@ -1,10 +1,14 @@
 # DayVault 开发指南
 
-> 当前范围（2026-09-14）：App 已停用远端 AI，不需要代理或 API 密钥。下文 AI 配置、接口与联调说明保留作历史实现参考，不能仅靠环境变量重新启用；恢复功能需要修改代码并重新验收。已有目标、记录和个人成就保留，iCloud、Calendar 与 StoreKit 不受本次范围调整影响。
+> v1.4 当前范围（2026-09-14）：App 已停用远端 AI，常规运行不需要代理或 API 密钥。可选本地 MCP 使用“导出目标快照 → 外部工具生成草案 → iPhone 预览确认”的文件流程，接入步骤见 [MCP 指南](MCP.zh-CN.md)。它不读取外部工具的聊天历史，也不恢复 App 内 AI 排程。
+>
+> 下文 AI 配置、接口、旧入口名称及联调说明保留作历史实现参考，不能仅靠环境变量重新启用。当前入口和用法以 [README](../README.md) 与 MCP 指南为准。已有目标、记录、个人成就和历史陪伴记录保留，iCloud、Calendar 与 StoreKit 不受这次范围调整影响。
+>
+> 已知日期限制：MCP 草案按目标时区验证和保存，但今日清单仍按设备时区选择日期范围。跨时区旅行后，仅日期事项可能出现在相邻日期。本版没有把跨时区显示问题标为已修复。
 
 > Release privacy note / 发布脱敏说明：`api.example.com`, `example-model` and legacy model labels are placeholders, not actual provider settings. 私人接口与模型仅保存在忽略的本地配置中；历史测试结论保留。
 
-[English](DEVELOPMENT.en.md) · [项目介绍](../README.md) · [隐私说明](../PRIVACY.md)
+[English](DEVELOPMENT.en.md) · [项目介绍](../README.md) · [MCP 接入](MCP.zh-CN.md) · [隐私说明](../PRIVACY.md)
 
 本文说明如何运行项目、配置服务、理解数据边界并验证改动。DayVault 当前是原生 iPhone 原型，不是已部署完毕的商业 AI 服务。首版 App 使用简体中文；英文资源仍在仓库中，但未打包进首版 App 和小组件。提供英文文档不代表 App 已发布英文版本。
 
